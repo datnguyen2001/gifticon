@@ -26,15 +26,19 @@ class LoginController extends Controller
             $user = User::where('google_id', $socialUser->getId())->first();
 
             if (!$user) {
+                $avatar = null;
                 $avatarUrl = $socialUser->getAvatar();
-                $avatarContents = file_get_contents($avatarUrl);
-                $avatarName = 'avatar/' . Str::random(10) . '.png';
-                Storage::disk('public')->put($avatarName, $avatarContents);
+                if ($avatarUrl){
+                    $avatarContents = file_get_contents($avatarUrl);
+                    $avatarName = 'avatar/' . Str::random(10) . '.png';
+                    Storage::disk('public')->put($avatarName, $avatarContents);
+                    $avatar = Storage::url($avatarName);
+                }
 
                 $user = User::create([
                     'full_name' => $socialUser->getName(),
                     'email' => $socialUser->getEmail(),
-                    'avatar' => Storage::url($avatarName),
+                    'avatar' => $avatar,
                     'google_id' => $socialUser->getId(),
                 ]);
             }
@@ -53,15 +57,19 @@ class LoginController extends Controller
             $user = User::where('facebook_id', $socialUser->getId())->first();
 
             if (!$user) {
+                $avatar = null;
                 $avatarUrl = $socialUser->getAvatar();
-                $avatarContents = file_get_contents($avatarUrl);
-                $avatarName = 'avatar/' . Str::random(10) . '.png';
-                Storage::disk('public')->put($avatarName, $avatarContents);
+                if ($avatarUrl){
+                    $avatarContents = file_get_contents($avatarUrl);
+                    $avatarName = 'avatar/' . Str::random(10) . '.png';
+                    Storage::disk('public')->put($avatarName, $avatarContents);
+                    $avatar = Storage::url($avatarName);
+                }
 
                 $user = User::create([
                     'full_name' => $socialUser->getName(),
                     'email' => $socialUser->getEmail(),
-                    'avatar' => Storage::url($avatarName),
+                    'avatar' => $avatar,
                     'facebook_id' => $socialUser->getId(),
                 ]);
             }
@@ -77,20 +85,23 @@ class LoginController extends Controller
     public function zaloCallback(){
         try{
             $socialUser  = Socialite::driver('zalo')->user();
-            dd($socialUser);
             $user = User::where('facebook_id', $socialUser->getId())->first();
 
             if (!$user) {
+                $avatar = null;
                 $avatarUrl = $socialUser->getAvatar();
-                $avatarContents = file_get_contents($avatarUrl);
-                $avatarName = 'avatar/' . Str::random(10) . '.png';
-                Storage::disk('public')->put($avatarName, $avatarContents);
+                if ($avatarUrl){
+                    $avatarContents = file_get_contents($avatarUrl);
+                    $avatarName = 'avatar/' . Str::random(10) . '.png';
+                    Storage::disk('public')->put($avatarName, $avatarContents);
+                    $avatar = Storage::url($avatarName);
+                }
 
                 $user = User::create([
                     'full_name' => $socialUser->getName(),
                     'email' => $socialUser->getEmail(),
-                    'avatar' => Storage::url($avatarName),
-                    'facebook_id' => $socialUser->getId(),
+                    'avatar' => $avatar,
+                    'zalo_id' => $socialUser->getId(),
                 ]);
             }
 
