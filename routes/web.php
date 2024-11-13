@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
+use \App\Http\Controllers\web\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use \App\Http\Controllers\web\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('auth/{provider}/redirect', [LoginController::class , 'redirect']);
+Route::get('auth/google/callback', [LoginController::class , 'googleCallback']);
+Route::get('auth/facebook/callback', [LoginController::class , 'facebookCallback']);
+Route::get('auth/zalo/callback', [LoginController::class , 'zaloCallback']);
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
