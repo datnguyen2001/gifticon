@@ -64,3 +64,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+1.composer require laravel/socialite
+2.composer require socialiteproviders/google
+3.composer require socialiteproviders/facebook
+4.composer require socialiteproviders/zalo
