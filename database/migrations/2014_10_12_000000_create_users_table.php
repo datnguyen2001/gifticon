@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('google_id')->nullable();
             $table->string('facebook_id')->nullable();
+            $table->string('zalo_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
