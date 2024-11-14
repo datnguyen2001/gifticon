@@ -2,7 +2,7 @@
 @section('title','Đăng ký')
 @section('header-title', 'Đăng ký')
 @section('footer-title')
-    Bạn đã có tài khoản? <a href="{{ route('login') }}" class="link-route">Đăng Nhập</a>
+    Bạn đã có tài khoản? <a href="{{ route('login') }}" class="link-route loading-href">Đăng Nhập</a>
 @stop
 @section('style_page')
 @stop
@@ -62,15 +62,15 @@
             <div class="switch-slash"></div>
         </div>
         <div class="link-wrapper">
-            <a href="{{url('auth/zalo/redirect')}}" class="link-detail">
+            <a href="{{url('auth/zalo/redirect')}}" class="link-detail loading-href">
                 <img src="{{asset('assets/images/zalo-icon.png')}}" alt="zalo" class="link-icon"/>
                 <span>Tiếp tục với Zalo</span>
             </a>
-            <a href="{{url('auth/facebook/redirect')}}" class="link-detail">
+            <a href="{{url('auth/facebook/redirect')}}" class="link-detail loading-href">
                 <img src="{{asset('assets/images/fb-icon.png')}}" alt="facebook" class="link-icon"/>
                 <span>Tiếp tục với Facebook</span>
             </a>
-            <a href="{{url('auth/google/redirect')}}" class="link-detail">
+            <a href="{{url('auth/google/redirect')}}" class="link-detail loading-href">
                 <img src="{{asset('assets/images/email-icon.png')}}" alt="email" class="link-icon"/>
                 <span>Tiếp tục bằng email</span>
             </a>
@@ -85,7 +85,7 @@
             setTimeout(() => event.target.submit(), 100);
         });
 
-        document.querySelectorAll('.link-detail').forEach(function(link) {
+        document.querySelectorAll('.loading-href').forEach(function(link) {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
                 showLoading();
@@ -94,5 +94,6 @@
                 }, 100);
             });
         });
+        window.addEventListener('pageshow', hideLoading);
     </script>
 @stop
