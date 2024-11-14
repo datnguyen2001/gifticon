@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Closure;
 
@@ -20,18 +21,24 @@ class Authenticate
 
     public function handle(Request $request, Closure $next)
     {
-        $token = JWTAuth::getToken();
-
+        $token = JWTAuth::getToken() ?: session('jwt_token');
         if (!$token) {
             toastr()->error('Vui lòng đăng nhập để tiếp tục');
             return redirect()->route('login');
         }
 
         try {
-            $user = JWTAuth::authenticate($token);
+            $user = JWTAuth::setToken($token)->authenticate();
+            if (!$user) {
+                toastr()->error('Không thể xác thực người dùng.');
+                return redirect()->route('login');
+            }
+        } catch (TokenExpiredException $e) {
+            toastr()->error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+            return redirect()->route('login');
         } catch (JWTException $e) {
-            toastr()->error($e->getMessage());
-            return back();
+            toastr()->error('Đăng nhập thất bại, vui lòng thử lại.');
+            return redirect()->route('login');
         }
 
         return $next($request);
