@@ -65,8 +65,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-
-1.composer require laravel/socialite
-2.composer require socialiteproviders/google
-3.composer require socialiteproviders/facebook
-4.composer require socialiteproviders/zalo
+1. composer require tymon/jwt-auth
+2. php artisan jwt:secret
+3. php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider" --tag="config"
+3.composer require laravel/socialite
+4.composer require socialiteproviders/google
+5.composer require socialiteproviders/facebook
+6.composer require socialiteproviders/zalo

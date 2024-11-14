@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -43,7 +44,9 @@ class LoginController extends Controller
                 ]);
             }
 
-            Auth::login($user);
+            $token = JWTAuth::fromUser($user);
+            $user->token = $token;
+            $user->save();
 
             return redirect()->route('home');
         }catch (\Exception $exception){
@@ -74,7 +77,9 @@ class LoginController extends Controller
                 ]);
             }
 
-            Auth::login($user);
+            $token = JWTAuth::fromUser($user);
+            $user->token = $token;
+            $user->save();
 
             return redirect()->route('home');
         }catch (\Exception $exception){
@@ -105,7 +110,9 @@ class LoginController extends Controller
                 ]);
             }
 
-            Auth::login($user);
+            $token = JWTAuth::fromUser($user);
+            $user->token = $token;
+            $user->save();
 
             return redirect()->route('home');
         }catch (\Exception $exception){

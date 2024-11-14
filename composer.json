@@ -14,6 +14,7 @@
         "socialiteproviders/facebook": "^4.1",
         "socialiteproviders/google": "^4.1",
         "socialiteproviders/zalo": "^5.0",
+        "tymon/jwt-auth": "^2.1",
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
