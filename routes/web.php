@@ -25,8 +25,7 @@ Route::post('/login', [AuthController::class, 'loginSubmit'])->name('login.submi
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('auth')->group(function () {
-
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 });
