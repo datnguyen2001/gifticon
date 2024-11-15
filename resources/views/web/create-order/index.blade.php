@@ -6,6 +6,7 @@
 @stop
 {{--content of page--}}
 @section('content')
+@include('web.partials.loading')
     <div class="container">
         @php
             $price = 200000;
@@ -61,11 +62,13 @@
                 <div class="excel-upload">
                     <img src="{{asset('assets/images/excel-icon.png')}}" alt="Excel icon" class="excel-icon"/>
                     <span class="upload-excel-text">Upload file excel</span>
+                    <input type="file" id="excelFileInput" style="display: none;" accept=".xlsx, .xls" />
+                    <div class="tooltip-text">Vui lòng upload file excel với 2 cột: Số điện thoại và Số lượng</div>
                 </div>
             </div>
             <div class="receiver-detail">
                 <label class="label-field">Số điện thoại của người nhận*</label>
-                <div class="list-receiver">
+                <div class="list-receiver" id="listReceiver">
                     @for ($i = 1; $i <= 30; $i++)
                         <div class="receiver-item" data-index="{{ $i }}">
                             <div class="ordinal-number">{{ $i }}</div>
@@ -76,7 +79,6 @@
                     @endfor
                 </div>
             </div>
-
         </div>
         <div class="receiver-payment">
                 <span class="payment-total">
@@ -94,5 +96,6 @@
     <script src="{{asset('assets/js/create-order.js')}}"></script>
     <script>
         const price = {{ $price }};
+        const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
     </script>
 @stop
