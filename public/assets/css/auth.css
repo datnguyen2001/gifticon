@@ -134,6 +134,7 @@ body {
         border-radius: 40px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        text-decoration: none;
     }
 
     .link-detail:hover {
@@ -147,9 +148,15 @@ body {
     }
 
     .link-detail span {
+        color: #111111;
         font-family: 'Sen', 'sans-serif';
         font-size: 20px;
         font-weight: 400;
+    }
+    .error-message{
+        font-size: 12px;
+        font-weight: 400;
+        color: red;
     }
 }
 

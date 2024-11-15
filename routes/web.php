@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\web\AuthController;
+use App\Http\Controllers\web\CreateOrderController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
 use \App\Http\Controllers\web\LoginController;
@@ -28,5 +29,5 @@ Route::post('/register', [AuthController::class, 'registerSubmit'])->name('regis
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('auth')->group(function () {
-
+    Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');
 });

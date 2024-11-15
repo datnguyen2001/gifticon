@@ -48,6 +48,8 @@ class LoginController extends Controller
             $user->token = $token;
             $user->save();
 
+            session(['jwt_token' => $token]);
+
             return redirect()->route('home');
         }catch (\Exception $exception){
             return back()->with(['error'=>$exception->getMessage()]);
@@ -81,6 +83,8 @@ class LoginController extends Controller
             $user->token = $token;
             $user->save();
 
+            session(['jwt_token' => $token]);
+
             return redirect()->route('home');
         }catch (\Exception $exception){
             return back()->with(['error'=>$exception->getMessage()]);
@@ -113,6 +117,8 @@ class LoginController extends Controller
             $token = JWTAuth::fromUser($user);
             $user->token = $token;
             $user->save();
+
+            session(['jwt_token' => $token]);
 
             return redirect()->route('home');
         }catch (\Exception $exception){
