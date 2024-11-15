@@ -4,6 +4,7 @@
     height: auto;
     max-height: 150px;
     max-width: 150px;
+    border-radius: 8px;
 }
 .product-name{
     font-size: 24px;
@@ -18,6 +19,7 @@
 .product-price{
     font-size: 16px;
     font-weight: 400;
+    margin-bottom: 0;
 }
 .buyer-info{
     margin-top: 24px;
@@ -41,7 +43,7 @@
     justify-content: space-between;
     h6{
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 700;
         margin-bottom: 0;
     }
 }
@@ -128,6 +130,7 @@ input:checked + .slider::before {
     margin-bottom: 0;
 }
 .excel-upload{
+    position: relative;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -135,6 +138,32 @@ input:checked + .slider::before {
     color: #ffffff;
     padding: 8px 16px;
     border-radius: 50px;
+    cursor: pointer;
+}
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: -50px;
+    left: -30px;
+    width: 140%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+.excel-upload:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+.upload-excel-text{
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
 }
 .list-receiver {
     display: grid;
@@ -196,6 +225,7 @@ input:checked + .slider::before {
     color: #ffffff;
     padding: 8px 16px;
     border-radius: 50px;
+    cursor: pointer;
     .payment-total{
         font-size: 20px;
         font-weight: 500;
@@ -203,10 +233,98 @@ input:checked + .slider::before {
     p{
         margin-bottom: 0;
         font-size: 16px;
+        font-weight: 500;
+        color: white;
+        text-wrap-mode: nowrap;
+    }
+    i{
         color: white;
     }
 }
 .ordinal-number{
     font-size: 16px;
     font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .product-image{
+        max-height: 120px;
+        max-width: 120px;
+    }
+    .product-name{
+        font-size: 18px;
+    }
+    .product-price{
+        font-size: 14px;
+    }
+    .buyer-info{
+        margin-top: 15px;
+        gap: 15px;
+    }
+    .buyer-title{
+        font-size: 16px;
+    }
+    .buyer-form{
+        gap: 10px;
+    }
+    .label-field{
+        font-weight: 400;
+    }
+    .input-field{
+        font-size: 14px;
+        padding: 8px;
+    }
+    .buy-for {
+        h6 {
+            font-size: 16px;
+        }
+    }
+    .receiver-payment {
+        margin-top: 20px;
+    }
+    .payment-button{
+        padding: 4px 16px;
+        p{
+            font-size: 14px;
+        }
+        i{
+            font-size: 14px;
+        }
+    }
+    .receiver-info{
+        margin-top: 20px;
+    }
+    .receiver-title{
+        font-size: 16px;
+    }
+    .excel-upload{
+        padding: 4px 16px;
+    }
+    .excel-icon{
+        width: 16px;
+        height: 16px;
+    }
+    .upload-excel-text{
+        font-size: 14px;
+    }
+    .list-receiver{
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 15px;
+    }
+    .receiver-number {
+        width: 40px;
+        padding: 8px 4px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .excel-upload{
+        padding: 4px 8px;
+    }
+    .list-receiver{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .payment-button{
+        padding: 4px 8px;
+    }
 }

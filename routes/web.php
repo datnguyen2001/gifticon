@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\web\AuthController;
+use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CreateOrderController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
@@ -28,6 +29,7 @@ Route::post('/register', [AuthController::class, 'registerSubmit'])->name('regis
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich', [HomeController::class, 'trademark'])->name('trademark');
+Route::get('/thuong-hieu/{id}', [BrandController::class, 'detail'])->name('brand.detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');
