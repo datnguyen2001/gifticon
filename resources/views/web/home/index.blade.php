@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="promotion-content">
-            <div class="swiper mySwiperBanner">
+            <div class="swiper mySwiperBanner w-100">
                 <div class="swiper-wrapper">
                     @for($i=0;$i<4;$i++)
                         <div class="swiper-slide">
@@ -59,19 +59,19 @@
                     <img src="{{asset('assets/images/image-drink.png')}}" >
                     <div class="price-tag">1,687,816đ</div>
                 </div>
-                <div class="drink-item item2">
+                <div class="drink-item item2 item3">
                     <img src="{{asset('assets/images/image-drink.png')}}" >
                     <div class="price-tag">4,200,000đ</div>
                 </div>
-                <div class="drink-item item1">
+                <div class="drink-item item1 item4">
                     <img src="{{asset('assets/images/image-drink.png')}}" >
                     <div class="price-tag">1,243,823đ</div>
                 </div>
-                <div class="drink-item item1">
+                <div class="drink-item item1 item4">
                     <img src="{{asset('assets/images/image-drink.png')}}">
                     <div class="price-tag">1,677,720đ</div>
                 </div>
-                <div class="drink-item item2">
+                <div class="drink-item item2 item3">
                     <img src="{{asset('assets/images/image-drink.png')}}" >
                     <div class="price-tag">6,632,124đ</div>
                 </div>

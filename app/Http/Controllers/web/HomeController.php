@@ -9,7 +9,11 @@ class HomeController extends Controller
 {
     public function home()
     {
-//        dd(Auth::user());
         return view('web.home.index');
+    }
+
+    public function trademark()
+    {
+        return view('web.trademark.index');
     }
 }

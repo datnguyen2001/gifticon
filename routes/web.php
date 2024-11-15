@@ -27,6 +27,7 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('thuong-hieu-yeu-thich', [HomeController::class, 'trademark'])->name('trademark');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');

@@ -6,6 +6,20 @@ var mySwiperPromotion = new Swiper(".mySwiperPromotion", {
         delay: 3000,
         disableOnInteraction: false
     },
+    breakpoints: {
+        1024: {
+            slidesPerView: 3
+        },
+        768: {
+            slidesPerView: 4
+        },
+        576: {
+            slidesPerView: 3
+        },
+        0: {
+            slidesPerView: 2.5
+        }
+    }
 });
 
 var mySwiperBanner = new Swiper(".mySwiperBanner", {
@@ -28,6 +42,17 @@ var mySwiperTrademark = new Swiper(".mySwiperTrademark", {
         nextEl: ".trademark-button-next",
         prevEl: ".trademark-button-prev",
     },
+    breakpoints: {
+        768: {
+            slidesPerView: 5
+        },
+        576: {
+            slidesPerView: 4
+        },
+        0: {
+            slidesPerView: 2.5
+        }
+    }
 });
 
 $('ul.tabs li').click(function(){
