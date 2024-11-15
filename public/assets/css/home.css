@@ -30,7 +30,7 @@
 }
 
 .promotion-content {
-    width: 50%;
+    width: calc((100% / 2) - 10px);
 }
 
 .title-popular {
@@ -48,6 +48,8 @@ ul.tabs {
     justify-content: center;
     align-items: center;
     gap: 15px;
+    width: 100%;
+    overflow-x: auto;
 }
 
 ul.tabs li {
@@ -84,6 +86,7 @@ ul.tabs li.current {
 .drink-grid {
     display: flex;
     flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     gap: 16px;
     width: 100%;
@@ -91,7 +94,7 @@ ul.tabs li.current {
 }
 
 .drink-item {
-    width: calc((100%/4) - 16px);
+    width: calc((100% / 4) - 16px);
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -121,24 +124,26 @@ ul.tabs li.current {
     height: 200px;
 }
 
-.item2{
+.item2 {
     height: 300px;
 }
 
-.box-trademark{
+.box-trademark {
     margin-bottom: 30px;
     position: relative;
 }
-.line-top-trademark{
+
+.line-top-trademark {
     margin-bottom: 20px;
 }
-.line-top-trademark span{
+
+.line-top-trademark span {
     color: #222222;
     font-weight: 500;
     font-size: 27px;
 }
 
-.line-top-trademark .fa-arrow-right{
+.line-top-trademark .fa-arrow-right {
     font-size: 22px;
     margin-left: 40px;
 }
@@ -164,4 +169,140 @@ ul.tabs li.current {
     box-shadow: 0px 1px 3px 0px #0000004D;
     font-size: 20px;
     border: none;
+}
+.mySwiperTrademark img{
+    box-shadow: 0px 28px 8px 0px #00000000;
+}
+
+@media (max-width: 1200px) {
+    .drink-grid {
+        gap: 10px;
+    }
+
+    .title-popular, .line-top-trademark span {
+        font-size: 24px;
+    }
+
+    ul.tabs li {
+        padding: 6px 16px;
+    }
+
+    .trademark-button-prev, .trademark-button-next {
+        width: 42px;
+        height: 42px;
+    }
+
+    .swiper-buttons {
+        width: 95px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .line-top-you-like span {
+        font-size: 18px;
+    }
+
+    .title-popular, .line-top-trademark span {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 1025px) {
+    .content-you-like {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .line-top-you-like span {
+        font-size: 16px;
+    }
+
+    .title-popular, .line-top-trademark span {
+        font-size: 20px;
+    }
+
+    ul.tabs li {
+        font-size: 14px;
+    }
+
+    .box-promotion {
+        gap: 16px;
+        flex-wrap: wrap-reverse;
+    }
+
+    .promotion-content {
+        width: 100%;
+    }
+
+    .item1 {
+        height: 180px;
+    }
+
+    .item2 {
+        height: 250px;
+    }
+
+    .price-tag {
+        font-size: 12px;
+    }
+
+    .drink-grid {
+        height: 450px;
+    }
+
+    .trademark-button-prev, .trademark-button-next {
+        width: 36px;
+        height: 36px;
+    }
+
+    .swiper-buttons {
+        width: 82px;
+    }
+
+    .trademark-button-prev, .trademark-button-next {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 700px) {
+    .title-popular, .line-top-trademark span {
+        font-size: 18px;
+    }
+    .content-you-like {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 567px) {
+    .content-you-like {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .swiper-buttons {
+        width: 69px;
+        display: none;
+    }
+    .line-top-trademark{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .trademark-button-prev, .trademark-button-next {
+        width: 30px;
+        height: 30px;
+    }
+    .line-top-trademark .fa-arrow-right {
+        font-size: 19px;
+        margin-left: 20px;
+    }
+    .drink-grid {
+        height: 900px;
+    }
+    .drink-item{
+        width: calc((100% / 2) - 10px);
+    }
+    .item3{
+        height: 180px;
+    }
+    .item4{
+        height: 250px;
+    }
 }
