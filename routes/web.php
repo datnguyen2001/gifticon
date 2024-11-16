@@ -29,6 +29,8 @@ Route::post('/register', [AuthController::class, 'registerSubmit'])->name('regis
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich', [HomeController::class, 'trademark'])->name('trademark');
+Route::get('khuyen-mai-hom-nay', [HomeController::class, 'promotionToday'])->name('promotion-today');
+Route::get('co-the-ban-thich', [HomeController::class, 'youLike'])->name('you-like');
 Route::get('/thuong-hieu/{id}', [BrandController::class, 'detail'])->name('brand.detail');
 
 Route::middleware('auth')->group(function () {

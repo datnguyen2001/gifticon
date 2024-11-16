@@ -16,4 +16,17 @@ class HomeController extends Controller
     {
         return view('web.trademark.index');
     }
+
+    public function promotionToday()
+    {
+        $title = "Khuyến mãi mới hôm nay";
+
+        return view('web.trademark.list',compact('title'));
+    }
+    public function youLike ()
+    {
+        $title = "Có thể bạn cũng thích";
+
+        return view('web.trademark.list',compact('title'));
+    }
 }
