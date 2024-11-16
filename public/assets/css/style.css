@@ -302,6 +302,81 @@ a:hover {
     cursor: pointer;
 }
 
+.search-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    align-items: center;
+    gap: 20px;
+.filter-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+.price-range-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-right: 15px;
+}
+.price-range {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-price {
+    width: 130px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #F3F3F3;
+    font-size: 14px;
+    color: #555;
+    outline-color: #e0e0e0;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #F47621;
+    margin-left: 20px;
+    border-radius: 25px;
+}
+.search-input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #555;
+    background-color: #FFFFFF;
+    margin-left: 4px;
+    padding: 8px;
+    width: 200px;
+    border-top-left-radius: 25%;
+    border-bottom-left-radius: 25%;
+}
+.search-button {
+    background-color: #F47621;
+    border: none;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 11px 14px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+}
+.apply-button {
+    background-color: #FA5A00;
+    border-radius: 63px;
+    border: none;
+    padding: 8px 24px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-wrap: nowrap;
+}
+}
 
 @media (max-width: 1400px) {
     .main, .header {
@@ -360,11 +435,55 @@ a:hover {
     }
 }
 
+@media screen and (max-width: 852px){
+    .search-wrapper{
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 16px;
+    .filter-search{
+        gap: 8px;
+    .price-range-title{
+        margin-right: 0;
+        font-size: 16px;
+    }
+    .input-price{
+        width: 100px;
+        padding: 4px 8px;
+    }
+    .search-container{
+        margin-left: 0;
+    }
+    .search-input{
+        padding: 4px 8px;
+    }
+    .search-button{
+        padding: 8px 14px;
+    }
+}
+.apply-button{
+    padding: 6px 16px;
+    font-size: 14px;
+}
+}
+}
+
 @media (max-width: 768px) {
     .footer {
         padding-left: 20px;
         padding-right: 20px;
     }
+}
+@media (max-width: 622px) {
+    .search-wrapper {
+    .filter-search {
+    .input-price {
+        width: 80px;
+    }
+    .search-input{
+        width: 150px;
+    }
+}
+}
 }
 
 @media (max-width: 567px) {
