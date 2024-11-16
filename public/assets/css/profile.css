@@ -1,0 +1,208 @@
+.profile-tab > div {
+    display: none;
+}
+.profile-tab > .active-tab {
+    display: block;
+}
+.li-tab-wrapper{
+    border-radius: 8px;
+}
+.li-tab-wrapper.active {
+    background: #F1641E;
+}
+.li-tab-wrapper.active .profile-menu-title {
+    color: white;
+}
+.profile-side-bar li:hover .profile-menu-title {
+    color: #F1641E;
+}
+.li-tab-wrapper.active:hover .profile-menu-title {
+    color: white;
+}
+
+.profile-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+.profile-side-bar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 10px;
+    height: fit-content;
+}
+.profile-avatar{
+    margin: auto;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.list-tab{
+    li{
+        list-style: none;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+}
+.list-tab-wrapper{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+.profile-menu-title{
+    color: #929292;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.profile-tab{
+    padding-left: 20px;
+    border-left: 1px solid #BFBFBF;
+    .information-tab {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .information-title{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .information-avatar-wrapper{
+            position: relative;
+            margin: auto;
+        }
+        .information-avatar{
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .camera-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        .input-field-wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .double-input{
+            display: flex;
+            gap: 20px;
+        }
+        .double-input-item{
+            width: 50%;
+        }
+        .label-field {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .input-field {
+            color: #111111;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #66666659;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .error-message{
+            font-size: 12px;
+            font-weight: 400;
+            color: red;
+        }
+        .information-submit{
+            margin: 20px auto 0;
+            width: 50%;
+            padding: 8px;
+            background: #F1641E;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+        }
+    }
+    .love-tab{
+        .title-trademark{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .box-menu-trademark{
+            gap: 8px;
+        }
+        .item-menu-trademark{
+            padding: 4px 12px;
+        }
+        .content-you-like{
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .change-password-tab{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .change-password-title{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .input-field-wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .input-field-password{
+            position: relative;
+        }
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .label-field {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .input-field {
+            color: #111111;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #66666659;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .error-message{
+            font-size: 12px;
+            font-weight: 400;
+            color: red;
+        }
+        .change-password-submit{
+            margin: 20px auto 0;
+            width: 50%;
+            padding: 8px;
+            background: #F1641E;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .profile-wrapper{
+        grid-template-columns: 1fr 2fr;
+    }
+}
