@@ -33,6 +33,7 @@ Route::get('thuong-hieu-yeu-thich', [HomeController::class, 'trademark'])->name(
 Route::get('khuyen-mai-hom-nay', [HomeController::class, 'promotionToday'])->name('promotion-today');
 Route::get('co-the-ban-thich', [HomeController::class, 'youLike'])->name('you-like');
 Route::get('/thuong-hieu/{id}', [BrandController::class, 'detail'])->name('brand.detail');
+Route::get('phieu-cua-toi', [HomeController::class, 'myVote'])->name('my-vote');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');

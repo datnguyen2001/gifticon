@@ -29,4 +29,10 @@ class HomeController extends Controller
 
         return view('web.trademark.list',compact('title'));
     }
+
+    public function myVote ()
+    {
+        return view('web.voucher.index');
+    }
+
 }
