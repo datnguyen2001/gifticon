@@ -1,5 +1,5 @@
 @php
-    $user = \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->authenticate();
+    $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
 @endphp
 <div class="box-header">
     <div class="header">
@@ -11,7 +11,7 @@
              </div>
             <div class="d-flex align-items-center box-infor-login">
                 @if($user)
-                    <a href="{{route('profile.index')}}" class="link-login"><img src="{{asset('assets/images/user-icon.png')}}" ></a>
+                    <a href="{{route('profile.index')}}" class="link-login"><img src="{{asset('assets/images/user-icon.png')}}" > <span>{{$user->full_name}}</span></a>
                     @else
                     <a href="{{route('login')}}" class="link-login">Đăng nhập</a>
                 @endif
