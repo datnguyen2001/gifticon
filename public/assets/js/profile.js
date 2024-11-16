@@ -56,13 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (activeTab === 'change-password') {
         activateTab(changePasswordTab);
         activateMenuItem(2);
-    } else if (activeTab === 'love') {
+    } else if (activeTab === 'love' || localStorage.getItem('activeTab') === 'love') {
         activateTab(loveTab);
         activateMenuItem(1);
     } else {
         activateTab(informationTab);
         activateMenuItem(0);
     }
+    localStorage.removeItem('activeTab');
 
     // Add click events to the menu items
     menuItems.forEach((item, index) => {

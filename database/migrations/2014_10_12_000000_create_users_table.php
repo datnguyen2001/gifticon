@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('token')->nullable();
+            $table->longText('token')->nullable();
             $table->string('google_id')->nullable();
             $table->string('facebook_id')->nullable();
             $table->string('zalo_id')->nullable();

@@ -15,7 +15,9 @@
                     @else
                     <a href="{{route('login')}}" class="link-login">Đăng nhập</a>
                 @endif
-                <a href="#" class="icon-header"><img src="{{asset('assets/images/heart-icon.png')}}" ></a>
+                    <a href="javascript:void(0);" class="icon-header" onclick="setLoveTab();">
+                        <img src="{{asset('assets/images/heart-icon.png')}}" alt="Heart Icon">
+                    </a>
                 <a href="#" class="icon-header"><img src="{{asset('assets/images/icon-cart.png')}}" ></a>
             </div>
          </div>
@@ -30,3 +32,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function setLoveTab() {
+        localStorage.setItem('activeTab', 'love');
+        window.location.href = "{{ route('profile.index') }}";
+    }
+</script>
