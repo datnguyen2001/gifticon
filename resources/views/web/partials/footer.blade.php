@@ -41,3 +41,8 @@
         </div>
     </div>
 </div>
+
+<div class="box-footer-mobile">
+    <a href="#">Giỏ hàng</a>
+    <a href="#">Profile</a>
+</div>
