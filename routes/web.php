@@ -3,6 +3,7 @@
 use App\Http\Controllers\web\AuthController;
 use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CreateOrderController;
+use App\Http\Controllers\web\ProfileController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
 use \App\Http\Controllers\web\LoginController;
@@ -36,4 +37,7 @@ Route::get('phieu-cua-toi', [HomeController::class, 'myVote'])->name('my-vote');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');
+    Route::get('/thong-tin-ca-nhan', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/cap-nhat-mat-khau', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
