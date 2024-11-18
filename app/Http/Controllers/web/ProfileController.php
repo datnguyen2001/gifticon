@@ -113,7 +113,7 @@ class ProfileController extends Controller
             'new_phone' => $request->phone
         ]);
 
-//        $this->sendZaloOTP($request->phone, $otp);
+        $this->sendZaloOTP($request->phone, $otp);
 
         // Return success response
         return response()->json([
