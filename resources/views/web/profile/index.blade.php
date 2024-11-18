@@ -8,8 +8,17 @@
 {{--content of page--}}
 @section('content')
     @include('web.partials.loading')
+    <div class="menu-toggle" id="menu-toggle">
+        <span class="menu-dash"></span>
+        <span class="menu-dash"></span>
+        <span class="menu-dash"></span>
+    </div>
+    <div class="overlay" id="overlay"></div>
     <div class="profile-wrapper">
         <div class="profile-side-bar">
+            <div class="close-icon">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
             <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('assets/images/user-icon.png') }}" alt="avatar" class="profile-avatar" />
             <ul class="list-tab">
                 <li class="li-tab-wrapper">
@@ -32,8 +41,13 @@
                 </li>
                 <li class="li-tab-wrapper">
                     <div class="list-tab-wrapper">
-                        <img src="{{asset('assets/images/logout-icon.png')}}" alt="logout icon" class="profile-icon" />
-                        <span class="profile-menu-title">Đăng xuất</span>
+                        <form method="POST" action="{{ route('logout.submit') }}">
+                            @csrf
+                            <button type="submit" class="logout-submit-btn" id="logout-form">
+                                <img src="{{asset('assets/images/logout-icon.png')}}" alt="logout icon" class="profile-icon" />
+                                <span class="profile-menu-title">Đăng xuất</span>
+                            </button>
+                        </form>
                     </div>
                 </li>
             </ul>
