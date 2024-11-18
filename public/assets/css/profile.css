@@ -143,6 +143,13 @@
             font-weight: 400;
             color: red;
         }
+        .update-current-phone{
+            text-decoration: underline;
+            font-weight: 700;
+        }
+        .update-current-phone:hover{
+            color: #F1641E;
+        }
         .information-submit{
             margin: 20px auto 0;
             width: 50%;
@@ -221,6 +228,75 @@
             width: 50%;
             padding: 8px;
             background: #F1641E;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+        }
+    }
+    .update-phone-tab{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .update-phone-title{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .input-field-wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .label-field {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .input-field {
+            color: #111111;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #66666659;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .error-message{
+            font-size: 12px;
+            font-weight: 400;
+            color: red;
+        }
+        .send-otp{
+            color: white;
+            background: #F1641E;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px;
+        }
+        .update-phone-submit{
+            display: flex;
+            justify-content: center;
+            margin: 20px auto 0;
+            width: 50%;
+            padding: 8px;
+            background: #F1641E;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+        }
+        .update-phone-submit-disable{
+            display: flex;
+            justify-content: center;
+            margin: 20px auto 0;
+            width: 50%;
+            padding: 8px;
+            background: grey;
             color: white;
             font-size: 16px;
             font-weight: 600;

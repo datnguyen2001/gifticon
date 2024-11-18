@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const informationTab = document.querySelector(".information-tab-action");
     const loveTab = document.querySelector(".love-tab");
     const changePasswordTab = document.querySelector(".change-password-tab-action");
+    const updatePhoneTab = document.querySelector(".update-phone-tab-action");
     const menuItems = document.querySelectorAll(".profile-side-bar li");
 
     // Icon paths
@@ -49,8 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to activate a tab
     function activateTab(tab) {
+        // Always hide the updatePhoneTab unless the activeTab is "update-phone"
+        if (localStorage.getItem('activeTab') !== 'update-phone' && updatePhoneTab) {
+            updatePhoneTab.style.display = "none";
+        }
         document.querySelectorAll(".profile-tab > *").forEach(div => div.classList.remove("active-tab"));
         tab.classList.add("active-tab");
+
+        // Show updatePhoneTab only if it's the update-phone tab
+        if (localStorage.getItem('activeTab') === 'update-phone' && updatePhoneTab || activeTab === 'update-phone') {
+            updatePhoneTab.style.display = "block";
+        }
     }
 
     // Function to activate menu item
@@ -71,12 +81,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Set the active tab based on the flash data
-    if (activeTab === 'change-password') {
+    if (activeTab === 'change-password' || localStorage.getItem('activeTab') === 'change-password') {
         activateTab(changePasswordTab);
         activateMenuItem(2);
     } else if (activeTab === 'love' || localStorage.getItem('activeTab') === 'love') {
         activateTab(loveTab);
         activateMenuItem(1);
+    } else if (activeTab === 'update-phone' || localStorage.getItem('activeTab') === 'update-phone') {
+        updatePhoneTab.style.display = "block";
+        activateTab(updatePhoneTab);
+        activateMenuItem(0);
     } else {
         activateTab(informationTab);
         activateMenuItem(0);

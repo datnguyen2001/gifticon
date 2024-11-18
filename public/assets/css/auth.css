@@ -97,6 +97,9 @@ body {
         font-weight: 500;
     }
 
+    .submit-btn:hover{
+        background-color: #9b9b9b;
+    }
     .switch-wrapper {
         display: flex;
         flex-direction: column;

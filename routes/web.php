@@ -43,4 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::post('/cap-nhat-mat-khau', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::post('/logout', [ProfileController::class, 'logout'])->name('logout.submit');
+    Route::post('/send-otp-profile', [ProfileController::class, 'sendOTP'])->name('profile.sendOTP');
+    Route::post('/verify-otp-profile', [ProfileController::class, 'verifyOTPProfile'])->name('profile.verifyOTP');
 });

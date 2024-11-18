@@ -18,8 +18,8 @@
                         </a>
                         <div class="profile-menu">
                             <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/user-icon.png')}}" alt="user" class="profile-icon" /> Trang cá nhân</a>
-                            <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/lock-icon.png')}}" alt="lock" class="profile-icon" /> Thay đổi mật khẩu</a>
-                            <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/logout-icon.png')}}" alt="logout icon" class="profile-icon" /> Đăng xuất</a>
+                            <a href="javascript:void(0);" onclick="setChangePassTab();"><img src="{{asset('assets/images/lock-icon.png')}}" alt="lock" class="profile-icon" /> Thay đổi mật khẩu</a>
+                            <a href="javascript:void(0);" onclick="logOutOnClick();"><img src="{{asset('assets/images/logout-icon.png')}}" alt="logout icon" class="profile-icon" /> Đăng xuất</a>
                         </div>
                     </div>
                     @else
@@ -48,4 +48,26 @@
         localStorage.setItem('activeTab', 'love');
         window.location.href = "{{ route('profile.index') }}";
     }
+
+    function setChangePassTab() {
+        localStorage.setItem('activeTab', 'change-password');
+        window.location.href = "{{ route('profile.index') }}";
+    }
+
+    function logOutOnClick() {
+        const logoutForm = document.createElement('form');
+        logoutForm.method = 'POST';
+        logoutForm.action = "{{ route('logout.submit') }}";
+
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = "{{ csrf_token() }}";
+
+        logoutForm.appendChild(csrfInput);
+
+        document.body.appendChild(logoutForm);
+        logoutForm.submit();
+    }
+
 </script>
