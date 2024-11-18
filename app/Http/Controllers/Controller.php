@@ -43,13 +43,13 @@ class Controller extends BaseController
         return $dataReturn;
     }
 
-    public function sendZaloOTP(User $user, $otp)
+    public function sendZaloOTP($phone, $otp)
     {
         $data = $this->getTokenZalo();
         if ($data['status'] == false) {
             return back()->with(['error' => 'Refresh Token đã hết hạn']);
         }
-        $phoneNumber = '84' . substr($user->phone, 1);
+        $phoneNumber = '84' . substr($phone, 1);
         $trackingId = Str::random(32);
         $curl = curl_init();
 
