@@ -42,4 +42,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/thong-tin-ca-nhan', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::post('/cap-nhat-mat-khau', [ProfileController::class, 'updatePassword'])->name('password.update');
+    Route::post('/logout', [ProfileController::class, 'logout'])->name('logout.submit');
 });
