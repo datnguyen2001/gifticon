@@ -38,13 +38,16 @@
             @endif
         </div>
         <div class="double-input-item">
-            <label class="label-field">Điện thoại <span style="color: red">*</span></label>
+            <label class="label-field">Điện thoại
+                (<a href="javascript:void(0);" class="update-current-phone" onclick="setUpdatePhoneTab();">Thay Đổi SĐT</a>)
+            </label>
             <input
                 type="text"
                 name="phone"
                 class="input-field"
                 value="{{ old('phone', $user->phone ?? 'N/A') }}"
                 required
+                readonly
             />
             @if ($errors->has('phone'))
                 <span class="error-message">{{ $errors->first('phone') }}</span>
@@ -53,3 +56,10 @@
     </div>
 </div>
 <button class="information-submit">Cập nhật hồ sơ</button>
+
+<script>
+    function setUpdatePhoneTab() {
+        localStorage.setItem('activeTab', 'update-phone');
+        window.location.href = "{{ route('profile.index') }}";
+    }
+</script>

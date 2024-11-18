@@ -72,6 +72,11 @@
                     </div>
                 </form>
             </div>
+            <div class="update-phone-tab-action">
+                <div class="update-phone-tab">
+                    @include('web.profile.partials.update-phone')
+                </div>
+            </div>
         </div>
     </div>
 @stop

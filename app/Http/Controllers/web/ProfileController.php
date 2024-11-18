@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -87,5 +88,67 @@ class ProfileController extends Controller
                 'error' => 'Đăng xuất thất bại, vui lòng thử lại sau.',
             ]);
         }
+    }
+
+    public function sendOTP(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|digits:10',
+        ]);
+
+        $phoneExists = User::where('phone', $request->phone)->exists();
+
+        if ($phoneExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Số điện thoại này đã được sử dụng.',
+            ], 422);
+        }
+
+        $otp = random_int(10000, 99999);
+
+        session([
+            'otp_code' => $otp,
+            'otp_created_at' => now(),
+            'new_phone' => $request->phone
+        ]);
+
+//        $this->sendZaloOTP($request->phone, $otp);
+
+        // Return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP đã được gửi!',
+        ]);
+    }
+
+    public function verifyOTPProfile(Request $request)
+    {
+        session()->flash('active_tab', 'update-phone');
+
+        $request->validate([
+            'otp' => 'required|numeric',
+        ]);
+
+        if (!session()->has('otp_code') || !session()->has('new_phone')) {
+            return redirect()->back()->withErrors([
+                'otp' => 'Mã OTP không tồn tại hoặc đã hết hạn. Vui lòng thử lại.',
+            ]);
+        }
+
+        if ($request->otp != session('otp_code')) {
+            return redirect()->back()->withErrors([
+                'otp' => 'Mã OTP không chính xác.',
+            ]);
+        }
+
+        $user = JWTAuth::user();
+        $user->update([
+            'phone' => session('new_phone'),
+        ]);
+
+        session()->forget(['otp_code', 'otp_created_at', 'new_phone']);
+
+        return redirect()->route('profile.index')->with('success', 'Số điện thoại đã được cập nhật thành công!');
     }
 }
