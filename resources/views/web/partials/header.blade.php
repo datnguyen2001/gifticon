@@ -11,7 +11,17 @@
              </div>
             <div class="d-flex align-items-center box-infor-login">
                 @if($user)
-                    <a href="{{route('profile.index')}}" class="link-login"><img src="{{asset('assets/images/user-icon.png')}}" > <span>{{$user->full_name}}</span></a>
+                    <div class="profile-menu-container">
+                        <a href="{{route('profile.index')}}" class="link-login">
+                            <img src="{{asset('assets/images/user-icon.png')}}">
+                            <span>{{$user->full_name}}</span>
+                        </a>
+                        <div class="profile-menu">
+                            <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/user-icon.png')}}" alt="user" class="profile-icon" /> Trang cá nhân</a>
+                            <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/lock-icon.png')}}" alt="lock" class="profile-icon" /> Thay đổi mật khẩu</a>
+                            <a href="{{route('profile.index')}}"><img src="{{asset('assets/images/logout-icon.png')}}" alt="logout icon" class="profile-icon" /> Đăng xuất</a>
+                        </div>
+                    </div>
                     @else
                     <a href="{{route('login')}}" class="link-login">Đăng nhập</a>
                 @endif
