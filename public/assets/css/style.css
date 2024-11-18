@@ -121,6 +121,45 @@ a:hover {
 .item-menu-header img {
     width: 18px;
 }
+.profile-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    padding: 10px 0;
+    min-width: 150px;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.profile-menu a:hover {
+    background-color: #f1f1f1;
+    color: #000;
+}
+
+.profile-menu-container:hover .profile-menu {
+    display: block;
+}
+
+.profile-menu img{
+    width: 20px;
+    height: 20px;
+}
 
 .main {
     padding-top: 130px;
@@ -390,6 +429,10 @@ a:hover {
         padding-left: 20px;
         padding-right: 20px;
     }
+    .box-search{
+        width: 60%;
+        max-width: 800px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -402,7 +445,7 @@ a:hover {
     }
 
     .box-search {
-        width: 60%;
+        width: 55%;
     }
     .footer {
         padding-left: 40px;
@@ -424,7 +467,7 @@ a:hover {
     }
 
     .box-search {
-        max-width: 385px;
+        max-width: 415px;
         margin-left: 10px;
     }
 
@@ -439,6 +482,18 @@ a:hover {
 
     .input-search {
         width: calc(100% - 30px);
+    }
+}
+
+@media screen and (max-width: 992px){
+    .link-login {
+        margin-right: 5px;
+    }
+    .box-search {
+        max-width: 355px;
+    }
+    .icon-header {
+        padding: 10px;
     }
 }
 
