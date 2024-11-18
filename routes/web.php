@@ -23,10 +23,12 @@ Route::get('auth/{provider}/redirect', [LoginController::class , 'redirect']);
 Route::get('auth/google/callback', [LoginController::class , 'googleCallback']);
 Route::get('auth/facebook/callback', [LoginController::class , 'facebookCallback']);
 Route::get('auth/zalo/callback', [LoginController::class , 'zaloCallback']);
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginSubmit'])->name('login.submit');
-Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/dang-ky', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
+Route::get('/xac-thuc-ma-otp', [AuthController::class, 'showOtpVerify'])->name('otp.verify');
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('otp.submit');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich', [HomeController::class, 'trademark'])->name('trademark');

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -58,8 +59,104 @@ class AuthController extends Controller
         $user->full_name = $request->full_name;
         $user->password = Hash::make($request->password);
 
+        session([
+            'user_data' => [
+                'phone' => $user->phone,
+                'full_name' => $user->full_name,
+                'password' => $user->password,
+            ],
+        ]);
+
+        $otp = random_int(10000, 99999);
+
+        session([
+            'otp_code' => $otp,
+            'otp_created_at' => now(),
+        ]);
+
+        $this->sendZaloOTP($user->phone, $otp);
+
+        return redirect()->route('otp.verify')->with('success', 'Vui lòng kiểm tra tin nhắn Zalo để nhận mã OTP và xác thực.');
+    }
+
+    public function showOtpVerify()
+    {
+        $otpCreatedAt = session('otp_created_at');
+
+        if (!$otpCreatedAt || now()->diffInMinutes($otpCreatedAt) > 5) {
+            session()->forget(['user_data', 'otp_code', 'otp_created_at']);
+
+            return redirect()->route('register')->with('error', 'OTP đã hết hạn. Vui lòng đăng ký lại.');
+        }
+
+        return view('auth.verify_otp');
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|numeric',
+        ]);
+
+        if ($request->otp != session('otp_code')) {
+            return redirect()->back()->with('error', 'Mã OTP không chính xác.');
+        }
+
+        $userData = session('user_data');
+
+        $user = new User();
+        $user->phone = $userData['phone'];
+        $user->full_name = $userData['full_name'];
+        $user->password = $userData['password'];
         $user->save();
+
+        session()->forget(['user_data', 'otp_code', 'otp_created_at']);
 
         return redirect()->route('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
+
+    public function sendZaloOTP(User $user)
+    {
+        $data = $this->getToken();
+        if ($data['status'] == false) {
+            return back()->with(['error' => 'Refresh Token đã hết hạn']);
+        }
+        $phoneNumber = '84' . substr($user->phone, 1);
+        $trackingId = Str::random(32);
+        $curl = curl_init();
+
+        $postData = array(
+            "phone" => $phoneNumber,
+            "template_id" => "385250",
+            "template_data" => array(
+                "otp" => $user->otp_code
+            ),
+            "tracking_id" => $trackingId
+        );
+
+        $headers = array(
+            'access_token: '.$data['access_token'],
+            'Content-Type: application/json'
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://business.openapi.zalo.me/message/template',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => $headers,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return $response;
+    }
+
 }
