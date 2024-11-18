@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProfileController extends Controller
@@ -71,4 +72,20 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', 'Mật khẩu đã được cập nhật thành công.');
     }
 
+    public function logout()
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            session()->flush();
+
+            return redirect('/')->with([
+                'success' => 'Đăng xuất thành công!',
+            ]);
+        } catch (JWTException $e) {
+            return redirect()->back()->withErrors([
+                'error' => 'Đăng xuất thất bại, vui lòng thử lại sau.',
+            ]);
+        }
+    }
 }

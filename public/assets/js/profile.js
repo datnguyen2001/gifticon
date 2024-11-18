@@ -1,3 +1,21 @@
+const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.querySelector('.profile-side-bar');
+const overlay = document.getElementById('overlay');
+const closeIcon = document.querySelector('.close-icon');
+
+menuToggle.addEventListener('click', function () {
+    sidebar.classList.toggle('show');
+    overlay.classList.toggle('active');
+});
+closeIcon.addEventListener('click', function () {
+    sidebar.classList.remove('show');
+    overlay.classList.remove('active');
+});
+overlay.addEventListener('click', function () {
+    sidebar.classList.remove('show');
+    overlay.classList.remove('active');
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     /* ============================ INDEX TAB ============================ */
     const informationTab = document.querySelector(".information-tab-action");
@@ -116,14 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.getElementById('update-profile-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        showLoading();
-        setTimeout(() => event.target.submit(), 100);
-    });
-
-    window.addEventListener('pageshow', hideLoading);
-
     /* ============================ CHANGE PASSWORD TAB ============================ */
     document.querySelectorAll('.show-password').forEach((icon) => {
         icon.addEventListener('click', () => {
@@ -136,6 +146,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    document.getElementById('update-profile-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        showLoading();
+        setTimeout(() => event.target.submit(), 100);
+    });
+
+    window.addEventListener('pageshow', hideLoading);
+
     document.getElementById('change-password-form').addEventListener('submit', function (event) {
         event.preventDefault();
         showLoading();
@@ -144,4 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener('pageshow', hideLoading);
 
+    document.getElementById('logout-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        showLoading();
+        setTimeout(() => event.target.submit(), 100);
+    });
+
+    window.addEventListener('pageshow', hideLoading);
 });

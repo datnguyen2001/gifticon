@@ -89,7 +89,7 @@ class AuthController extends Controller
             return redirect()->route('register')->with('error', 'OTP đã hết hạn. Vui lòng đăng ký lại.');
         }
 
-        return view('auth.verify_otp');
+        return view('web.auth.verify_otp');
     }
 
     public function verifyOtp(Request $request)
@@ -99,7 +99,7 @@ class AuthController extends Controller
         ]);
 
         if ($request->otp != session('otp_code')) {
-            return redirect()->back()->with('error', 'Mã OTP không chính xác.');
+            return redirect()->back()->with('otp', 'Mã OTP không chính xác.');
         }
 
         $userData = session('user_data');

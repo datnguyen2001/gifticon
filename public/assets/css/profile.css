@@ -24,12 +24,32 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
 }
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 73px;
+    left: 15px;
+    z-index: 10;
+    .menu-dash {
+        display: block;
+        width: 30px;
+        height: 3px;
+        background: #F1641E;
+        margin: 5px 0;
+        border-radius: 2px;
+    }
+}
+.close-icon{
+    display: none;
+}
 .profile-side-bar{
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding-right: 10px;
     height: fit-content;
+    transition: transform 0.3s ease;
 }
 .profile-avatar{
     margin: auto;
@@ -49,6 +69,12 @@
     display: flex;
     gap: 10px;
     padding: 10px;
+}
+.logout-submit-btn{
+    border: none;
+    background: none;
+    display: flex;
+    gap: 10px;
 }
 .profile-menu-title{
     color: #929292;
@@ -130,6 +156,9 @@
         }
     }
     .love-tab{
+        .box-trademark{
+            margin-top: 0;
+        }
         .title-trademark{
             font-size: 24px;
             font-weight: 600;
@@ -204,5 +233,158 @@
 @media screen and (max-width: 1024px) {
     .profile-wrapper{
         grid-template-columns: 1fr 2fr;
+    }
+    .list-tab{
+        padding-left: 0;
+    }
+    .profile-tab{
+        .love-tab{
+            .content-you-like{
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .profile-wrapper{
+        display: block;
+    }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
+        z-index: 9; /* Ensure it's below the sidebar */
+        display: none; /* Hidden by default */
+    }
+
+    .overlay.active {
+        display: block;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+    .profile-avatar{
+        display: flex;
+    }
+    .close-icon{
+        display: block;
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        cursor: pointer;
+        i{
+            font-size: 24px;
+        }
+    }
+    .list-tab{
+        margin-top: 50px;
+    }
+    .profile-side-bar{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: #fff;
+        z-index: 10;
+        transform: translateX(-100%);
+        width: 350px;
+        padding: 40px 15px;
+    }
+    .profile-side-bar.show {
+        display: block;
+        transform: translateX(0);
+    }
+    .profile-tab{
+        padding-left: 0;
+        border-left: none;
+        .information-tab{
+            gap: 10px;
+            .information-avatar{
+                width: 130px;
+                height: 130px;
+            }
+            .information-title{
+                font-size: 20px;
+                text-align: center;
+            }
+            .input-field-wrapper{
+                gap: 10px;
+            }
+            .double-input{
+                flex-direction: column;
+                gap: 10px;
+            }
+            .double-input-item{
+                width: 100%;
+            }
+            .label-field{
+                font-size: 14px;
+            }
+            .input-field{
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+            .information-submit{
+                margin: 10px auto 0;
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+        }
+        .love-tab {
+            .title-trademark{
+                text-align: center;
+            }
+        }
+        .change-password-tab{
+            .change-password-title{
+                font-size: 20px;
+                text-align: center;
+            }
+            .input-field-wrapper{
+                gap: 10px;
+            }
+            .label-field{
+                font-size: 14px;
+            }
+            .input-field{
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+            .change-password-submit{
+                margin: 10px auto 0;
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .profile-tab{
+        .love-tab{
+            .title-trademark{
+                font-size: 20px;
+            }
+            .content-you-like{
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .change-password-tab{
+            .change-password-submit{
+                width: 75%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .profile-side-bar {
+        width: 100%;
     }
 }
