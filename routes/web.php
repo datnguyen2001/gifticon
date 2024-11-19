@@ -3,6 +3,7 @@
 use App\Http\Controllers\web\AuthController;
 use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CreateOrderController;
+use App\Http\Controllers\web\ProductController;
 use App\Http\Controllers\web\ProfileController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
@@ -36,6 +37,7 @@ Route::get('khuyen-mai-hom-nay', [HomeController::class, 'promotionToday'])->nam
 Route::get('co-the-ban-thich', [HomeController::class, 'youLike'])->name('you-like');
 Route::get('/thuong-hieu/{id}', [BrandController::class, 'detail'])->name('brand.detail');
 Route::get('phieu-cua-toi', [HomeController::class, 'myVote'])->name('my-vote');
+Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');

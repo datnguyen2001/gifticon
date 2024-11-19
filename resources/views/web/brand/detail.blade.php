@@ -6,7 +6,6 @@
 @stop
 {{--content of page--}}
 @section('content')
-    @include('web.partials.loading')
     <section class="box-promotion">
         <div class="promotion-content">
             <div class="brand-information">

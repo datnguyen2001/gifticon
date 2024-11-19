@@ -39,7 +39,7 @@
                 renderer: 'svg',
                 loop: true,
                 autoplay: false, // Controlled manually
-                path: 'assets/json/loading.json'
+                path: '{{asset('assets/json/loading.json')}}'
             });
         } else {
             console.error("Lottie library failed to load.");
