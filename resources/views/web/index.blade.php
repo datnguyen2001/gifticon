@@ -36,6 +36,7 @@
 </main>
 @include('web.partials.footer')
 
+@include('web.partials.loading')
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -49,6 +50,23 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    document.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            showLoading();
+            if (link.getAttribute('href') === '#') {
+                hideLoading();
+            }
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 100);
+        });
+    });
+
+    window.addEventListener('pageshow', hideLoading);
+
+</script>
 @yield('script_page')
 
 </body>
