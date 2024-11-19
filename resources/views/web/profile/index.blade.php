@@ -7,7 +7,6 @@
 @stop
 {{--content of page--}}
 @section('content')
-    @include('web.partials.loading')
     <div class="menu-toggle" id="menu-toggle">
         <span class="menu-dash"></span>
         <span class="menu-dash"></span>
