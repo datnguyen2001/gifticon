@@ -94,7 +94,7 @@ class LoginController extends Controller
     public function zaloCallback(){
         try{
             $socialUser  = Socialite::driver('zalo')->user();
-            $user = User::where('facebook_id', $socialUser->getId())->orWhere('email',$socialUser->getEmail())->first();
+            $user = User::where('zalo_id', $socialUser->getId())->orWhere('email',$socialUser->getEmail())->first();
 
             if (!$user) {
                 $avatar = null;
