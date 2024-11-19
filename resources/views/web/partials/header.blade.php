@@ -1,6 +1,3 @@
-@php
-    $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
-@endphp
 <div class="box-header">
     <div class="header">
          <div class="header-main">
@@ -32,7 +29,7 @@
             </div>
          </div>
         <div class="header-bottom">
-            <div class="item-menu-header"><img src="{{asset('assets/images/Container.png')}}" alt=""> <span>Gif card</span></div>
+{{--            <div class="item-menu-header"><img src="{{asset('assets/images/Container.png')}}" alt=""> <span>Gif card</span></div>--}}
             <a href="{{route('trademark')}}" class="item-menu-header">Tất cả các thương hiệu</a>
             <a href="{{route('my-vote')}}" class="item-menu-header">Quà của tôi</a>
             <a href="#" class="item-menu-header">Mua số lượng lớn</a>
