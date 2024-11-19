@@ -208,10 +208,6 @@ ul.tabs li.current {
 }
 
 @media (max-width: 1025px) {
-    .content-you-like {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
     .line-top-you-like span {
         font-size: 16px;
     }
@@ -267,15 +263,9 @@ ul.tabs li.current {
     .title-popular, .line-top-trademark span {
         font-size: 18px;
     }
-    .content-you-like {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 @media (max-width: 567px) {
-    .content-you-like {
-        grid-template-columns: repeat(2, 1fr);
-    }
     .swiper-buttons {
         width: 69px;
         display: none;
