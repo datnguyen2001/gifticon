@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to activate a tab
     function activateTab(tab) {
         // Always hide the updatePhoneTab unless the activeTab is "update-phone"
-        if (localStorage.getItem('activeTab') !== 'update-phone' && updatePhoneTab) {
+        if (localStorage.getItem('activeTab') !== 'update-phone' && updatePhoneTab || activeTab !== 'update-phone') {
             updatePhoneTab.style.display = "none";
         }
         document.querySelectorAll(".profile-tab > *").forEach(div => div.classList.remove("active-tab"));
