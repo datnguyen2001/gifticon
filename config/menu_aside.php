@@ -27,6 +27,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'shop',
+            'title' => 'Quản lý shop',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.shop.index',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'footer',
             'title' => 'Quản lý Footer',
             'icon' => 'bi bi-grid',

@@ -7,6 +7,7 @@ use \App\Http\Controllers\admin\SettingController;
 use \App\Http\Controllers\admin\BannersController;
 use \App\Http\Controllers\admin\CategoryController;
 use \App\Http\Controllers\admin\FooterController;
+use \App\Http\Controllers\admin\ShopController;
 
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -32,6 +33,15 @@ Route::middleware('check-admin-auth')->group(function () {
         Route::get('delete/{id}', [CategoryController::class, 'delete']);
         Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::post('update/{id}', [CategoryController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('shop')->name('shop.')->group(function () {
+        Route::get('', [ShopController::class, 'index'])->name('index');
+        Route::get('create', [ShopController::class, 'create'])->name('create');
+        Route::post('store', [ShopController::class, 'store'])->name('store');
+        Route::get('delete/{id}', [ShopController::class, 'delete']);
+        Route::get('edit/{id}', [ShopController::class, 'edit'])->name('edit');
+        Route::post('update/{id}', [ShopController::class, 'update'])->name('update');
     });
 
     Route::prefix('footer')->name('footer.')->group(function () {

@@ -29,7 +29,9 @@
 </head>
 
 <body>
-
+@php
+    $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
+@endphp
 @include('web.partials.header')
 <main class="main">
     @yield('content')
