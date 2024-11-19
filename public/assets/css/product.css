@@ -1,0 +1,232 @@
+.product-detail{
+    display: flex;
+    gap: 20px;
+}
+.product-image-wrapper{
+    width: 40%;
+}
+.product-image{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.product-information{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 60%;
+    .product-name{
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .product-field{
+        display: flex;
+    }
+    .title-field{
+        width: 40%;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .item-field{
+        width: 60%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .member-field{
+        display: flex;
+        justify-content: space-around;
+        width: 60%;
+        padding: 8px;
+        border: 1px solid #F1641E;
+        border-radius: 16px;
+    }
+    .member-item{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        p{
+            color: #424242;
+            margin-bottom: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        span{
+            color: #424242;
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+    .location-field{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    .location-item{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .location-text{
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .location-icon{
+        width: 24px;
+        height: 24px;
+    }
+}
+.add-to-cart{
+    background: #929292;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 50px;
+}
+.buy-now{
+    background: #F1641E;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 40px;
+    border: none;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.related-information-wrapper {
+    margin-top: 24px;
+}
+.related-information-header {
+    border-bottom: 1px solid #a9a9a9;
+    align-items: center;
+
+    .product-wrapper,
+    .store-wrapper {
+        padding: 10px;
+        border-radius: 8px 8px 0px 0px;
+        color: #000000;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .product-wrapper.active,
+    .store-wrapper.active {
+        background-color: white;
+        border: 1px solid #a9a9a9;
+        border-bottom: none;
+    }
+
+    .report-product {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #000000;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+.tab-content {
+    .product-tab,
+    .store-tab {
+        padding: 10px;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .product-information{
+        gap: 20px;
+    }
+    .related-information-header {
+        .report-product {
+            display: none;
+        }
+    }
+    .tab-content {
+        .product-tab,
+        .store-tab {
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .product-detail{
+        flex-direction: column;
+    }
+    .product-image-wrapper {
+        width: 50%;
+        margin: auto;
+    }
+    .product-information {
+        width: 100%;
+        gap: 10px;
+        .product-field{
+            gap: 10px;
+        }
+        .title-field {
+            font-size: 14px;
+        }
+        .item-field {
+            font-size: 16px;
+        }
+        .member-item {
+            p {
+                font-size: 14px;
+            }
+            span {
+                font-size: 16px;
+            }
+        }
+        .location-field{
+            margin-top: 0;
+        }
+        .add-to-cart{
+            font-size: 14px;
+            padding: 8px;
+        }
+        .buy-now{
+            font-size: 14px;
+            padding: 8px 24px;
+        }
+    }
+    .button-wrapper{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
+@media screen and (max-width: 575px) {
+    .member-wrapper{
+        flex-wrap: wrap;
+        .title-field{
+            width: 100%;
+        }
+        .member-field{
+            width: 100%;
+        }
+    }
+}
+@media screen and (max-width: 475px) {
+    .product-image-wrapper {
+        width: 75%;
+    }
+    .related-information-header {
+        .product-wrapper,
+        .store-wrapper {
+            font-size: 14px;
+        }
+    }
+}

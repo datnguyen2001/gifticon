@@ -6,7 +6,6 @@
 @stop
 {{--content of page--}}
 @section('content')
-@include('web.partials.loading')
     <div class="container">
         @php
             $price = 200000;
