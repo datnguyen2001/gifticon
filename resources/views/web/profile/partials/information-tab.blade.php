@@ -1,6 +1,6 @@
 <h5 class="information-title">Cập nhật hồ sơ</h5>
 <div class="information-avatar-wrapper">
-    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('assets/images/user-icon.png') }}"
+    <img src="{{ $user->avatar ? asset($user->avatar) : asset('assets/images/user-icon.png') }}"
          alt="avatar" class="information-avatar"/>
     <img src="{{asset('assets/images/camera-icon.png')}}" alt="avatar" class="camera-icon"/>
     <input type="file" name="avatar" id="upload-avatar" class="upload-avatar" accept="image/*" style="display: none;"/>
