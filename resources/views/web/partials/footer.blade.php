@@ -1,5 +1,37 @@
+@php
+    $setting = \App\Models\SettingModel::first();
+@endphp
 <div class="box-footer">
     <div class="footer">
+        <div class="footer-top">
+            <a href="{{route('home')}}" class="title-logo">Gifticon</a>
+            <div class="describe-footer">
+                {{@$setting->describe}}
+            </div>
+            <div class="line-infor-cty">
+                <div class="box-info-footer">
+                    <img src="{{asset('assets/images/icon-phone.png')}}" class="icon-info-footer">
+                    <div class="d-flex flex-column ">
+                        <span class="title-info-footer">Điện thoại</span>
+                        <span class="content-info-footer">{{@$setting->phone}}</span>
+                    </div>
+                </div>
+                <div class="box-info-footer">
+                    <img src="{{asset('assets/images/icon-mail.png')}}" class="icon-info-footer">
+                    <div class="d-flex flex-column ">
+                        <span class="title-info-footer">Email</span>
+                        <span class="content-info-footer">{{@$setting->email}}</span>
+                    </div>
+                </div>
+                <div class="box-info-footer" style="max-width: 406px">
+                    <img src="{{asset('assets/images/icon-map.png')}}" class="icon-info-footer">
+                    <div class="d-flex flex-column ">
+                        <span class="title-info-footer">Địa chỉ</span>
+                        <span class="content-info-footer">{{@$setting->address}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="footer-main">
             <div class="item-footer">
                 <p class="title-footer">Hỗ trợ khách hàng</p>
@@ -28,11 +60,19 @@
             </div>
             <div class="item-footer">
                 <p class="title-footer">Kết nối với chúng tôi</p>
-                <div class="d-flex align-center justify-content-between">
+                <div class="d-flex align-center justify-content-between" style="max-width: 200px">
                     <a href="#" class="item-menu-footer"><img src="{{asset('assets/images/icon-gg.png')}}" ></a>
                     <a href="#" class="item-menu-footer"><img src="{{asset('assets/images/icon-fb.png')}}" ></a>
                     <a href="#" class="item-menu-footer"><img src="{{asset('assets/images/icon-tw.png')}}" ></a>
                     <a href="#" class="item-menu-footer"><img src="{{asset('assets/images/icon-apple.png')}}" ></a>
+                </div>
+                <div class="line-app">
+                    <a href="#">
+                        <img src="{{asset('assets/images/appStore.png')}}" class="img-app">
+                    </a>
+                    <a href="">
+                        <img src="{{asset('assets/images/chPlay.png')}}" class="img-app">
+                    </a>
                 </div>
             </div>
         </div>

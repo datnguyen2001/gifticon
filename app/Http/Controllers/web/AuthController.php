@@ -74,7 +74,10 @@ class AuthController extends Controller
             'otp_created_at' => now(),
         ]);
 
-        $this->sendZaloOTP($user->phone, $otp);
+        $response = $this->sendZaloOTP($user->phone, $otp);
+        if (!$response){
+            return redirect()->back()->with(['error' => 'Refresh Token đã hết hạn']);
+        }
 
         return redirect()->route('otp.verify')->with('success', 'Vui lòng kiểm tra tin nhắn Zalo để nhận mã OTP và xác thực.');
     }

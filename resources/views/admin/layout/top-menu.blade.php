@@ -3,8 +3,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{'/admin'}}" class="logo d-flex align-items-center">
-            <img src="{{asset('assets/images/logo.png')}}" alt="" style="width: 50px;height: 50px;max-height: 50px">
-            <h5>Admin</h5>
+{{--            <img src="{{asset('assets/images/logo.png')}}" alt="" style="width: 50px;height: 50px;max-height: 50px">--}}
+{{--            <h5>Admin</h5>--}}
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

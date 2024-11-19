@@ -21,7 +21,7 @@
                                 <img src="{{asset('assets/images/image-product.png')}}" class="img-product">
                                 <i class="fa-solid fa-heart fa-heart-sp"></i>
                             </div>
-                            <div class="name-product">Triple Coffee Frappuccino</div>
+                            <div class="name-product custom-content-2-line">Triple Coffee Frappuccino</div>
                             <span class="price-product">200.000đ</span>
                         </div>
                     @endfor
