@@ -6,6 +6,10 @@
 @stop
 {{--content of page--}}
 @section('content')
+    <a href="{{route('home')}}" class="line-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Trở lại</span>
+    </a>
     <section class="box-promotion">
         <div class="promotion-content">
             <div class="brand-information">
