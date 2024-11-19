@@ -1,22 +1,23 @@
 <h5 class="update-phone-title">Thay đổi số điện thoại</h5>
-<div class="input-field-wrapper">
-    <div class="single-input">
-        <label class="label-field">Số điện thoại mới</label>
-        <div class="d-flex">
-            <input
-                type="text"
-                name="phone"
-                id="phone-input"
-                class="input-field"
-                value="{{ old('phone') }}"
-                required
-            />
-            <button class="send-otp text-nowrap mx-2" id="send-otp-btn">Gửi mã xác thực</button>
+@include('web.partials.success-alert')
+<form method="POST" action="{{route('profile.verifyOTP')}}" >
+    @csrf
+    <div class="input-field-wrapper">
+        <div class="single-input">
+            <label class="label-field">Số điện thoại mới</label>
+            <div class="d-flex">
+                <input
+                    type="text"
+                    name="phone"
+                    id="phone-input"
+                    class="input-field"
+                    value="{{ old('phone') }}"
+                    required
+                />
+                <button class="send-otp text-nowrap mx-2" id="send-otp-btn">Gửi mã xác thực</button>
+            </div>
+            <span class="error-message"></span>
         </div>
-        <span class="error-message"></span>
-    </div>
-    <form method="POST" action="{{route('profile.verifyOTP')}}" >
-        @csrf
         <div class="single-input">
             <label class="label-field">Mã xác thực</label>
             <input
@@ -33,8 +34,8 @@
         </div>
         <button class="update-phone-submit-disable" id="update-phone-disable-btn" disabled>Cập nhật hồ sơ</button>
         <button class="update-phone-submit" id="update-phone-btn" style="display: none;">Cập nhật hồ sơ</button>
-    </form>
-</div>
+    </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -68,17 +69,9 @@
                 success: function (response) {
                     hideLoading();
                     if (response.success) {
-                        alert("Mã xác thực đã được gửi!");
-                        otpInput.on("input", function () {
-                            const otp = $(this).val();
-                            if (otp.length === 5 && /^[0-9]+$/.test(otp)) {
-                                updatePhoneDisableBtn.hide();
-                                updatePhoneBtn.show();
-                            } else {
-                                updatePhoneDisableBtn.show();
-                                updatePhoneBtn.hide();
-                            }
-                        });
+                        $(".success-message").text("Mã xác thực đã được gửi!");
+                        $(".success-alert").fadeIn();
+                        $(".success-overlay").fadeIn();
                     } else {
                         errorMessage.text(response.message || "Gửi mã xác thực thất bại.");
                     }
@@ -99,7 +92,28 @@
                 },
             });
         });
+
+        // Handle OTP input for showing the update button
+        otpInput.on("input", function () {
+            const otp = $(this).val();
+
+            if (otp.length === 5 && /^[0-9]+$/.test(otp)) {
+                updatePhoneDisableBtn.hide();
+                updatePhoneBtn.show();
+            } else {
+                updatePhoneDisableBtn.show();
+                updatePhoneBtn.hide();
+            }
+        });
+
+        // Check OTP input on page load (for verifyOTPProfile failure case)
+        const initialOtp = otpInput.val();
+        if (initialOtp.length === 5 && /^[0-9]+$/.test(initialOtp)) {
+            updatePhoneDisableBtn.hide();
+            updatePhoneBtn.show();
+        } else {
+            updatePhoneDisableBtn.show();
+            updatePhoneBtn.hide();
+        }
     });
-
-
 </script>

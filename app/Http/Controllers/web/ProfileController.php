@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -113,7 +114,7 @@ class ProfileController extends Controller
             'new_phone' => $request->phone
         ]);
 
-//        $this->sendZaloOTP($request->phone, $otp);
+        $this->sendZaloOTP($request->phone, $otp);
 
         // Return success response
         return response()->json([
@@ -130,16 +131,17 @@ class ProfileController extends Controller
             'otp' => 'required|numeric',
         ]);
 
+        // Check if OTP exists and matches
         if (!session()->has('otp_code') || !session()->has('new_phone')) {
             return redirect()->back()->withErrors([
                 'otp' => 'Mã OTP không tồn tại hoặc đã hết hạn. Vui lòng thử lại.',
-            ]);
+            ])->withInput(['phone' => session('new_phone')]);
         }
 
         if ($request->otp != session('otp_code')) {
             return redirect()->back()->withErrors([
                 'otp' => 'Mã OTP không chính xác.',
-            ]);
+            ])->withInput(['phone' => session('new_phone')]);
         }
 
         $user = JWTAuth::user();
@@ -147,7 +149,7 @@ class ProfileController extends Controller
             'phone' => session('new_phone'),
         ]);
 
-        session()->forget(['otp_code', 'otp_created_at', 'new_phone']);
+        session()->forget(['otp_code', 'otp_created_at', 'new_phone', 'active_tab']);
 
         return redirect()->route('profile.index')->with('success', 'Số điện thoại đã được cập nhật thành công!');
     }

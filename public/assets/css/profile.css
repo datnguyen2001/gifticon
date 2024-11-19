@@ -438,6 +438,31 @@
                 font-size: 14px;
             }
         }
+        .update-phone-tab{
+            .update-phone-title{
+                font-size: 20px;
+                text-align: center;
+            }
+            .label-field{
+                font-size: 14px;
+            }
+            .input-field{
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+            .send-otp{
+                padding: 4px 8px;
+                font-size: 14px;
+            }
+            .update-phone-submit-disable{
+                margin: 10px auto 0;
+                padding: 4px 8px;
+            }
+            .update-phone-submit{
+                margin: 10px auto 0;
+                padding: 4px 8px;
+            }
+        }
     }
 }
 
