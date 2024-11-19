@@ -16,6 +16,7 @@ class ShopModel extends Authenticatable
         'password',
         'content',
         'src',
-        'display'
+        'display',
+        'slug'
     ];
 }

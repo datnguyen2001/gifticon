@@ -1,3 +1,6 @@
+.line-back{
+    font-size: 16px;
+}
 .promotion-content{
     display: flex;
     gap: 20px;
@@ -70,6 +73,9 @@
 }
 
 @media screen and (max-width: 768px) {
+    .line-back{
+        font-size: 14px;
+    }
     .brand-name {
         font-size: 20px;
     }

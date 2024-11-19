@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('src')->nullable();
             $table->integer('display')->default(1);
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
