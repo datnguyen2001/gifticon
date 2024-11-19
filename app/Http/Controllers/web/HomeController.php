@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Models\BannerModel;
+use App\Models\FooterModel;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        return view('web.home.index');
+        $banner = BannerModel::where('display',1)->orderBy('created_at','desc')->get();
+
+        return view('web.home.index',compact('banner'));
     }
 
     public function trademark()
@@ -33,6 +37,13 @@ class HomeController extends Controller
     public function myVote ()
     {
         return view('web.voucher.index');
+    }
+
+    public function customerSupport ($slug)
+    {
+        $data = FooterModel::where('slug',$slug)->first();
+
+        return view('web.post-footer',compact('data'));
     }
 
 }

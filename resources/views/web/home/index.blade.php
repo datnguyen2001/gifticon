@@ -28,17 +28,19 @@
                 </div>
             </div>
         </div>
+        @if(isset($banner) && count($banner))
         <div class="promotion-content">
             <div class="swiper mySwiperBanner w-100">
                 <div class="swiper-wrapper">
-                    @for($i=0;$i<4;$i++)
-                        <div class="swiper-slide">
-                            <img src="{{asset('assets/images/banner.png')}}" class="w-100">
-                        </div>
-                    @endfor
+                    @foreach($banner as $banners)
+                        <a @if($banners->link) href="{{$banners->link}}" @endif class="swiper-slide">
+                            <img src="{{asset($banners->src)}}" class="w-100">
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
+            @endif
     </section>
 
     <section class="box-popular">
