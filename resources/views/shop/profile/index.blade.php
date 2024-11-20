@@ -1,4 +1,4 @@
-@extends('admin.layout.index')
+@extends('shop.layout.index')
 @section('main')
     <main id="main" class="main">
 
@@ -7,39 +7,40 @@
         </div><!-- End Page Title -->
         <section class="section dashboard">
             <div class="bg-white p-4">
-                <form action="{{route('admin.shop.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{url("shop/update-profile")}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-3">Tên cửa hàng :</div>
                         <div class="col-8">
-                            <input class="form-control" name="title" type="text" required>
+                            <input class="form-control" name="title" value="{{$data->name}}" type="text" required>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-3">Số điện thoại :</div>
                         <div class="col-8">
-                            <input class="form-control" name="phone" type="text" required>
+                            <input class="form-control" name="phone" value="{{$data->phone}}" type="text" required>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-3">Mật khẩu :</div>
                         <div class="col-8">
-                            <input class="form-control" name="password" type="text" required>
+                            <input class="form-control" name="password" type="text">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-3">Mô tả :</div>
                         <div class="col-8">
-                            <textarea name="content" class="form-control" rows="6" required placeholder="Mô tả shop"></textarea>
+                            <textarea name="content" class="form-control" rows="6" required placeholder="Mô tả shop">{{$data->content}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-3">Hình ảnh :</div>
                         <div class="col-5">
-                            <div class="form-control position-relative" style="padding-top: 50%">
-                                <button type="button" class="position-absolute border-0 bg-transparent select-image" style="top: 50%;left: 50%;transform: translate(-50%,-50%)">
-                                    <i style="font-size: 30px" class="bi bi-download"></i>
-                                </button>
+                            <div class="form-control position-relative div-parent" style="padding-top: 50%">
+                                <div class="position-absolute w-100 h-100 div-file" style="top: 0; left: 0;z-index: 10">
+                                    <button type="button" class="position-absolute clear border-0 bg-danger p-0 d-flex justify-content-center align-items-center" style="top: -10px;right: -10px;width: 30px;height: 30px;border-radius: 50%"><i class="bi bi-x-lg text-white"></i></button>
+                                    <img src="{{asset($data->src)}}" class="w-100 h-100" style="object-fit: cover">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -47,7 +48,7 @@
                         <div class="col-3">Bật/tắt :</div>
                         <div class="col-8">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" name="display" checked type="checkbox"
+                                <input class="form-check-input" name="display" @if($data->display == 1) checked @endif type="checkbox"
                                        id="flexSwitchCheckChecked">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Hiện </label>
                             </div>
@@ -55,11 +56,11 @@
                     </div>
                     <div class="row mt-5">
                         <div class="col-3"></div>
-                        <div class="col-8 ">
-                            <button type="submit" class="btn btn-primary">Tạo</button>
-                            <a href="{{route('admin.shop.index')}}" class="btn btn-danger">Hủy</a>
+                        <div class="col-8">
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <a href="{{route('shop.profile')}}" class="btn btn-danger">Hủy</a>
                         </div>
-                    <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" hidden>
+                        <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" hidden>
                     </div>
                 </form>
             </div>
@@ -103,6 +104,7 @@
             }
         }
         $(document).on("click", "button.clear", function () {
+            parent = $(this).closest(".div-parent");
             $(".div-file").remove();
             let html = '<button type="button" class="position-absolute border-0 bg-transparent select-image" style="top: 50%;left: 50%;transform: translate(-50%,-50%)">\n' +
                 '                                    <i style="font-size: 30px" class="bi bi-download"></i>\n' +

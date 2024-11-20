@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
 use App\Models\FooterModel;
+use App\Models\ShopModel;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -12,13 +13,9 @@ class HomeController extends Controller
     public function home()
     {
         $banner = BannerModel::where('display',1)->orderBy('created_at','desc')->get();
+        $shop = ShopModel::where('display',1)->limit(15)->get();
 
-        return view('web.home.index',compact('banner'));
-    }
-
-    public function trademark()
-    {
-        return view('web.trademark.index');
+        return view('web.home.index',compact('banner','shop'));
     }
 
     public function promotionToday()
@@ -39,11 +36,26 @@ class HomeController extends Controller
         return view('web.voucher.index');
     }
 
+    public function detailMyVote ()
+    {
+        return view('web.voucher.detail');
+    }
+
+    public function voucher ()
+    {
+        return view('web.voucher.item');
+    }
+
     public function customerSupport ($slug)
     {
         $data = FooterModel::where('slug',$slug)->first();
 
         return view('web.post-footer',compact('data'));
+    }
+
+    public function order ()
+    {
+        return view('web.order.index');
     }
 
 }

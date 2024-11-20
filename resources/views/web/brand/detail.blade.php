@@ -14,11 +14,11 @@
         <div class="promotion-content">
             <div class="brand-information">
                 <div class="brand-logo">
-                    <img src="{{asset('assets/images/brand-logo.png')}}" alt="brand logo" class="brand-img" />
+                    <img src="{{asset($data->src??'assets/images/brand-logo.png')}}" alt="brand logo" class="brand-img" />
                 </div>
                 <div class="brand-introduction">
-                    <h5 class="brand-name">Mc Donald</h5>
-                    <p class="brand-content">Mcdonal’s phấn đấu trở thành địa điểm yêu thích của khách hàng và là cách tốt nhấn để thưởng thức đồ ăn  bắng cách mang đến cho khách hàng trải nghiệm tốt hơn.</p>
+                    <h5 class="brand-name">{{@$data->name}}</h5>
+                    <p class="brand-content">{{@$data->content}}</p>
                 </div>
             </div>
             <div class="swiper mySwiperPromotion">

@@ -1,5 +1,5 @@
 @extends('web.index')
-@section('title','Thương hiệu yêu thích')
+@section('title','voucher')
 
 @section('style_page')
     <link rel="stylesheet" href="{{asset('assets/css/voucher.css')}}">
