@@ -32,7 +32,8 @@ class ProfileController extends Controller
 
         // Handle avatar upload
         if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $filePath = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = 'storage/' . $filePath;
             $user->update(['avatar' => $avatarPath]);
         }
 
