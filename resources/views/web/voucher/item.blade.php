@@ -31,6 +31,8 @@
                     <p class="code-voucher">Mã Voucher: <span>1234569</span></p>
                     <button class="btn-copy-code">Copy mã</button>
                 </div>
+                <div class="circle1"><img src="{{asset('assets/images/ellipse1.png')}}" alt=""></div>
+                <div class="circle2"><img src="{{asset('assets/images/ellipse1.png')}}" alt=""></div>
             </div>
         </div>
     </section>
@@ -38,5 +40,20 @@
 
 @stop
 @section('script_page')
+    <script>
+        document.querySelector('.btn-copy-code').addEventListener('click', function () {
+            const voucherCode = document.querySelector('.code-voucher span').textContent;
 
+            const tempInput = document.createElement('input');
+            tempInput.value = voucherCode;
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+            document.execCommand('copy');
+
+            document.body.removeChild(tempInput);
+
+        });
+
+    </script>
 @stop
