@@ -140,6 +140,7 @@
 }
 
 .tab-content {
+    padding-top: 20px;
     .product-tab,
     .store-tab {
         padding: 10px;
@@ -161,6 +162,7 @@
         }
     }
     .tab-content {
+        padding-top: 10px;
         .product-tab,
         .store-tab {
             font-size: 14px;

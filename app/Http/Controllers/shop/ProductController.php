@@ -17,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $shopID = Auth::guard('shop')->id();
         $listData = ShopProductModel::select('id', 'name', 'src', 'display')
+            ->where('shop_id', $shopID)
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
