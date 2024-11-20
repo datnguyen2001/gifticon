@@ -27,12 +27,13 @@ class ProfileController extends Controller
         $user->update([
             'full_name' => $request->input('full_name'),
             'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
+//            'phone' => $request->input('phone'),
         ]);
 
         // Handle avatar upload
         if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $filePath = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = 'storage/' . $filePath;
             $user->update(['avatar' => $avatarPath]);
         }
 

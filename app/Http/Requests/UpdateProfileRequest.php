@@ -25,7 +25,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $userId,
-            'phone' => 'required|digits:10|unique:users,phone,' . $userId,
+//            'phone' => 'required|digits:10|unique:users,phone,' . $userId,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
@@ -43,9 +43,9 @@ class UpdateProfileRequest extends FormRequest
             'email.email' => 'Email không hợp lệ.',
             'email.max' => 'Email không được vượt quá 255 ký tự.',
             'email.unique' => 'Email này đã được đăng ký.', // Custom message for email uniqueness
-            'phone.required' => 'Số điện thoại là bắt buộc.',
-            'phone.digits' => 'Số điện thoại phải là 10 chữ số.',
-            'phone.unique' => 'Số điện thoại này đã được đăng ký.',
+//            'phone.required' => 'Số điện thoại là bắt buộc.',
+//            'phone.digits' => 'Số điện thoại phải là 10 chữ số.',
+//            'phone.unique' => 'Số điện thoại này đã được đăng ký.',
             'avatar.image' => 'Ảnh đại diện phải là tệp hình ảnh.',
             'avatar.mimes' => 'Ảnh đại diện phải có định dạng: jpeg, png, jpg, gif.',
             'avatar.max' => 'Ảnh đại diện không được vượt quá 2MB.',

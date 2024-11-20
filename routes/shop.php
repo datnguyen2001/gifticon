@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\shop\ProductController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\shop\LoginController;
 use \App\Http\Controllers\shop\DashboardController;
@@ -16,4 +17,5 @@ Route::middleware('check-shop-auth')->group(function () {
     Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
 
+    Route::resource('product', ProductController::class);
 });
