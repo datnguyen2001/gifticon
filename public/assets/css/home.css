@@ -171,7 +171,7 @@ ul.tabs li.current {
     border: none;
 }
 .mySwiperTrademark img{
-    box-shadow: 0px 28px 8px 0px #00000000;
+    box-shadow: 0px 7px 10px 0px #00000040;
 }
 
 @media (max-width: 1200px) {

@@ -61,6 +61,14 @@ return [
             'submenu' => [],
             'number' => 1
         ],
+        [
+            'name' => 'profile',
+            'title' => 'Thông tin cá nhân',
+            'icon' => 'bi bi-grid',
+            'route' => 'shop.profile',
+            'submenu' => [],
+            'number' => 1
+        ],
 
     ]
 ];

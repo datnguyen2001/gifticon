@@ -7,12 +7,30 @@
         </div><!-- End Page Title -->
         <section class="section dashboard">
             <div class="bg-white p-4">
-                <form action="{{url("admin/category/update",$data->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{url("admin/shop/update",$data->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-3">Tên danh mục :</div>
+                        <div class="col-3">Tên cửa hàng :</div>
                         <div class="col-8">
                             <input class="form-control" name="title" value="{{$data->name}}" type="text" required>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">Số điện thoại :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="phone" value="{{$data->phone}}" type="text" required>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">Mật khẩu :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="password" type="text">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">Mô tả :</div>
+                        <div class="col-8">
+                            <textarea name="content" class="form-control" rows="6" required placeholder="Mô tả shop">{{$data->content}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -40,7 +58,7 @@
                         <div class="col-3"></div>
                         <div class="col-8">
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
-                            <a href="{{route('admin.category.index')}}" class="btn btn-danger">Hủy</a>
+                            <a href="{{route('admin.shop.index')}}" class="btn btn-danger">Hủy</a>
                         </div>
                         <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" hidden>
                     </div>

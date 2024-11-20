@@ -91,6 +91,7 @@
         <div id="tab-3" class="tab-content">content3</div>
     </section>
 
+    @if(isset($shop) && count($shop)>0)
     <section class="box-trademark">
         <div class="line-top-trademark">
             <span>Những thương hiệu yêu thích</span>
@@ -103,14 +104,15 @@
 
         <div class="swiper mySwiperTrademark">
             <div class="swiper-wrapper">
-                @for($i = 0; $i < 10; $i++)
-                    <a href="{{route('brand.detail',1)}}" class="swiper-slide">
-                        <img src="{{ asset('assets/images/kfc.png') }}" class="w-100">
+                @foreach($shop as $shops)
+                    <a href="{{route('brand.detail',$shops->slug)}}" class="swiper-slide">
+                        <img src="{{ asset($shops->src??'assets/images/kfc.png') }}" class="w-100">
                     </a>
-                @endfor
+                @endforeach
             </div>
         </div>
     </section>
+    @endif
 
     <section class="box-you-like">
         <div class="line-top-you-like">
