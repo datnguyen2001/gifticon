@@ -216,6 +216,7 @@
     padding: 25px 20px;
     border-radius: 24px;
     background: white;
+    position: relative;
 }
 
 .name-sp-voucher {
@@ -267,6 +268,29 @@
     padding: 10px 16px;
     color: #F1641E;
     border: 1px solid #F1641E;
+}
+
+.circle1 img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 36%;
+    left: -35px;
+    background: white;
+}
+
+.circle2 img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 36%;
+    right: -35px;
+    background: white;
+    transform: rotate(180deg);
 }
 
 @media (max-width: 1400px) {
@@ -332,6 +356,14 @@
     .name-product-voucher {
         font-size: 20px;
     }
+
+    .img-ticket-voucher {
+        max-width: 575px;
+    }
+
+    .name-sp-voucher, .code-voucher {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -355,6 +387,23 @@
     .price-product-voucher {
         font-size: 16px;
         margin-bottom: 3px;
+    }
+
+    .box-item-img-voucher {
+        margin-top: 30px;
+    }
+
+    .img-ticket-voucher {
+        max-width: 510px;
+    }
+
+    .name-sp-voucher, .code-voucher {
+        font-size: 16px;
+    }
+
+    .btn-copy-code {
+        font-size: 14px;
+        padding: 5px 16px;
     }
 }
 
@@ -449,5 +498,29 @@
 
     .content-voucher {
         margin-top: 30px;
+    }
+
+    .box-item-img-voucher {
+        margin-top: 40px;
+    }
+
+    .img-ticket-voucher {
+        width: 92%;
+        max-width: 510px;
+        padding: 20px 15px;
+    }
+
+    .circle1 img {
+        width: 40px;
+        height: 40px;
+        left: -28px;
+        top: 31%;
+    }
+
+    .circle2 img {
+        width: 40px;
+        height: 40px;
+        right: -28px;
+        top: 31%;
     }
 }
