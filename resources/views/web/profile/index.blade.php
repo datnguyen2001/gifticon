@@ -18,7 +18,7 @@
             <div class="close-icon">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </div>
-            <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('assets/images/user-icon.png') }}" alt="avatar" class="profile-avatar" />
+            <img src="{{ $user->avatar ? asset($user->avatar) : asset('assets/images/user-icon.png') }}" alt="avatar" class="profile-avatar" />
             <ul class="list-tab">
                 <li class="li-tab-wrapper">
                     <div class="list-tab-wrapper">
