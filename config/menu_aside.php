@@ -61,6 +61,13 @@ return [
             'submenu' => [],
             'number' => 1
         ],
-
+        [
+            'name' => 'create-product',
+            'title' => 'Sản phẩm',
+            'icon' => 'bi bi-grid',
+            'route' => 'shop.product.index',
+            'submenu' => [],
+            'number' => 1
+        ],
     ]
 ];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\shop\ProductController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\shop\LoginController;
 use \App\Http\Controllers\shop\DashboardController;
@@ -12,5 +13,5 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('check-shop-auth')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('index');
-
+    Route::resource('product', ProductController::class);
 });
