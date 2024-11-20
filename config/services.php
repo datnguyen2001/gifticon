@@ -34,19 +34,19 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => '/auth/google/callback'
+        'redirect' => 'https://gifticon.krmedi.vn/auth/google/callback'
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => '/auth/facebook/callback'
+        'redirect' => 'https://gifticon.krmedi.vn/auth/facebook/callback'
     ],
 
     'zalo' => [
         'client_id' => env('ZALO_CLIENT_ID'),
         'client_secret' => env('ZALO_CLIENT_SECRET'),
-        'redirect' => '/auth/zalo/callback'
+        'redirect' => 'https://gifticon.krmedi.vn/auth/zalo/callback'
     ],
 
 ];
