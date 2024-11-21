@@ -13,7 +13,7 @@
     width: 50%;
 }
 .brand-logo{
-    box-shadow: 0px 7px 10px 0px #00000040;
+    box-shadow: 0px 3px 10px 0px #00000040;
     border-radius: 16px;
     padding: 20px;
     height: fit-content;
@@ -40,6 +40,26 @@
     font-weight: 500;
     text-align: left;
     margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+}
+.brand-content.brand-truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+}
+.brand-toggle-button {
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.brand-toggle-button:focus {
+    outline: none;
 }
 .mySwiperPromotion{
     width: 50%;
@@ -71,29 +91,33 @@
         grid-template-columns: repeat(4, 1fr);
     }
 }
-
-@media screen and (max-width: 768px) {
-    .line-back{
-        font-size: 14px;
-    }
-    .brand-name {
-        font-size: 20px;
-    }
-    .brand-logo{
-        padding: 10px
-    }
-    .brand-content {
-        font-size: 14px;
-    }
-    .promotion-content{
-        flex-direction: column;
-        padding-bottom: 20px;
-    }
+@media screen and (max-width: 992px) {
     .brand-information{
         width: 100%;
     }
     .mySwiperPromotion{
         width: 100%;
+    }
+    .brand-logo{
+        padding: 10px
+    }
+    .brand-name {
+        font-size: 20px;
+    }
+    .brand-content {
+        font-size: 14px;
+    }
+    .brand-toggle-button {
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .line-back{
+        font-size: 14px;
+    }
+    .promotion-content{
+        flex-direction: column;
+        padding-bottom: 20px;
     }
     .content-you-like {
         grid-template-columns: repeat(3, 1fr);

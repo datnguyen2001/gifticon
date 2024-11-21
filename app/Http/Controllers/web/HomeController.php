@@ -13,13 +13,13 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $banner = BannerModel::where('display',1)->orderBy('created_at','desc')->get();
-        $shop = ShopModel::where('display',1)->limit(15)->get();
-        $saleProducts = ShopProductModel::select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(6)->get();
-        $popularProducts = ShopProductModel::select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(8)->get();
-        $likeProducts = ShopProductModel::select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(24)->get();
+        $banner = BannerModel::where('display', 1)->orderBy('created_at', 'desc')->get();
+        $shop = ShopModel::where('display', 1)->limit(15)->get();
+        $saleProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(6)->get();
+        $popularProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(8)->get();
+        $likeProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(24)->get();
 
-        return view('web.home.index',compact('banner','shop', 'saleProducts', 'popularProducts', 'likeProducts'));
+        return view('web.home.index', compact('banner','shop', 'saleProducts', 'popularProducts', 'likeProducts'));
     }
 
     public function promotionToday()
