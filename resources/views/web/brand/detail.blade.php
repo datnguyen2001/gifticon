@@ -63,7 +63,7 @@
         </div>
         <div class="content-you-like">
             @foreach($shopProducts as $shopProduct)
-                <a href="{{ route('product.detail', [$shopProduct->slug]) }}" class="item-product"
+                <a href="{{ route('product.detail', [$shopProduct->slug]) }}" class="item-product" id="item-filter"
                    data-price="{{ $shopProduct->price }}"
                    data-name="{{ strtolower($shopProduct->name) }}">
                     <div class="box-img-product">

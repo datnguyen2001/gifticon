@@ -45,7 +45,7 @@ $(document).ready(function() {
 
         var anyVisible = false;
 
-        $('.item-product').each(function() {
+        $('#item-filter').each(function() {
             var productPrice = parseFloat($(this).data('price'));
             var productNameData = $(this).data('name') || '';
 
