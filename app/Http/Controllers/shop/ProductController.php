@@ -130,7 +130,7 @@ class ProductController extends Controller
 
         try {
             $product = ShopProductModel::findOrFail($id);
-
+            $slug = Str::slug($request->input('name'), '-');
             // Update product details
             $product->update([
                 'name' => $request->input('name'),
@@ -141,6 +141,7 @@ class ProductController extends Controller
                 'end_date' => $request->input('end_date'),
                 'describe' => $request->input('describe'),
                 'guide' => $request->input('guide'),
+                'slug' => $slug
             ]);
 
             // Handle file upload
