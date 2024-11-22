@@ -14,54 +14,41 @@
         <p class="name-title">Chế độ quà tặng giúp việc tặng quà trở nên cực kỳ dễ dàng</p>
         <p class="title-trademark">Nhấn để chọn thương hiệu mà bạn muốn tặng </p>
         <div class="box-menu-trademark">
-            <a href="#" class="item-menu-trademark menu-trademark-active">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Cafe & bánh</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Siêu thị & Mua sắm</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Thời trang & Phụ Kiện</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Du lịch & Di chuyển</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Hoa, Trái cây & Thực phẩm sạch</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Siêu thị & Mua sắm</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Thời trang & Phụ Kiện</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Du lịch & Di chuyển</span>
-            </a>
-            <a href="#" class="item-menu-trademark">
-                <img src="{{asset('assets/images/tea.png')}}" >
-                <span>Hoa, Trái cây & Thực phẩm sạch</span>
-            </a>
+            @foreach($categories as $category)
+{{--                active class:  menu-trademark-active--}}
+                <a href="#" class="item-menu-trademark">
+                    <img src="{{asset($category->src)}}" >
+                    <span>{{$category->name ?? ''}}</span>
+                </a>
+            @endforeach
         </div>
 
         <div class="line-center-trademark"></div>
 
         <div class="content-trademark">
-            @for($i = 0; $i < 10; $i++)
-                <img src="{{ asset('assets/images/kfc.png') }}" class="img-trademark">
-            @endfor
+            @foreach($brands as $brand)
+                <a href="{{route('brand.detail', [$brand->slug])}}" class="img-trademark-wrapper">
+                    <img src="{{ asset($brand->src) }}" alt="{{$brand->name}}" class="img-trademark">
+                </a>
+            @endforeach
         </div>
     </section>
 
 @stop
 @section('script_page')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var trademarkItems = document.querySelectorAll('.item-menu-trademark');
 
+        trademarkItems.forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // Toggle the 'menu-trademark-active' class on the clicked item
+                this.classList.toggle('menu-trademark-active');
+            });
+        });
+    });
+
+</script>
 @stop

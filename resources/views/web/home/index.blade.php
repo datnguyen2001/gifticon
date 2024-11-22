@@ -52,11 +52,11 @@
     </section>
 
     <section class="box-popular">
-        <p class="title-popular">Nhưng món quà phổ biến</p>
+        <p class="title-popular">Những món quà phổ biến</p>
         <ul class="tabs">
-            <li class="tab-link current" data-tab="tab-1">Đồ uống</li>
-            <li class="tab-link" data-tab="tab-2">Trà sữa</li>
-            <li class="tab-link" data-tab="tab-3">Gà rán</li>
+            @foreach($categories as $key => $category)
+                <li class="tab-link @if($key == 0) current @endif" data-tab="tab-{{ $key + 1 }}">{{ $category->name }}</li>
+            @endforeach
         </ul>
 
         @php
@@ -72,18 +72,24 @@
             ];
         @endphp
 
-        <div id="tab-1" class="tab-content current">
-            <div class="drink-grid">
-                @foreach($popularProducts as $index => $product)
-                    <a href="{{route('product.detail', [$product->slug])}}" class="drink-item {{ $classSequence[$index % count($classSequence)] }}">
-                        <img src="{{ asset($product->src) }}" alt="{{ $product->name }}">
-                        <div class="price-tag">{{ number_format($product->price, 0, ',', '.') }}đ</div>
-                    </a>
-                @endforeach
+        @foreach($categories as $key => $category)
+            <div id="tab-{{ $key + 1 }}" class="tab-content @if($key == 0) current @endif">
+                <div class="drink-grid">
+                    @php
+                        $filteredProducts = $categoryProducts[$category->id];
+                    @endphp
+                    @foreach($filteredProducts as $index => $product)
+                        @php
+                            $class = $classSequence[$index % count($classSequence)];
+                        @endphp
+                        <a href="{{ route('product.detail', [$product->slug]) }}" class="drink-item {{ $class }}">
+                            <img src="{{ asset($product->src) }}" alt="{{ $product->name }}">
+                            <div class="price-tag">{{ number_format($product->price, 0, ',', '.') }}đ</div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
-        </div>
-        <div id="tab-2" class="tab-content">content2</div>
-        <div id="tab-3" class="tab-content">content3</div>
+        @endforeach
     </section>
 
     @if(isset($shop) && count($shop)>0)
