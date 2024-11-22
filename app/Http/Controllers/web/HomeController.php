@@ -8,7 +8,7 @@ use App\Models\CategoryModel;
 use App\Models\FooterModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -31,6 +31,30 @@ class HomeController extends Controller
         }
 
         return view('web.home.index', compact('banner','shop', 'saleProducts', 'categoryProducts', 'likeProducts', 'categories'));
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'keyword' => 'required|string|min:1',
+        ]);
+
+        $keyword = $request->input('keyword');
+
+        $shops = ShopModel::where('name', 'like', '%' . $keyword . '%')
+            ->where('display', 1)
+            ->select('id', 'name', 'slug', 'src')
+            ->get();
+
+        $products = ShopProductModel::where('name', 'like', '%' . $keyword . '%')
+            ->where('display', 1)
+            ->select('id', 'name', 'slug', 'price', 'src')
+            ->get();
+
+        return response()->json([
+            'shops' => $shops,
+            'products' => $products,
+        ]);
     }
 
     public function promotionToday()
