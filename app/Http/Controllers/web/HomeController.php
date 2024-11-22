@@ -6,16 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
 use App\Models\FooterModel;
 use App\Models\ShopModel;
+use App\Models\ShopProductModel;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        $banner = BannerModel::where('display',1)->orderBy('created_at','desc')->get();
-        $shop = ShopModel::where('display',1)->limit(15)->get();
+        $banner = BannerModel::where('display', 1)->orderBy('created_at', 'desc')->get();
+        $shop = ShopModel::where('display', 1)->limit(15)->get();
+        $saleProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(6)->get();
+        $popularProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(8)->get();
+        $likeProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(24)->get();
 
-        return view('web.home.index',compact('banner','shop'));
+        return view('web.home.index', compact('banner','shop', 'saleProducts', 'popularProducts', 'likeProducts'));
     }
 
     public function promotionToday()

@@ -15,16 +15,18 @@
             </div>
             <div class="swiper mySwiperPromotion">
                 <div class="swiper-wrapper">
-                    @for($i=0;$i<6;$i++)
-                        <div class="swiper-slide item-product">
-                            <div class="box-img-product">
-                                <img src="{{asset('assets/images/image-product.png')}}" class="img-product">
-                                <i class="fa-solid fa-heart fa-heart-sp"></i>
-                            </div>
-                            <div class="name-product custom-content-2-line">Triple Coffee Frappuccino</div>
-                            <span class="price-product">200.000đ</span>
+                    @foreach($saleProducts as $saleProduct)
+                        <div class="swiper-slide">
+                            <a href="{{route('product.detail', [$saleProduct->slug])}}" class="item-product">
+                                <div class="box-img-product">
+                                    <img src="{{asset($saleProduct->src)}}" class="img-product">
+                                    <i class="fa-solid fa-heart fa-heart-sp"></i>
+                                </div>
+                                <div class="name-product custom-content-2-line">{{$saleProduct->name ?? 'N/A'}}</div>
+                                <span class="price-product">{{ number_format($saleProduct->price ?? 0, 0, ',', '.') }}đ</span>
+                            </a>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -57,40 +59,27 @@
             <li class="tab-link" data-tab="tab-3">Gà rán</li>
         </ul>
 
+        @php
+            $classSequence = [
+                'item1',
+                'item2',
+                'item2 item3',
+                'item1 item4',
+                'item1 item4',
+                'item2 item3',
+                'item2',
+                'item1'
+            ];
+        @endphp
+
         <div id="tab-1" class="tab-content current">
             <div class="drink-grid">
-                <div class="drink-item item1">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">1,295,337đ</div>
-                </div>
-                <div class="drink-item item2">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">1,687,816đ</div>
-                </div>
-                <div class="drink-item item2 item3">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">4,200,000đ</div>
-                </div>
-                <div class="drink-item item1 item4">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">1,243,823đ</div>
-                </div>
-                <div class="drink-item item1 item4">
-                    <img src="{{asset('assets/images/image-drink.png')}}">
-                    <div class="price-tag">1,677,720đ</div>
-                </div>
-                <div class="drink-item item2 item3">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">6,632,124đ</div>
-                </div>
-                <div class="drink-item item2">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">4,186,867đ</div>
-                </div>
-                <div class="drink-item item1">
-                    <img src="{{asset('assets/images/image-drink.png')}}" >
-                    <div class="price-tag">3,132,184đ</div>
-                </div>
+                @foreach($popularProducts as $index => $product)
+                    <a href="{{route('product.detail', [$product->slug])}}" class="drink-item {{ $classSequence[$index % count($classSequence)] }}">
+                        <img src="{{ asset($product->src) }}" alt="{{ $product->name }}">
+                        <div class="price-tag">{{ number_format($product->price, 0, ',', '.') }}đ</div>
+                    </a>
+                @endforeach
             </div>
         </div>
         <div id="tab-2" class="tab-content">content2</div>
@@ -126,16 +115,16 @@
             <a href="{{route('you-like')}}">Xem tất cả</a>
         </div>
         <div class="content-you-like">
-            @for($i=0;$i<24;$i++)
-                <div class="item-product">
+            @foreach($likeProducts as $likeProduct)
+                <a href="{{route('product.detail', [$likeProduct->slug])}}" class="item-product">
                     <div class="box-img-product">
-                        <img src="{{asset('assets/images/image-product.png')}}" class="img-product">
+                        <img src="{{asset($likeProduct->src)}}" class="img-product">
                         <i class="fa-solid fa-heart fa-heart-sp"></i>
                     </div>
-                    <div class="name-product">Triple Coffee Frappuccino</div>
-                    <span class="price-product">200.000đ</span>
-                </div>
-            @endfor
+                    <div class="name-product">{{$likeProduct->name ?? 'N/A'}}</div>
+                    <span class="price-product">{{ number_format($likeProduct->price ?? 0, 0, ',', '.') }}đ</span>
+                </a>
+            @endforeach
         </div>
     </section>
 @stop
