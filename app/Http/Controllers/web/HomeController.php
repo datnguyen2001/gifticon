@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
+use App\Models\CategoryModel;
 use App\Models\FooterModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
@@ -16,10 +17,20 @@ class HomeController extends Controller
         $banner = BannerModel::where('display', 1)->orderBy('created_at', 'desc')->get();
         $shop = ShopModel::where('display', 1)->limit(15)->get();
         $saleProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(6)->get();
-        $popularProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(8)->get();
         $likeProducts = ShopProductModel::where('display', 1)->select('id', 'name', 'src', 'price', 'slug')->inRandomOrder()->limit(24)->get();
+        $categories = CategoryModel::where('display', 1)->orderBy('id', 'asc')->limit(5)->get();
+        $categoryProducts = [];
+        foreach ($categories as $category) {
+            $products = ShopProductModel::where('display', 1)
+                ->where('category_id', $category->id)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id')
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
+            $categoryProducts[$category->id] = $products;
+        }
 
-        return view('web.home.index', compact('banner','shop', 'saleProducts', 'popularProducts', 'likeProducts'));
+        return view('web.home.index', compact('banner','shop', 'saleProducts', 'categoryProducts', 'likeProducts', 'categories'));
     }
 
     public function promotionToday()
