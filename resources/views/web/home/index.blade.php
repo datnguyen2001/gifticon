@@ -33,9 +33,15 @@
             <div class="swiper mySwiperBanner w-100">
                 <div class="swiper-wrapper">
                     @foreach($banner as $banners)
-                        <a @if($banners->link) href="{{$banners->link}}" @endif class="swiper-slide">
-                            <img src="{{asset($banners->src)}}" class="w-100">
-                        </a>
+                        @if($banners->link)
+                            <a href="{{ $banners->link }}" class="swiper-slide">
+                                <img src="{{ asset($banners->src) }}" class="w-100">
+                            </a>
+                        @else
+                            <div class="swiper-slide">
+                                <img src="{{ asset($banners->src) }}" class="w-100">
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
