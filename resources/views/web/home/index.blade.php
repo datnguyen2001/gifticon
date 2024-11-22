@@ -22,7 +22,7 @@
                                     <img src="{{asset($saleProduct->src)}}" class="img-product">
                                     <i class="fa-solid fa-heart fa-heart-sp"></i>
                                 </div>
-                                <div class="name-product custom-content-2-line">{{$saleProduct->name ?? 'N/A'}}</div>
+                                <div class="name-product custom-content-2-line" style="height: 42px">{{$saleProduct->name ?? 'N/A'}}</div>
                                 <span class="price-product">{{ number_format($saleProduct->price ?? 0, 0, ',', '.') }}đ</span>
                             </a>
                         </div>
@@ -35,9 +35,15 @@
             <div class="swiper mySwiperBanner w-100">
                 <div class="swiper-wrapper">
                     @foreach($banner as $banners)
-                        <a @if($banners->link) href="{{$banners->link}}" @endif class="swiper-slide">
-                            <img src="{{asset($banners->src)}}" class="w-100">
-                        </a>
+                        @if($banners->link)
+                            <a href="{{ $banners->link }}" class="swiper-slide">
+                                <img src="{{ asset($banners->src) }}" class="w-100">
+                            </a>
+                        @else
+                            <div class="swiper-slide">
+                                <img src="{{ asset($banners->src) }}" class="w-100">
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -101,7 +107,7 @@
             <div class="swiper-wrapper">
                 @foreach($shop as $shops)
                     <a href="{{route('brand.detail',$shops->slug)}}" class="swiper-slide">
-                        <img src="{{ asset($shops->src??'assets/images/kfc.png') }}" class="w-100">
+                        <img src="{{ asset($shops->src??'assets/images/kfc.png') }}" class="img-shop-like">
                     </a>
                 @endforeach
             </div>

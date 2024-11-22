@@ -73,4 +73,9 @@ class HomeController extends Controller
         return view('web.order.index');
     }
 
+    public function cart ()
+    {
+        return view('web.cart.index');
+    }
+
 }
