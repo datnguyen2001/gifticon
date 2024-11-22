@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\MemberShipController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\admin\LoginController;
 use \App\Http\Controllers\admin\DashboardController;
@@ -56,6 +57,11 @@ Route::middleware('check-admin-auth')->group(function () {
     Route::prefix('setting')->name('setting.')->group(function () {
         Route::get('', [SettingController::class, 'index'])->name('index');
         Route::post('update', [SettingController::class, 'save'])->name('update');
+    });
+
+    Route::prefix('membership')->name('membership.')->group(function () {
+        Route::get('', [MemberShipController::class, 'index'])->name('index');
+        Route::post('update', [MemberShipController::class, 'save'])->name('update');
     });
 
 });

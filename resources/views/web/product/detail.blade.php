@@ -31,18 +31,12 @@
             <div class="product-field member-wrapper">
                 <label class="title-field">Giá chiết khấu theo cấp độ thành viên:</label>
                 <div class="member-field">
-                    <div class="member-item">
-                        <p>Bạc (5%)</p>
-                        <span>{{ number_format($product->price * 0.95, 0, ',', '.') }}đ</span>
-                    </div>
-                    <div class="member-item">
-                        <p>Vàng (10%)</p>
-                        <span>{{ number_format($product->price * 0.90, 0, ',', '.') }}đ</span>
-                    </div>
-                    <div class="member-item">
-                        <p>Kim cương (15%)</p>
-                        <span>{{ number_format($product->price * 0.85, 0, ',', '.') }}đ</span>
-                    </div>
+                    @foreach($memberShip as $member)
+                        <div class="member-item">
+                            <p>{{$member->name}} ({{$member->discount_percent}}%)</p>
+                            <span>{{ number_format($product->price * (100 - $member->discount_percent) / 100, 0, ',', '.') }}đ</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="product-field flex-column">
