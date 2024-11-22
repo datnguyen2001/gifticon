@@ -50,6 +50,14 @@ return [
             'submenu' => [],
             'number' => 1
         ],
+        [
+            'name' => 'membership',
+            'title' => 'Hạng thành viên',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.membership.index',
+            'submenu' => [],
+            'number' => 1
+        ],
 
     ],
     'shop' => [

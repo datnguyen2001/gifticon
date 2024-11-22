@@ -53,7 +53,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{{asset('assets/js/header.js')}}"></script>
 <script>
     document.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function (event) {
