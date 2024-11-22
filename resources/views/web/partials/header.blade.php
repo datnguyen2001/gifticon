@@ -100,6 +100,10 @@
             }
         });
 
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN').format(price);
+        }
+
         function displaySearchResults(data) {
             const resultsContainer = $('#search-results');
             resultsContainer.empty();
@@ -130,7 +134,7 @@
                         <img src="{{ asset('') }}${product.src}" alt="${product.name}">
                         <div class="item-info">
                             <div class="item-name">${product.name}</div>
-                            <div class="item-type">${product.price}</div>
+                            <div class="item-type">${formatPrice(product.price)} VNĐ</div>
                         </div>
                     </a>
                 `;
