@@ -46,9 +46,9 @@
                      data-name="{{ strtolower($product->name) }}">
                     <div class="box-img-product">
                         <img src="{{ asset($product->src) }}" class="img-product">
-                        <i class="fa-solid fa-heart fa-heart-sp"></i>
+                        <i class="fa-solid fa-heart fa-heart-sp {{ $product->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $product->id }}"></i>
                     </div>
-                    <div class="name-product">{{ $product->name }}</div>
+                    <a href="{{route('product.detail', [$product->slug])}}" class="name-product">{{ $product->name }}</a>
                     <span class="price-product">{{ number_format($product->price, 0, ',', '.') }}đ</span>
                 </div>
             @endforeach
