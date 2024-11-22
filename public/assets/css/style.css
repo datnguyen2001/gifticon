@@ -521,6 +521,9 @@ a:hover {
 .btn-close:focus {
      box-shadow: unset;
 }
+.fa-heart-sp-active{
+    color: #F1641E;
+}
 @media (max-width: 1400px) {
     .main, .header {
         padding-left: 20px;

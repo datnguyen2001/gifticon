@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ShopProductModel extends Model
 {
@@ -55,6 +57,17 @@ class ShopProductModel extends Model
     public function category()
     {
         return $this->belongsTo(CategoryModel::class, 'category_id');
+    }
+
+    public function isFavorite()
+    {
+        $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
+        if (!$user) {
+            return false;
+        }
+        return FavoritesModel::where('user_id', $user->id)
+            ->where('product_id', $this->id)
+            ->exists();
     }
 
 }

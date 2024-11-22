@@ -28,6 +28,19 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-3">Danh mục :</div>
+                        <div class="col-8 d-flex flex-wrap gap-3">
+                            @foreach($categories as $category)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="categories[]" value="{{ $category->id }}" id="category-{{ $category->id }}" @if($data->categories->contains($category->id)) checked @endif>
+                                    <label class="form-check-label" for="category-{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-3">Mô tả :</div>
                         <div class="col-8">
                             <textarea name="content" class="form-control" rows="6" required placeholder="Mô tả shop">{{$data->content}}</textarea>

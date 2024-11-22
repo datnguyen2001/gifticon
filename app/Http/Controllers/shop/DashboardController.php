@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategoryModel;
 use App\Models\ShopModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -25,8 +27,9 @@ class DashboardController extends Controller
         $page_menu = 'profile';
         $page_sub = null;
         $data = Auth::guard('shop')->user();
+        $categories = CategoryModel::where('display',1)->get();
 
-        return view('shop.profile.index', compact('titlePage','page_menu','page_sub','data'));
+        return view('shop.profile.index', compact('titlePage','page_menu','page_sub','data','categories'));
     }
 
     public function updateProfile(Request $request)
@@ -41,19 +44,23 @@ class DashboardController extends Controller
                 }
                 $shop->src = $imagePath;
             }
-            if ($request->get('display') == 'on'){
-                $display = 1;
-            }else{
-                $display = 0;
+            $display = $request->get('display') == 'on' ? 1 : 0;
+            if ($request->has('password')) {
+                $shop->password = Hash::make($request->get('password'));
             }
 
             $shop->name = $request->get('title');
             $shop->slug = Str::slug($request->get('title'));
             $shop->phone = $request->get('phone');
             $shop->content = $request->get('content');
-            $shop->password = $request->get('password')??$shop->password;
             $shop->display = $display;
             $shop->save();
+
+            if ($request->has('categories')) {
+                $shop->categories()->sync($request->get('categories'));
+            } else {
+                $shop->categories()->detach();
+            }
 
             return redirect()->route('shop.profile')->with(['success' => 'Cập nhật dữ liệu thành công']);
         } catch (\Exception $e) {

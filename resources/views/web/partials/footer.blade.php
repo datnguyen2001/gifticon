@@ -85,7 +85,7 @@
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="z-index: 3;border-radius: 32px">
     <div class="offcanvas-body small position-relative" style="padding-top: 28px">
         <button type="button" class="btn-close btn-close-menu" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <a href="{{route('trademark')}}" class="item-menu-footer-offcanvas">Tất cả các thương hiệu</a>
+        <a href="{{route('trademark','all')}}" class="item-menu-footer-offcanvas">Tất cả các thương hiệu</a>
         <a href="{{route('my-vote')}}" class="item-menu-footer-offcanvas">Quà của tôi</a>
         <a href="#" class="item-menu-footer-offcanvas">Mua số lượng lớn</a>
     </div>

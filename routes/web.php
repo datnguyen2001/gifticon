@@ -33,7 +33,7 @@ Route::get('/xac-thuc-ma-otp', [AuthController::class, 'showOtpVerify'])->name('
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('otp.submit');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('thuong-hieu-yeu-thich', [ShopController::class, 'trademark'])->name('trademark');
+Route::get('thuong-hieu-yeu-thich/{slug}', [ShopController::class, 'trademark'])->name('trademark');
 Route::get('/thuong-hieu/{slug}', [BrandController::class, 'detail'])->name('brand.detail');
 Route::get('khuyen-mai-hom-nay', [HomeController::class, 'promotionToday'])->name('promotion-today');
 Route::get('co-the-ban-thich', [HomeController::class, 'youLike'])->name('you-like');
@@ -45,6 +45,7 @@ Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->n
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('thanh-toan', [HomeController::class, 'order'])->name('order');
 Route::get('gio-hang', [HomeController::class, 'cart'])->name('cart');
+Route::post('/toggle-favorite/{id}', [HomeController::class, 'toggleFavorite']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');
