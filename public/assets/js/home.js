@@ -33,6 +33,7 @@ var mySwiperBanner = new Swiper(".mySwiperBanner", {
 
 var mySwiperTrademark = new Swiper(".mySwiperTrademark", {
     slidesPerView: 5,
+    spaceBetween: 16,
     loop: true,
     autoplay: {
         delay: 3500,
