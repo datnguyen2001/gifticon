@@ -45,6 +45,7 @@ Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->n
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('thanh-toan', [HomeController::class, 'order'])->name('order');
 Route::get('gio-hang', [HomeController::class, 'cart'])->name('cart');
+Route::get('search', [HomeController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');

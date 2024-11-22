@@ -3,8 +3,9 @@
          <div class="header-main">
              <a href="{{route('home')}}" class="title-logo">Gifticon</a>
              <div class="box-search">
-                 <input type="text" class="input-search" placeholder="Tìm kiếm bất cứ điều gì">
+                 <input type="text" class="input-search" placeholder="Tìm kiếm bất cứ điều gì" id="search-input">
                  <div class="icon-search"><img src="{{asset('assets/images/icon-search.png')}}" alt=""></div>
+                 <div class="box-search-result" id="search-results"></div>
              </div>
             <div class="d-flex align-items-center box-infor-login">
                 @if($user)
@@ -66,5 +67,86 @@
         document.body.appendChild(logoutForm);
         logoutForm.submit();
     }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let searchTimeout;
+
+        $('#search-input').on('input', function () {
+            clearTimeout(searchTimeout);
+
+            const keyword = $(this).val().trim();
+
+            if (keyword.length > 0) {
+                searchTimeout = setTimeout(function () {
+                    $.ajax({
+                        url: '/search',
+                        method: 'GET',
+                        data: {
+                            keyword: keyword
+                        },
+                        success: function (response) {
+                            displaySearchResults(response);
+                        },
+                        error: function (error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }, 300); // Delay to prevent too many requests
+            } else {
+                $('#search-results').empty().hide();
+            }
+        });
+
+        function displaySearchResults(data) {
+            const resultsContainer = $('#search-results');
+            resultsContainer.empty();
+
+            const shops = data.shops;
+            const products = data.products;
+
+            if (shops.length === 0 && products.length === 0) {
+                resultsContainer.append('<div class="no-results">Không tìm thấy kết quả</div>');
+            } else {
+                // Display shops
+                shops.forEach(function (shop) {
+                    const shopItem = `
+                    <a href="{{ url('thuong-hieu') }}/${shop.slug}" class="result-item">
+                        <img src="{{ asset('') }}${shop.src}" alt="${shop.name}">
+                        <div class="item-info">
+                            <div class="item-name">${shop.name}</div>
+                        </div>
+                    </a>
+                `;
+                    resultsContainer.append(shopItem);
+                });
+
+                // Display products
+                products.forEach(function (product) {
+                    const productItem = `
+                    <a href="{{ url('chi-tiet') }}/${product.slug}" class="result-item">
+                        <img src="{{ asset('') }}${product.src}" alt="${product.name}">
+                        <div class="item-info">
+                            <div class="item-name">${product.name}</div>
+                            <div class="item-type">${product.price}</div>
+                        </div>
+                    </a>
+                `;
+                    resultsContainer.append(productItem);
+                });
+            }
+
+            resultsContainer.show();
+        }
+
+        // Hide the search results when clicking outside
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('.box-search').length) {
+                $('#search-results').empty().hide();
+            }
+        });
+    });
 
 </script>
