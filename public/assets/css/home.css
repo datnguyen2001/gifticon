@@ -171,9 +171,9 @@ ul.tabs li.current {
     font-size: 20px;
     border: none;
 }
-.mySwiperTrademark img{
-   border-radius: 16px;
-}
+/*.mySwiperTrademark img{*/
+/*   border-radius: 16px;*/
+/*}*/
 .img-shop-like{
     width: 100%;
     height: 280px;
@@ -311,6 +311,9 @@ ul.tabs li.current {
     }
     .img-shop-like{
         height: 158px;
+    }
+    ul.tabs {
+        padding-left: 70px;
     }
 }
 @media (max-width: 400px) {

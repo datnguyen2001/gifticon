@@ -29,14 +29,14 @@
                 <div class="swiper-wrapper">
                     @foreach($saleProducts as $saleProduct)
                         <div class="swiper-slide">
-                            <a href="{{route('product.detail', [$saleProduct->slug])}}" class="item-product">
+                            <div class="item-product">
                                 <div class="box-img-product">
                                     <img src="{{asset($saleProduct->src ??'assets/images/image-product.png')}}" class="img-product">
-                                    <i class="fa-solid fa-heart fa-heart-sp"></i>
+                                    <i class="fa-solid fa-heart fa-heart-sp {{ $saleProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $saleProduct->id }}"></i>
                                 </div>
-                                <div class="name-product">{{$saleProduct->name ?? ''}}</div>
+                                <a href="{{route('product.detail', [$saleProduct->slug])}}" class="name-product">{{$saleProduct->name ?? ''}}</a>
                                 <span class="price-product">{{ number_format($saleProduct->price, 0, ',', '.') }}đ</span>
-                            </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -63,16 +63,16 @@
         </div>
         <div class="content-you-like">
             @foreach($shopProducts as $shopProduct)
-                <a href="{{ route('product.detail', [$shopProduct->slug]) }}" class="item-product"
+                <div class="item-product"
                    data-price="{{ $shopProduct->price }}"
                    data-name="{{ strtolower($shopProduct->name) }}">
                     <div class="box-img-product">
                         <img src="{{ asset($shopProduct->src ?? 'assets/images/image-product.png') }}" class="img-product">
-                        <i class="fa-solid fa-heart fa-heart-sp"></i>
+                        <i class="fa-solid fa-heart fa-heart-sp {{ $shopProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $shopProduct->id }}"></i>
                     </div>
-                    <div class="name-product">{{ $shopProduct->name ?? '' }}</div>
+                    <a href="{{ route('product.detail', [$shopProduct->slug]) }}" class="name-product">{{ $shopProduct->name ?? '' }}</a>
                     <span class="price-product">{{ number_format($shopProduct->price, 0, ',', '.') }}đ</span>
-                </a>
+                </div>
             @endforeach
         </div>
     </section>

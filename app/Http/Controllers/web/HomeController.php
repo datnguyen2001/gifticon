@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
 use App\Models\CategoryModel;
+use App\Models\FavoritesModel;
 use App\Models\FooterModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
@@ -87,6 +88,27 @@ class HomeController extends Controller
     public function cart ()
     {
         return view('web.cart.index');
+    }
+
+    public function toggleFavorite($productId)
+    {
+        $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
+
+        if (!$user) {
+            if (!$user) {
+                return response()->json(['status' => 'error', 'message' => 'Vui lòng đăng nhập để tiếp tục'], 401);
+            }
+        }
+
+        $favorite = FavoritesModel::where('user_id', $user->id)->where('product_id', $productId)->first();
+
+        if ($favorite) {
+            $favorite->delete();
+            return response()->json(['status' => 'removed']);
+        } else {
+            FavoritesModel::create(['user_id' => $user->id, 'product_id' => $productId]);
+            return response()->json(['status' => 'added']);
+        }
     }
 
 }

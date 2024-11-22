@@ -16,4 +16,9 @@ class CategoryModel extends Model
         'slug',
         'display'
     ];
+
+    public function shops()
+    {
+        return $this->belongsToMany(ShopModel::class, 'shop_category', 'category_id', 'shop_id');
+    }
 }

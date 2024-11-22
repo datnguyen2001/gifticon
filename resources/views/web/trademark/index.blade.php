@@ -15,8 +15,7 @@
         <p class="title-trademark">Nhấn để chọn thương hiệu mà bạn muốn tặng </p>
         <div class="box-menu-trademark">
             @foreach($categories as $category)
-{{--                active class:  menu-trademark-active--}}
-                <a href="#" class="item-menu-trademark">
+                <a href="{{route('trademark',$category->slug)}}" class="item-menu-trademark @if($category->slug == $slug) menu-trademark-active @endif">
                     <img src="{{asset($category->src)}}" >
                     <span>{{$category->name ?? ''}}</span>
                 </a>

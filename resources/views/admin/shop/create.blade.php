@@ -34,6 +34,20 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-3">Danh mục :</div>
+                        <div class="col-8 d-flex flex-wrap gap-3">
+                            @foreach($categories as $category)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="categories[]" value="{{ $category->id }}" id="category-{{ $category->id }}">
+                                    <label class="form-check-label" for="category-{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
                         <div class="col-3">Hình ảnh :</div>
                         <div class="col-5">
                             <div class="form-control position-relative" style="padding-top: 50%">

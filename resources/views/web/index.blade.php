@@ -70,8 +70,8 @@
     window.addEventListener('pageshow', hideLoading);
 
 </script>
+<script src="{{asset('assets/js/main.js')}}"></script>
 @yield('script_page')
-
 </body>
 
 </html>

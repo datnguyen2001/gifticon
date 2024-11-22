@@ -19,4 +19,9 @@ class ShopModel extends Authenticatable
         'display',
         'slug'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(CategoryModel::class, 'shop_category', 'shop_id', 'category_id');
+    }
 }
