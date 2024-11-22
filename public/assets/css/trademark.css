@@ -27,6 +27,7 @@
     align-items: center;
     gap: 5px;
     border: 1px solid #F3F3F3;
+    cursor: pointer;
 }
 .item-menu-trademark img{
     width: 32px;

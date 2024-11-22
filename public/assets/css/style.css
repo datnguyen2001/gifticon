@@ -293,6 +293,8 @@ a:hover {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .price-product {
