@@ -3,6 +3,7 @@
 use App\Http\Controllers\web\AuthController;
 use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CreateOrderController;
+use App\Http\Controllers\web\DiscountController;
 use App\Http\Controllers\web\ProductController;
 use App\Http\Controllers\web\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +36,8 @@ Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('otp.subm
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich/{slug}', [ShopController::class, 'trademark'])->name('trademark');
 Route::get('/thuong-hieu/{slug}', [BrandController::class, 'detail'])->name('brand.detail');
-Route::get('khuyen-mai-hom-nay', [HomeController::class, 'promotionToday'])->name('promotion-today');
-Route::get('co-the-ban-thich', [HomeController::class, 'youLike'])->name('you-like');
+Route::get('khuyen-mai-hom-nay', [ShopController::class, 'promotionToday'])->name('promotion-today');
+Route::get('co-the-ban-thich', [ShopController::class, 'youLike'])->name('you-like');
 Route::get('phieu-cua-toi', [HomeController::class, 'myVote'])->name('my-vote');
 Route::get('chi-tiet-phieu-cua-toi', [HomeController::class, 'detailMyVote'])->name('detailmy-vote');
 Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
@@ -46,6 +47,7 @@ Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('prod
 Route::get('thanh-toan', [HomeController::class, 'order'])->name('order');
 Route::get('gio-hang', [HomeController::class, 'cart'])->name('cart');
 Route::post('/toggle-favorite/{id}', [HomeController::class, 'toggleFavorite']);
+Route::get('search', [HomeController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');

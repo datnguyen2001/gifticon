@@ -9,7 +9,7 @@ use App\Models\FavoritesModel;
 use App\Models\FooterModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -34,17 +34,28 @@ class HomeController extends Controller
         return view('web.home.index', compact('banner','shop', 'saleProducts', 'categoryProducts', 'likeProducts', 'categories'));
     }
 
-    public function promotionToday()
+    public function search(Request $request)
     {
-        $title = "Khuyến mãi mới hôm nay";
+        $request->validate([
+            'keyword' => 'required|string|min:1',
+        ]);
 
-        return view('web.trademark.list',compact('title'));
-    }
-    public function youLike ()
-    {
-        $title = "Có thể bạn cũng thích";
+        $keyword = $request->input('keyword');
 
-        return view('web.trademark.list',compact('title'));
+        $shops = ShopModel::where('name', 'like', '%' . $keyword . '%')
+            ->where('display', 1)
+            ->select('id', 'name', 'slug', 'src')
+            ->get();
+
+        $products = ShopProductModel::where('name', 'like', '%' . $keyword . '%')
+            ->where('display', 1)
+            ->select('id', 'name', 'slug', 'price', 'src')
+            ->get();
+
+        return response()->json([
+            'shops' => $shops,
+            'products' => $products,
+        ]);
     }
 
     public function myVote ()
