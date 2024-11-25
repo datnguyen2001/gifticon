@@ -20,38 +20,71 @@ class ShopController extends Controller
                 })
                 ->select('name', 'id', 'src', 'slug')
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->paginate(20);
         }else{
-            $brands = ShopModel::where('display', 1)->orderBy('created_at','desc')->select('name', 'id', 'src', 'slug')->get();
+            $brands = ShopModel::where('display', 1)->orderBy('created_at','desc')->select('name', 'id', 'src', 'slug')->paginate(20);
         }
 
         return view('web.trademark.index', compact('categories', 'brands','slug'));
     }
 
-    public function promotionToday(Request $request)
+    public function promotionToday($slug,Request $request)
     {
         $title = "Khuyến mãi mới hôm nay";
         $categories = CategoryModel::where('display', 1)->orderBy('id', 'asc')->get();
+        if ($slug != 'all') {
+            $dataCate = CategoryModel::where('slug', $slug)->first();
+            $query = ShopProductModel::where('display', 1)->where('category_id',$dataCate->id)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+        }else{
+            $query = ShopProductModel::where('display', 1)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+        }
 
-        // Fetch all products for all categories
-        $products = ShopProductModel::where('display', 1)
-            ->select('id', 'name', 'src', 'price', 'slug', 'category_id')
-            ->get();
+        if ($request->has('start_price') && $request->has('end_price')) {
+            $startPrice = (int) $request->input('start_price');
+            $endPrice = (int) $request->input('end_price');
+            $query->whereBetween('price', [$startPrice, $endPrice]);
+        }
 
-        return view('web.trademark.list', compact('title', 'categories', 'products'));
+        if ($request->has('product_name') && $request->input('product_name') != '') {
+            $productName = strtolower($request->input('product_name'));
+            $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
+        }
+
+        $products = $query->paginate(24);
+
+        return view('web.trademark.list', compact('title', 'categories', 'products','slug'));
     }
 
-    public function youLike ()
+    public function youLike ($slug, Request $request)
     {
         $title = "Có thể bạn cũng thích";
 
         $categories = CategoryModel::where('display', 1)->orderBy('id', 'asc')->get();
 
-        // Fetch all products for all categories
-        $products = ShopProductModel::where('display', 1)
-            ->select('id', 'name', 'src', 'price', 'slug', 'category_id')
-            ->get();
+        if ($slug != 'all') {
+            $dataCate = CategoryModel::where('slug', $slug)->first();
+            $query = ShopProductModel::where('display', 1)->where('category_id',$dataCate->id)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+        }else{
+            $query = ShopProductModel::where('display', 1)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+        }
 
-        return view('web.trademark.list', compact('title', 'categories', 'products'));
+        if ($request->has('start_price') && $request->has('end_price')) {
+            $startPrice = (int) $request->input('start_price');
+            $endPrice = (int) $request->input('end_price');
+            $query->whereBetween('price', [$startPrice, $endPrice]);
+        }
+
+        if ($request->has('product_name') && $request->input('product_name') != '') {
+            $productName = strtolower($request->input('product_name'));
+            $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
+        }
+
+        $products = $query->inRandomOrder()->paginate(24);
+
+        return view('web.trademark.list', compact('title', 'categories', 'products','slug'));
     }
 }

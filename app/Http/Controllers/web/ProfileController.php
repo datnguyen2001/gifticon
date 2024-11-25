@@ -4,6 +4,8 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Models\CategoryModel;
+use App\Models\ShopProductModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +19,14 @@ class ProfileController extends Controller
     public function index()
     {
         $user = JWTAuth::user();
-        return view('web.profile.index', compact('user'));
+        $categories = CategoryModel::where('display', 1)->get();
+        $productFavorites = ShopProductModel::join('favorites', 'shop_products.id', '=', 'favorites.product_id')
+            ->where('favorites.user_id', $user->id)
+            ->where('shop_products.display', 1)
+            ->orderBy('favorites.created_at','desc')
+            ->get(['shop_products.id', 'shop_products.name', 'shop_products.src', 'shop_products.price', 'shop_products.slug', 'shop_products.category_id']);
+
+        return view('web.profile.index', compact('user','categories','productFavorites'));
     }
 
     public function updateProfile(UpdateProfileRequest $request)

@@ -32,7 +32,7 @@
         <div class="header-bottom">
 {{--            <div class="item-menu-header"><img src="{{asset('assets/images/Container.png')}}" alt=""> <span>Gif card</span></div>--}}
             <a href="{{route('trademark','all')}}" class="item-menu-header">Tất cả các thương hiệu</a>
-            <a href="{{route('my-vote')}}" class="item-menu-header">Quà của tôi</a>
+            <a href="{{url('phieu/cua-toi')}}" class="item-menu-header">Quà của tôi</a>
             <a href="#" class="item-menu-header">Mua số lượng lớn</a>
             @if(!$user)
             <a href="{{route('register')}}" class="item-menu-header">Đăng ký</a>
