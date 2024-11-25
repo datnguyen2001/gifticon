@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\web\AuthController;
 use App\Http\Controllers\web\BrandController;
+use App\Http\Controllers\web\CartController;
 use App\Http\Controllers\web\CreateOrderController;
 use App\Http\Controllers\web\DiscountController;
+use App\Http\Controllers\web\PaymentController;
 use App\Http\Controllers\web\ProductController;
 use App\Http\Controllers\web\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -41,13 +43,15 @@ Route::get('co-the-ban-thich/{slug}', [ShopController::class, 'youLike'])->name(
 Route::get('ho-tro-khach-hang/{slug}', [HomeController::class, 'customerSupport'])->name('customer-support');
 Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->name('about-us');
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
-Route::get('thanh-toan', [HomeController::class, 'order'])->name('order');
-Route::get('gio-hang', [HomeController::class, 'cart'])->name('cart');
 Route::post('/toggle-favorite/{id}', [HomeController::class, 'toggleFavorite']);
 Route::get('search', [HomeController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/tao-don-hang', [CreateOrderController::class, 'index'])->name('create-order.index');
+    Route::get('/gio-hang/tao-don-hang', [CreateOrderController::class, 'indexCart'])->name('create-order.add-cart.index');
+    Route::post('/them-gio-hang', [CreateOrderController::class, 'addToCartSubmit'])->name('create-order.add-cart.submit');
+    Route::get('/mua-ngay/tao-don-hang', [CreateOrderController::class, 'indexBuyNow'])->name('create-order.buy-now.index');
+    Route::post('/them-mua-ngay', [CreateOrderController::class, 'buyNowSubmit'])->name('create-order.buy-now.submit');
+
     Route::get('/thong-tin-ca-nhan', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::post('/cap-nhat-mat-khau', [ProfileController::class, 'updatePassword'])->name('password.update');
@@ -58,4 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::get('phieu/{slug}', [HomeController::class, 'myVote'])->name('my-vote');
     Route::get('chi-tiet-phieu-cua-toi', [HomeController::class, 'detailMyVote'])->name('detailmy-vote');
     Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
+
+    Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('xoa-gio-hang', [CartController::class, 'deleteCart'])->name('cart.delete');
+    Route::post('gio-hang/thanh-toan', [CartController::class, 'payment'])->name('cart.payment');
+
+    Route::get('thanh-toan', [PaymentController::class, 'index'])->name('order.index');
 });
