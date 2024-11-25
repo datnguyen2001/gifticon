@@ -57,9 +57,9 @@
                     Đến {{ \Carbon\Carbon::parse($product->end_date)->format('d/m/Y') }}
                 </div>
             </div>
-            <div class="button-wrapper">
-                <button class="add-to-cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">Mua ngay</button>
+            <div class="button-wrapper mt-3">
+                <a href="{{route('create-order.add-cart.index', ['productID' => $product->id])}}" class="add-to-cart">Thêm vào giỏ hàng</a>
+                <a href="{{route('create-order.buy-now.index', ['productID' => $product->id])}}" class="buy-now">Mua ngay</a>
             </div>
         </div>
     </div>

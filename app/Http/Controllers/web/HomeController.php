@@ -80,16 +80,6 @@ class HomeController extends Controller
         return view('web.post-footer',compact('data'));
     }
 
-    public function order ()
-    {
-        return view('web.order.index');
-    }
-
-    public function cart ()
-    {
-        return view('web.cart.index');
-    }
-
     public function toggleFavorite($productId)
     {
         $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;

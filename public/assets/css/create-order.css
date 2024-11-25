@@ -129,6 +129,20 @@ input:checked + .slider::before {
     font-weight: 500;
     margin-bottom: 0;
 }
+.add-receiver-btn{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #F1641E;
+    padding: 2px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.add-receiver-text{
+    font-size: 16px;
+    font-weight: 500;
+    color: #F1641E;
+}
 .excel-upload{
     position: relative;
     display: flex;
@@ -226,6 +240,7 @@ input:checked + .slider::before {
     padding: 8px 16px;
     border-radius: 50px;
     cursor: pointer;
+    border: none;
     .payment-total{
         font-size: 20px;
         font-weight: 500;
@@ -297,6 +312,9 @@ input:checked + .slider::before {
     .receiver-title{
         font-size: 16px;
     }
+    .add-receiver-text{
+        font-size: 14px;
+    }
     .excel-upload{
         padding: 4px 16px;
     }
@@ -326,5 +344,9 @@ input:checked + .slider::before {
     }
     .payment-button{
         padding: 4px 8px;
+    }
+    .wrap-mobile{
+        flex-wrap: wrap;
+        gap: 10px;
     }
 }
