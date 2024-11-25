@@ -58,9 +58,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function myVote ()
+    public function myVote ($slug)
     {
-        return view('web.voucher.index');
+        return view('web.voucher.index',compact('slug'));
     }
 
     public function detailMyVote ()

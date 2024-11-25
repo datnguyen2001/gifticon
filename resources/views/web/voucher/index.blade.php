@@ -8,12 +8,12 @@
 @section('content')
     <section class="box-voucher">
         <div class="line-menu-voucher">
-            <a href="#" class="item-voucher item-voucher-active">Của tôi</a>
-            <a href="#" class="item-voucher">Đã tặng</a>
+            <a href="{{url('phieu/cua-toi')}}" class="item-voucher @if($slug == 'cua-toi') item-voucher-active @endif">Của tôi</a>
+            <a href="{{url('phieu/da-tang')}}" class="item-voucher @if($slug == 'da-tang') item-voucher-active @endif">Đã tặng</a>
         </div>
         <div class="content-voucher">
             @for($i=0;$i<10;$i++)
-            <a href="#" class="voucher-item">
+            <a href="{{route('detailmy-vote')}}" class="voucher-item">
                 <img src="{{asset('assets/images/Subtract.png')}}" class="img-voucher">
                 <img src="{{asset('assets/images/phuc-long.png')}}" class="logo-trademark">
                 <div class="line-voucher"></div>

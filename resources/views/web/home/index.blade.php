@@ -11,7 +11,7 @@
         <div class="promotion-content">
             <div class="line-top-you-like">
                 <span>Khuyến mãi mới hôm nay</span>
-                <a href="{{route('promotion-today')}}">Xem tất cả</a>
+                <a href="{{url('khuyen-mai-hom-nay/all')}}">Xem tất cả</a>
             </div>
             <div class="swiper mySwiperPromotion">
                 <div class="swiper-wrapper">
@@ -118,7 +118,7 @@
     <section class="box-you-like">
         <div class="line-top-you-like">
             <span>Có thể bạn cũng thích</span>
-            <a href="{{route('you-like')}}">Xem tất cả</a>
+            <a href="{{url('co-the-ban-thich/all')}}">Xem tất cả</a>
         </div>
         <div class="content-you-like">
             @foreach($likeProducts as $likeProduct)

@@ -3,6 +3,71 @@
     margin: 0;
     box-sizing: border-box;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.disabled{
+    margin-right: 5px!important;
+}
+.pagination a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 31px;
+    margin: 0px;
+    border: 1px solid #F1641E;
+    border-radius: 8px;
+    color: #F1641E;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #F1641E;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.pagination .disabled {
+    border-color: #ccc;
+    color: #ccc;
+    pointer-events: none;
+}
+
+.pagination .this {
+    background-color: #F1641E;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pagination ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination svg {
+    fill: none;
+    stroke: #ff9900;
+    transition: all 0.3s;
+}
+
+.pagination a:hover svg {
+    stroke: #fff;
+}
+
+
+
 
 a {
     text-decoration: unset;
@@ -525,6 +590,10 @@ a:hover {
 }
 .fa-heart-sp-active{
     color: #F1641E;
+}
+.accordion-button:focus{
+    border-color: unset;
+    box-shadow: unset;
 }
 @media (max-width: 1400px) {
     .main, .header {

@@ -7,7 +7,7 @@
 {{--content of page--}}
 @section('content')
     <section class="box-voucher">
-        <a href="{{route('my-vote')}}" class="line-back">
+        <a href="{{url('phieu/cua-toi')}}" class="line-back">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Trở lại</span>
         </a>

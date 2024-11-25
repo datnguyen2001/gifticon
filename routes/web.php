@@ -36,11 +36,8 @@ Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('otp.subm
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich/{slug}', [ShopController::class, 'trademark'])->name('trademark');
 Route::get('/thuong-hieu/{slug}', [BrandController::class, 'detail'])->name('brand.detail');
-Route::get('khuyen-mai-hom-nay', [ShopController::class, 'promotionToday'])->name('promotion-today');
-Route::get('co-the-ban-thich', [ShopController::class, 'youLike'])->name('you-like');
-Route::get('phieu-cua-toi', [HomeController::class, 'myVote'])->name('my-vote');
-Route::get('chi-tiet-phieu-cua-toi', [HomeController::class, 'detailMyVote'])->name('detailmy-vote');
-Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
+Route::get('khuyen-mai-hom-nay/{slug}', [ShopController::class, 'promotionToday'])->name('promotion-today');
+Route::get('co-the-ban-thich/{slug}', [ShopController::class, 'youLike'])->name('you-like');
 Route::get('ho-tro-khach-hang/{slug}', [HomeController::class, 'customerSupport'])->name('customer-support');
 Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->name('about-us');
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
@@ -57,4 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [ProfileController::class, 'logout'])->name('logout.submit');
     Route::post('/send-otp-profile', [ProfileController::class, 'sendOTP'])->name('profile.sendOTP');
     Route::post('/verify-otp-profile', [ProfileController::class, 'verifyOTPProfile'])->name('profile.verifyOTP');
+
+    Route::get('phieu/{slug}', [HomeController::class, 'myVote'])->name('my-vote');
+    Route::get('chi-tiet-phieu-cua-toi', [HomeController::class, 'detailMyVote'])->name('detailmy-vote');
+    Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
 });
