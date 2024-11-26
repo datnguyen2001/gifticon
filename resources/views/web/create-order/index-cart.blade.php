@@ -6,7 +6,7 @@
 @stop
 {{-- Content of page --}}
 @section('content')
-    <form action="{{ route('create-order.add-cart.submit') }}" method="POST">
+    <form action="{{ route('create-order.add-cart.submit') }}" method="POST" id="add-cart-form">
         @csrf
         <div class="container">
             <div class="row">
@@ -112,5 +112,13 @@
     <script>
         const price = {{ $product->price }};
         const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
+    </script>
+    <script>
+        document.getElementById('add-cart-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            showLoading();
+            setTimeout(() => event.target.submit(), 100);
+        });
+        window.addEventListener('pageshow', hideLoading);
     </script>
 @stop

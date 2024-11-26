@@ -5,7 +5,11 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\CartModel;
 use App\Models\CartReceiverModel;
+use App\Models\OrderModel;
+use App\Models\OrderProductModel;
+use App\Models\OrderReceiverModel;
 use App\Models\ShopProductModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -106,5 +110,53 @@ class CreateOrderController extends Controller
     public function buyNowSubmit(Request $request)
     {
 
+    }
+
+    public function confirmOrder(Request $request)
+    {
+        try {
+            $user = JWTAuth::user();
+
+            $today = Carbon::today()->format('dmY');
+            $orderCountToday = OrderModel::where('order_code', 'like', "{$today}%")->count();
+            $orderSuffix = str_pad($orderCountToday + 1, 2, '0', STR_PAD_LEFT);
+            $orderCode = "{$today}_{$orderSuffix}";
+
+            $order = OrderModel::create([
+                'user_id' => $user->id,
+                'order_code' => $orderCode,
+                'total_price' => $request->input('total_price'),
+                'status_id' => 1,
+            ]);
+
+            foreach ($request->input('carts') as $cart) {
+                $orderProduct = OrderProductModel::create([
+                    'order_id' => $order->id,
+                    'product_id' => $cart['product_id'],
+                    'message' => $cart['message'] ?? null,
+                ]);
+
+                $cart = CartModel::where('id', $cart['id'])->first();
+
+                if ($cart && $cart->buy_for == '2'){
+                    $cartReceivers = CartReceiverModel::where('cart_id', $cart['id'])->get();
+
+                    foreach ($cartReceivers as $receiver) {
+                        OrderReceiverModel::create([
+                            'order_id' => $order->id,
+                            'order_product_id' => $orderProduct->id,
+                            'phone' => $receiver->phone,
+                            'quantity' => $receiver->quantity,
+                        ]);
+                    }
+                }
+                CartModel::where('id', $cart['id'])->delete();
+                CartReceiverModel::where('cart_id', $cart['id'])->delete();
+            }
+
+            return redirect()->route('home')->with('success', 'Mua hàng thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }
