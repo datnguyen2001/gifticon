@@ -45,7 +45,7 @@ class DashboardController extends Controller
                 $shop->src = $imagePath;
             }
             $display = $request->get('display') == 'on' ? 1 : 0;
-            if ($request->has('password')) {
+            if (trim($request->input('password')) !== '') {
                 $shop->password = Hash::make($request->get('password'));
             }
 

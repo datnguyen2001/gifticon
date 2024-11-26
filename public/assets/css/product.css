@@ -94,6 +94,10 @@
     border: none;
     border-radius: 50px;
 }
+.add-to-cart:hover{
+    background: #5f5f5f;
+    color: white;
+}
 .buy-now{
     background: #F1641E;
     color: white;
@@ -104,7 +108,10 @@
     border-radius: 50px;
     margin-left: 10px;
 }
-
+.buy-now:hover{
+    color: white;
+    box-shadow: 0 8px 12px 0 #00000040 inset;
+}
 .related-information-wrapper {
     margin-top: 24px;
 }

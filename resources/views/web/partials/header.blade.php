@@ -26,7 +26,7 @@
                     <a href="javascript:void(0);" class="icon-header" onclick="setLoveTab();">
                         <img src="{{asset('assets/images/heart-icon.png')}}" alt="Heart Icon">
                     </a>
-                <a href="#" class="icon-header"><img src="{{asset('assets/images/icon-cart.png')}}" ></a>
+                <a href="{{route('cart.index')}}" class="icon-header"><img src="{{asset('assets/images/icon-cart.png')}}" ></a>
             </div>
          </div>
         <div class="header-bottom">
