@@ -14,5 +14,17 @@ class OrderProductModel extends Model
         'order_id',
         'product_id',
         'message',
+        'quantity'
     ];
+
+    public function orderReceivers()
+    {
+        return $this->hasMany(OrderReceiverModel::class, 'order_product_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(ShopProductModel::class, 'product_id');
+    }
+
 }

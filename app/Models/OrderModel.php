@@ -18,4 +18,15 @@ class OrderModel extends Model
         'message',
         'status_id',
     ];
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProductModel::class, 'order_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

@@ -18,7 +18,7 @@
                                     <th scope="col">Tên sản phẩm</th>
                                     <th scope="col">Hình ảnh</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>

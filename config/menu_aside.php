@@ -78,10 +78,19 @@ return [
             'number' => 1
         ],
         [
-            'name' => 'create-product',
+            'name' => 'product',
             'title' => 'Sản phẩm',
             'icon' => 'bi bi-grid',
             'route' => 'shop.product.index',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
+            'name' => 'order',
+            'title' => 'Quản lý đơn hàng',
+            'icon' => 'bi bi-grid',
+            'route' => 'shop.order.index',
+            'parameters' => ['status' => 'all'],
             'submenu' => [],
             'number' => 1
         ],
