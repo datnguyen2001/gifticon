@@ -20,13 +20,17 @@ class BrandController extends Controller
 
         $query = ShopProductModel::where('shop_id', $data->id)->where('display', 1);
 
-        if ($request->has('start_price') && $request->has('end_price')) {
+        if (!empty($request->input('start_price'))) {
             $startPrice = (int) $request->input('start_price');
-            $endPrice = (int) $request->input('end_price');
-            $query->whereBetween('price', [$startPrice, $endPrice]);
+            $query->where('price', '>=', $startPrice);
         }
 
-        if ($request->has('product_name') && $request->input('product_name') != '') {
+        if (!empty($request->input('end_price'))) {
+            $endPrice = (int) $request->input('end_price');
+            $query->where('price', '<=', $endPrice);
+        }
+
+        if (!empty($request->input('product_name'))) {
             $productName = strtolower($request->input('product_name'));
             $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
         }
