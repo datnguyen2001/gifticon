@@ -6,7 +6,7 @@
 @stop
 {{-- Content of page --}}
 @section('content')
-    <form action="" method="POST" id="buy-now-form">
+    <form action="{{route('create-order.buy-now.submit')}}" method="POST" id="buy-now-form">
         @csrf
         <div class="container">
             <div class="row">

@@ -13,7 +13,7 @@ class CartController extends Controller
     public function index ()
     {
         $user = JWTAuth::user();
-        $carts = CartModel::where('user_id', $user->id)->with('product:id,src,name,start_date,end_date')->get();
+        $carts = CartModel::where('user_id', $user->id)->where('type', 1)->with('product:id,src,name,start_date,end_date')->get();
 
         return view('web.cart.index', compact('carts'));
     }
