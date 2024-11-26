@@ -6,7 +6,7 @@
 @stop
 {{-- Content of page --}}
 @section('content')
-    <form action="" method="POST">
+    <form action="" method="POST" id="buy-now-form">
         @csrf
         <div class="container">
             <div class="row">
@@ -112,5 +112,13 @@
     <script>
         const price = {{ $product->price }};
         const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
+    </script>
+    <script>
+        document.getElementById('buy-now-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            showLoading();
+            setTimeout(() => event.target.submit(), 100);
+        });
+        window.addEventListener('pageshow', hideLoading);
     </script>
 @stop

@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{route('cart.delete')}}" method="POST" class="btn-delete-cart">
+                        <form action="{{route('cart.delete')}}" method="POST" class="btn-delete-cart" id="delete-cart-form">
                             @csrf
                             <input type="hidden" name="cart_id" value="{{ $cart->id }}">
                             <button type="submit">
@@ -67,4 +67,17 @@
 @stop
 @section('script_page')
     <script src="{{ asset('assets/js/cart.js') }}"></script>
+    <script>
+        document.getElementById('delete-cart-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            showLoading();
+            setTimeout(() => event.target.submit(), 100);
+        });
+        document.getElementById('payment-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            showLoading();
+            setTimeout(() => event.target.submit(), 100);
+        });
+        window.addEventListener('pageshow', hideLoading);
+    </script>
 @stop

@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/them-gio-hang', [CreateOrderController::class, 'addToCartSubmit'])->name('create-order.add-cart.submit');
     Route::get('/mua-ngay/tao-don-hang', [CreateOrderController::class, 'indexBuyNow'])->name('create-order.buy-now.index');
     Route::post('/them-mua-ngay', [CreateOrderController::class, 'buyNowSubmit'])->name('create-order.buy-now.submit');
+    Route::post('/xac-nhan-don-hang', [CreateOrderController::class, 'confirmOrder'])->name('create-order.confirm');
 
     Route::get('/thong-tin-ca-nhan', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
