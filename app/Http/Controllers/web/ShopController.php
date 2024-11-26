@@ -41,13 +41,17 @@ class ShopController extends Controller
                 ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
         }
 
-        if ($request->has('start_price') && $request->has('end_price')) {
+        if (!empty($request->input('start_price'))) {
             $startPrice = (int) $request->input('start_price');
-            $endPrice = (int) $request->input('end_price');
-            $query->whereBetween('price', [$startPrice, $endPrice]);
+            $query->where('price', '>=', $startPrice);
         }
 
-        if ($request->has('product_name') && $request->input('product_name') != '') {
+        if (!empty($request->input('end_price'))) {
+            $endPrice = (int) $request->input('end_price');
+            $query->where('price', '<=', $endPrice);
+        }
+
+        if (!empty($request->input('product_name'))) {
             $productName = strtolower($request->input('product_name'));
             $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
         }
@@ -69,21 +73,25 @@ class ShopController extends Controller
                 ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
         }else{
             $query = ShopProductModel::where('display', 1)
-                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id')->inRandomOrder();
         }
 
-        if ($request->has('start_price') && $request->has('end_price')) {
+        if (!empty($request->input('start_price'))) {
             $startPrice = (int) $request->input('start_price');
-            $endPrice = (int) $request->input('end_price');
-            $query->whereBetween('price', [$startPrice, $endPrice]);
+            $query->where('price', '>=', $startPrice);
         }
 
-        if ($request->has('product_name') && $request->input('product_name') != '') {
+        if (!empty($request->input('end_price'))) {
+            $endPrice = (int) $request->input('end_price');
+            $query->where('price', '<=', $endPrice);
+        }
+
+        if (!empty($request->input('product_name'))) {
             $productName = strtolower($request->input('product_name'));
             $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
         }
 
-        $products = $query->inRandomOrder()->paginate(24);
+        $products = $query->paginate(24);
 
         return view('web.trademark.list', compact('title', 'categories', 'products','slug'));
     }

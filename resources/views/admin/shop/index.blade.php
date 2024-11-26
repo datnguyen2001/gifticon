@@ -9,7 +9,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="card-title">{{$titlePage}}</h5>
                                 <a class="btn btn-success"
-                                   href="{{route('admin.shop.create')}}">Thêm danh mục</a>
+                                   href="{{route('admin.shop.create')}}">Thêm Shop</a>
                             </div>
                             <table class="table">
                                 <thead class="thead-dark">
