@@ -15,7 +15,7 @@
                                     style="font-weight: 700">{{$order_pending}}</span></a>
                             <a href="{{url('admin/order/index/1')}}" type="button"
                                class="btn btn-outline-success @if($status == 1) active @endif">Đã thanh toán <span
-                                    style="font-weight: 700">{{$order_confirm}}</span></a>
+                                    style="font-weight: 700">{{$order_paid}}</span></a>
                         </div>
                     </div>
 
@@ -43,9 +43,10 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Mã đơn</th>
-                                        <th scope="col">Bên nhận</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Bên mua</th>
+                                        <th scope="col">Lời nhắn</th>
                                         <th scope="col" style="width: 12%;">Tổng tiền</th>
-                                        <th scope="col" style="width: 15%;">Mã vận chuyển</th>
                                         @if($status == 0 || $status == 'all')
                                             <th scope="col" style="width: 15%;">Xác nhận nhanh</th>
                                         @endif
@@ -56,39 +57,48 @@
                                         <tr>
                                             <th id="{{$value->id}}" scope="row">{{$k+1}}</th>
                                             <td>
-                                                <a
-                                                   class="btn btn-icon btn-light btn-hover-success btn-sm"
+                                                <a class="btn btn-icon btn-light btn-hover-success btn-sm"
                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title="Chi tiết đơn hàng">
+                                                   data-bs-original-title="Đơn hàng">
                                                     {{$value->order_code}}<br>
-                                                    <span
-                                                        style="color: @if($value->status == 0) #FF9900 @elseif($value->status == 1) #0099FF @elseif($value->status == 2) #0066FF @elseif($value->status == 3) #00FF00 @elseif($value->status == 4) #FF3333 @endif; font-weight: 600">{{$value->status_name}}</span><br>
-                                                    <span> @if($value->type_payment == 1) Nhận hàng thanh toán @else
-                                                            Thanh toán qua VNPAY @endif</span>
+                                                    <span style="color: @if($value->status == 0) #FF9900 @elseif($value->status == 1) #0099FF @elseif($value->status == 2) #0066FF @elseif($value->status == 3) #00FF00 @elseif($value->status == 4) #FF3333 @endif; font-weight: 600">
+                            {{$value->status_name}}
+                        </span>
                                                     <br>{{$value->created_at}}
                                                 </a>
                                             </td>
                                             <td>
-                                                {{$value->name}}<br>
-                                                {{$value->phone}}<br>
-                                                {{$value->full_address}}
+                                                    @foreach($value['orderProducts'] as $orderProduct)
+                                                        <div>
+                                                            <strong>{{$orderProduct->product->name}}</strong><br>
+                                                            Số lượng: {{$orderProduct->quantity}}<br>
+                                                            Giá: {{number_format($orderProduct->product->price)}} đ
+                                                        </div>
+                                                    @endforeach
                                             </td>
-
                                             <td>
-                                                {{number_format($value->total_money_order)}} đ
+                                                @if($value->user)
+                                                    {{$value->user->full_name}}<br>
+                                                    {{$value->user->phone}}
+                                                @else
+                                                    Không tìm thấy thông tin người mua.
+                                                @endif
                                             </td>
                                             <td>
-
+                                                @foreach($value['orderProducts'] as $messages)
+                                                    {{$messages['message']?:'Không có lời nhắn nào'}}
+                                                    @endforeach
+                                                </td>
+                                            <td>
+                                                {{number_format($value->total_price)}} đ
                                             </td>
                                             <td style="border-top: 1px solid #cccccc">
                                                 @if($value->status == 0)
                                                     <a href="{{url('admin/order/status/'.$value->id.'/1')}}" class="btn-zalo-send">
-                                                        <button type="submit" class="btn btn-primary mb-2 ">Xác nhận đơn
-                                                        </button>
+                                                        <button type="submit" class="btn btn-primary mb-2">Xác nhận đơn</button>
                                                     </a>
                                                     <a href="{{url('admin/order/status/'.$value->id.'/2')}}">
-                                                        <button type="submit" class="btn btn-danger">Huỷ đơn hàng
-                                                        </button>
+                                                        <button type="submit" class="btn btn-danger">Huỷ đơn hàng</button>
                                                     </a>
                                                 @endif
                                             </td>
@@ -102,6 +112,7 @@
                             @else
                                 <h5 class="card-title">Không có dữ liệu</h5>
                             @endif
+
                         </div>
                     </div>
                 </div>

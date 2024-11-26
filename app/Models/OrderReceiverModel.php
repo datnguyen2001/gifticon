@@ -12,7 +12,6 @@ class OrderReceiverModel extends Model
     protected $fillable = [
         'order_id',
         'order_product_id',
-        'phone',
-        'quantity'
+        'phone'
     ];
 }
