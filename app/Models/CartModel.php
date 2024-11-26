@@ -17,6 +17,8 @@ class CartModel extends Model
         'quantity',
         'buy_for',
         'message',
+        'is_selected',
+        'type'
     ];
 
     public function product()
