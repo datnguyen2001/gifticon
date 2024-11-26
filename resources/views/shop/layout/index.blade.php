@@ -75,5 +75,13 @@
 <!-- END: Content-->
 <div class="sidenav-overlay" style=""></div>
 <div class="drag-target"></div>
+<div id="loading-indicator">
+    <div class="lds-hourglass"></div>
+</div>
+<script>
+    $(document).on('click', '.btn-zalo-send', function () {
+        $('#loading-indicator').css('display', 'flex');
+    });
+</script>
 </body>
 </html>

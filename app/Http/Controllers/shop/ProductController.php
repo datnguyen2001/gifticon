@@ -17,13 +17,16 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $titlePage = 'Sản phẩm';
+        $page_menu = 'product';
+        $page_sub = null;
         $shopID = Auth::guard('shop')->id();
         $listData = ShopProductModel::select('id', 'name', 'src', 'display')
             ->where('shop_id', $shopID)
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        return view('shop.product.index', compact('listData'));
+        return view('shop.product.index', compact('titlePage', 'page_menu', 'listData', 'page_sub'));
     }
 
 
