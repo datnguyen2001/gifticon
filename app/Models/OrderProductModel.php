@@ -14,7 +14,8 @@ class OrderProductModel extends Model
         'order_id',
         'product_id',
         'message',
-        'quantity'
+        'quantity',
+        'buy_for'
     ];
 
     public function orderReceivers()

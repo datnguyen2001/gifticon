@@ -93,13 +93,18 @@ class CreateOrderController extends Controller
 
             // Save receivers if "buy_for = 2"
             if ($buyFor == '2') {
+                $totalQuantity = 0;
                 foreach ($receivers as $receiver) {
                     CartReceiverModel::create([
                         'cart_id' => $cart->id,
                         'phone' => $receiver['phone'],
                         'quantity' => $receiver['quantity'],
                     ]);
+                    $totalQuantity += $receiver['quantity'];
                 }
+                $cart->update([
+                    'quantity' => $totalQuantity
+                ]);
             }
 
             return redirect()->route('cart.index')->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
@@ -111,6 +116,7 @@ class CreateOrderController extends Controller
     public function buyNowSubmit(Request $request)
     {
         try {
+            $user = JWTAuth::user();
             $productID = $request->input('product_id');
             $product = ShopProductModel::findOrFail($productID);
             $productPrice = $product->price;
@@ -155,6 +161,17 @@ class CreateOrderController extends Controller
             }
             $totalPrice *= $productPrice;
 
+            $cartBuyNow = CartModel::where('user_id', $user->id)
+                ->where('type', 2)
+                ->first();
+
+            if ($cartBuyNow) {
+                if($cartBuyNow->buy_for == '2'){
+                    CartReceiverModel::where('cart_id', $cartBuyNow->id)->delete();
+                }
+                $cartBuyNow->delete();
+            }
+
             // Create cart entry
             $cart = CartModel::create([
                 'user_id' => JWTAuth::user()->id,
@@ -169,13 +186,18 @@ class CreateOrderController extends Controller
 
             // Save receivers if "buy_for = 2"
             if ($buyFor == '2') {
+                $totalQuantity = 0;
                 foreach ($receivers as $receiver) {
                     CartReceiverModel::create([
                         'cart_id' => $cart->id,
                         'phone' => $receiver['phone'],
                         'quantity' => $receiver['quantity'],
                     ]);
+                    $totalQuantity += $receiver['quantity'];
                 }
+                $cart->update([
+                    'quantity' => $totalQuantity
+                ]);
             }
 
             return redirect()->route('order.index')->with('success', 'Mua hàng thành công, vui lòng thanh toán!');
@@ -206,6 +228,8 @@ class CreateOrderController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $cart['product_id'],
                     'message' => $cart['message'] ?? null,
+                    'quantity' => $cart['quantity'],
+                    'buy_for' => $cart['buy_for'],
                 ]);
 
                 $cart = CartModel::where('id', $cart['id'])->first();
@@ -218,7 +242,6 @@ class CreateOrderController extends Controller
                             'order_id' => $order->id,
                             'order_product_id' => $orderProduct->id,
                             'phone' => $receiver->phone,
-                            'quantity' => $receiver->quantity,
                         ]);
                     }
                 }
