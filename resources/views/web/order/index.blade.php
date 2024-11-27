@@ -20,6 +20,8 @@
                         <input type="hidden" name="carts[{{ $loop->index }}][product_id]" value="{{ $cart->product->id }}">
                         <input type="hidden" name="carts[{{ $loop->index }}][message]" value="{{ @$cart->message }}">
                         <input type="hidden" name="carts[{{ $loop->index }}][id]" value="{{ @$cart->id }}">
+                        <input type="hidden" name="carts[{{ $loop->index }}][quantity]" value="{{ @$cart->quantity }}">
+                        <input type="hidden" name="carts[{{ $loop->index }}][buy_for]" value="{{ @$cart->buy_for }}">
                         <div class="item-info-order">
                             <div class="item-order">
                                 <div class="col-item-order">

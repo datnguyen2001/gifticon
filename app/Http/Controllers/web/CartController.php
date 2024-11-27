@@ -13,6 +13,12 @@ class CartController extends Controller
     public function index ()
     {
         $user = JWTAuth::user();
+
+        $cartsCheckSelect = CartModel::where('user_id', $user->id)->where('type', 1);
+        if ($cartsCheckSelect->exists()) {
+            $cartsCheckSelect->update(['is_selected' => false]);
+        }
+
         $carts = CartModel::where('user_id', $user->id)->where('type', 1)->with('product:id,src,name,start_date,end_date')->get();
 
         return view('web.cart.index', compact('carts'));
