@@ -21,8 +21,7 @@ Route::middleware('check-shop-auth')->group(function () {
     Route::resource('product', ProductController::class);
 
     Route::prefix('order')->name('order.')->group(function (){
-        Route::get('index/{status}', [OrderController::class,'getDataOrder'])->name('index');
-        Route::get('status/{order_id}/{status_id}', [OrderController::class,'statusOrder'])->name('status');
+        Route::get('index/{status}', [OrderController::class,'getDataOrderShop'])->name('index');
     });
 
 });

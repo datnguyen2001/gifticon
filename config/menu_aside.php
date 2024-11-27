@@ -35,6 +35,15 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'order',
+            'title' => 'Quản lý đơn hàng',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.order.index',
+            'parameters' => ['status' => 'all'],
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'footer',
             'title' => 'Quản lý Footer',
             'icon' => 'bi bi-grid',

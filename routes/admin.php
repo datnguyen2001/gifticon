@@ -9,6 +9,7 @@ use \App\Http\Controllers\admin\BannersController;
 use \App\Http\Controllers\admin\CategoryController;
 use \App\Http\Controllers\admin\FooterController;
 use \App\Http\Controllers\admin\ShopController;
+use \App\Http\Controllers\shop\OrderController;
 
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -62,6 +63,12 @@ Route::middleware('check-admin-auth')->group(function () {
     Route::prefix('membership')->name('membership.')->group(function () {
         Route::get('', [MemberShipController::class, 'index'])->name('index');
         Route::post('update', [MemberShipController::class, 'save'])->name('update');
+    });
+
+    Route::prefix('order')->name('order.')->group(function (){
+        Route::get('index/{status}', [OrderController::class,'getDataOrder'])->name('index');
+        Route::get('detail/{id}', [OrderController::class,'orderDetail'])->name('detail');
+        Route::get('status/{order_id}/{status_id}', [OrderController::class,'statusOrder'])->name('status');
     });
 
 });
