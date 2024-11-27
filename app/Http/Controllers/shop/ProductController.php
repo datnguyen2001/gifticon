@@ -49,6 +49,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'quantity' => 'required|integer|min:1',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'location' => 'array|required',
@@ -71,6 +72,7 @@ class ProductController extends Controller
                 'name' => $request->input('name'),
                 'slug' => $slug,
                 'price' => $request->input('price'),
+                'quantity' => $request->input('quantity'),
                 'display' => $request->has('display') ? 1 : 0,
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),
@@ -124,6 +126,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'quantity' => 'required|integer|min:1',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'location' => 'array',
@@ -139,6 +142,7 @@ class ProductController extends Controller
                 'name' => $request->input('name'),
                 'category_id' => $request->input('category_id'),
                 'price' => $request->input('price'),
+                'quantity' => $request->input('quantity'),
                 'display' => $request->has('display') ? 1 : 0,
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),

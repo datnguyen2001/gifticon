@@ -30,6 +30,7 @@ class ShopProductModel extends Model
         'src',
         'slug',
         'display',
+        'quantity',
         'price',
         'describe',
         'guide',
