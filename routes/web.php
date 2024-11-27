@@ -5,6 +5,7 @@ use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CartController;
 use App\Http\Controllers\web\CreateOrderController;
 use App\Http\Controllers\web\DiscountController;
+use App\Http\Controllers\web\MyVoteController;
 use App\Http\Controllers\web\PaymentController;
 use App\Http\Controllers\web\ProductController;
 use App\Http\Controllers\web\ProfileController;
@@ -60,8 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/send-otp-profile', [ProfileController::class, 'sendOTP'])->name('profile.sendOTP');
     Route::post('/verify-otp-profile', [ProfileController::class, 'verifyOTPProfile'])->name('profile.verifyOTP');
 
-    Route::get('phieu/{slug}', [HomeController::class, 'myVote'])->name('my-vote');
-    Route::get('chi-tiet-phieu-cua-toi', [HomeController::class, 'detailMyVote'])->name('detailmy-vote');
+    Route::get('phieu/{slug}', [MyVoteController::class, 'myVote'])->name('my-vote');
+    Route::get('chi-tiet-phieu-cua-toi/{id}', [MyVoteController::class, 'detailMyVote'])->name('detailmy-vote');
+
     Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
 
     Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');

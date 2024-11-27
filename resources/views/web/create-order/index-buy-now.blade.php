@@ -76,7 +76,7 @@
                     <div class="list-receiver" id="listReceiver">
                         @php
                             $oldReceivers = old('receivers', []);
-                            $receiverCount = max(count($oldReceivers), 12);
+                            $receiverCount = max(count($oldReceivers), 1);
                         @endphp
 
                         @for ($index = 0; $index < $receiverCount; $index++)

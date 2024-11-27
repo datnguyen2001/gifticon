@@ -13,7 +13,7 @@
         </div>
         <div class="content-voucher">
             @for($i=0;$i<10;$i++)
-            <a href="{{route('detailmy-vote')}}" class="voucher-item">
+            <a href="{{route('detailmy-vote', [1])}}" class="voucher-item">
                 <img src="{{asset('assets/images/Subtract.png')}}" class="img-voucher">
                 <img src="{{asset('assets/images/phuc-long.png')}}" class="logo-trademark">
                 <div class="line-voucher"></div>
