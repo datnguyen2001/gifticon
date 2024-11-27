@@ -7,28 +7,32 @@
 {{--content of page--}}
 @section('content')
     <section class="box-voucher">
-        <a href="{{route('detailmy-vote')}}" class="line-back">
+        <a href="{{route('detailmy-vote', [$orderProductID])}}" class="line-back">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Trở lại</span>
         </a>
         <div class="box-item-img-voucher">
             <div class="img-ticket-voucher">
-                <p class="name-sp-voucher">Hi Tea Vải</p>
+                <p class="name-sp-voucher">{{@$vouchers->product_name}}</p>
                 <div class="d-flex justify-content-center">
-                    <img src="{{asset('assets/images/demo-product.png')}}" class="img-sp-voucher">
+                    <img src="{{asset(@$vouchers->product_src)}}" class="img-sp-voucher">
                 </div>
                 <div class="line-barcode">
                     <img src="{{asset('assets/images/top-section.png')}}" class="img-barcode">
                 </div>
                 <p class="name-cs">Cơ sở áp dụng:</p>
-                @for($i=0;$i<4;$i++)
-                    <div class="line-address">
-                        <img src="{{asset('assets/images/location-icon.png')}}" class="icon-location">
-                        <span>90 Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội</span>
-                    </div>
-                @endfor
+                @if(!empty($vouchers->locations) && is_array($vouchers->locations))
+                    @foreach($vouchers->locations as $location)
+                        <div class="line-address">
+                            <img src="{{asset('assets/images/location-icon.png')}}" class="icon-location">
+                            <span>{{$location}}</span>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="mb-0">Không có cơ sở</p>
+                @endif
                 <div class="line-bottom-voucher">
-                    <p class="code-voucher">Mã Voucher: <span>1234569</span></p>
+                    <p class="code-voucher">Mã Voucher: <span>{{@$vouchers->barcode}}</span></p>
                     <button class="btn-copy-code">Copy mã</button>
                 </div>
                 <div class="circle1"><img src="{{asset('assets/images/ellipse1.png')}}" alt=""></div>

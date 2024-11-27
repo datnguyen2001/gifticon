@@ -238,6 +238,7 @@ class CreateOrderController extends Controller
                         'buy_for' => $cart['buy_for'],
                         'shop_id' => $shopID,
                         'unit_price' => $unitPrice,
+                        'receiver_phone' => $user->phone ?? null,
                         'barcode' => 'ABC123',
                     ];
                     OrderProductModel::create($orderProductData);
