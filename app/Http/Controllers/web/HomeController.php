@@ -58,11 +58,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function voucher ()
-    {
-        return view('web.voucher.item');
-    }
-
     public function customerSupport ($slug)
     {
         $data = FooterModel::where('slug',$slug)->first();

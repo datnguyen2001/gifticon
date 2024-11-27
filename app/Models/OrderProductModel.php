@@ -27,4 +27,10 @@ class OrderProductModel extends Model
         return $this->belongsTo(ShopProductModel::class, 'product_id');
     }
 
+    public function locations()
+    {
+        return $this->hasMany(ShopProductLocationModel::class, 'product_id', 'product_id');
+    }
+
+
 }
