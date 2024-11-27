@@ -40,7 +40,6 @@
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 20px;
 }
 
@@ -69,9 +68,12 @@
 .content-item-voucher {
     position: absolute;
     left: 135px;
-    top: 16px;
+    top: 20px;
     width: 100%;
     max-width: 295px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .name-voucher-product {
@@ -79,6 +81,11 @@
     font-weight: 700;
     font-size: 14px;
     color: #000000;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .price-voucher-product {
@@ -92,14 +99,18 @@
     color: #000000;
     font-size: 12px;
     font-weight: 500;
-    margin-top: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 4;
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
-
+.remaining-quantity{
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
 .expiry {
     position: absolute;
     right: 25px;
@@ -459,6 +470,9 @@
 
     .box-content-voucher {
         margin-top: 10px;
+    }
+    .remaining-quantity{
+        font-size: 14px;
     }
 }
 

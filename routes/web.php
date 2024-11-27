@@ -63,8 +63,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('phieu/{slug}', [MyVoteController::class, 'myVote'])->name('my-vote');
     Route::get('chi-tiet-phieu-cua-toi/{id}', [MyVoteController::class, 'detailMyVote'])->name('detailmy-vote');
-
-    Route::get('voucher', [HomeController::class, 'voucher'])->name('voucher');
+    Route::get('voucher/{id}', [MyVoteController::class, 'voucher'])->name('voucher');
 
     Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');
     Route::post('xoa-gio-hang', [CartController::class, 'deleteCart'])->name('cart.delete');

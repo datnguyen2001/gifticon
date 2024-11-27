@@ -13,16 +13,28 @@
         </div>
         <div class="content-voucher">
             @foreach($orders as $order)
-                <a href="{{route('detailmy-vote', [$order->order_id])}}" class="voucher-item">
-                    <img src="{{asset('assets/images/Subtract.png')}}" class="img-voucher">
-                    <img src="{{asset('assets/images/phuc-long.png')}}" class="logo-trademark">
+                <a href="{{ route('detailmy-vote', [$order->order_product_id]) }}" class="voucher-item">
+                    <img src="{{ asset('assets/images/Subtract.png') }}" class="img-voucher">
+                    <img src="{{ asset($order->shop_src) }}" alt="{{ @$order->product_name }}" class="logo-trademark">
                     <div class="line-voucher"></div>
                     <div class="content-item-voucher">
-                        <p class="name-voucher-product">Hi Tea Vải</p>
-                        <p class="price-voucher-product">200.000đ</p>
-                        <div class="content-voucher-product">Chút ngọt ngào của Vải, mix cùng vị chua thanh tao từ trà hoa Hibiscus, mang đến cho bạn thức uống đúng chuẩn vừa ngon, vừa healthy. Chút ngọt ngào của Vải, mix cùng vị chua thanh tao từ trà hoa Hibiscus, mang đến cho bạn thức uống đúng chuẩn vừa ngon, vừa healthy.</div>
+                        <p class="name-voucher-product">{{ @$order->product_name }}</p>
+                        <p class="price-voucher-product">
+                            Đơn giá: {{ number_format(@$order->unit_price, 0, ',', '.') }}đ
+                        </p>
+                        <div class="content-voucher-product">
+                            Số lượng còn lại: {{ number_format(@$order->quantity, 0, ',', '.') }}
+                        </div>
+                        @if($slug == 'da-tang')
+                            <div class="content-voucher-product">
+                                Số điện thoại người nhận: {{ @$order->receiver_phone }}
+                            </div>
+                        @endif
                     </div>
-                    <div class="expiry">HSD: 24/9/2024</div>
+                    <div class="expiry">
+                        Từ: {{ \Carbon\Carbon::parse(@$order->product_start_date)->format('d/m/Y') }} đến
+                        {{ \Carbon\Carbon::parse(@$order->product_end_date)->format('d/m/Y') }}
+                    </div>
                 </a>
             @endforeach
 
