@@ -19,7 +19,7 @@
                         </div>
                     </div>
 
-                    <div class="card" >
+                    <div class="card">
                         <div class="card-body d-flex justify-content-end" style="padding: 20px">
                             <form class="d-flex align-items-center w-50" method="get"
                                   action="{{url('admin/order/index/'.$status)}}">
@@ -43,10 +43,10 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Mã đơn</th>
-                                        <th scope="col">Sản phẩm</th>
                                         <th scope="col">Bên mua</th>
-                                        <th scope="col">Lời nhắn</th>
                                         <th scope="col" style="width: 12%;">Tổng tiền</th>
+                                        <th scope="col">Trạng thái đơn hàng</th>
+                                        <th scope="col">Thời gian mua</th>
                                         @if($status == 0 || $status == 'all')
                                             <th scope="col" style="width: 15%;">Xác nhận nhanh</th>
                                         @endif
@@ -57,24 +57,12 @@
                                         <tr>
                                             <th id="{{$value->id}}" scope="row">{{$k+1}}</th>
                                             <td>
-                                                <a class="btn btn-icon btn-light btn-hover-success btn-sm"
+                                                {{$value->order_code}}<br>
+                                                <a class="btn btn-icon btn-light btn-hover-success btn-sm mt-1"
                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title="Đơn hàng">
-                                                    {{$value->order_code}}<br>
-                                                    <span style="color: @if($value->status == 0) #FF9900 @elseif($value->status == 1) #0099FF @elseif($value->status == 2) #0066FF @elseif($value->status == 3) #00FF00 @elseif($value->status == 4) #FF3333 @endif; font-weight: 600">
-                            {{$value->status_name}}
-                        </span>
-                                                    <br>{{$value->created_at}}
+                                                   data-bs-original-title="Chi tiết đơn hàng">
+                                                    Chi tiết đơn hàng
                                                 </a>
-                                            </td>
-                                            <td>
-                                                    @foreach($value['orderProducts'] as $orderProduct)
-                                                        <div>
-                                                            <strong>{{$orderProduct->product->name}}</strong><br>
-                                                            Số lượng: {{$orderProduct->quantity}}<br>
-                                                            Giá: {{number_format($orderProduct->product->price)}} đ
-                                                        </div>
-                                                    @endforeach
                                             </td>
                                             <td>
                                                 @if($value->user)
@@ -85,20 +73,23 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @foreach($value['orderProducts'] as $messages)
-                                                    {{$messages['message']?:'Không có lời nhắn nào'}}
-                                                    @endforeach
-                                                </td>
-                                            <td>
                                                 {{number_format($value->total_price)}} đ
                                             </td>
+                                            <td style="color: @if($value->status == 0) #FF9900 @elseif($value->status == 1) #0099FF @elseif($value->status == 2) #0066FF @elseif($value->status == 3) #00FF00 @elseif($value->status == 4) #FF3333 @endif; font-weight: 600">
+                                                {{$value->status_name}}
+                                            </td>
+                                            <td>{{$value->created_at}}</td>
                                             <td style="border-top: 1px solid #cccccc">
                                                 @if($value->status == 0)
-                                                    <a href="{{url('admin/order/status/'.$value->id.'/1')}}" class="btn-zalo-send">
-                                                        <button type="submit" class="btn btn-primary mb-2">Xác nhận đơn</button>
+                                                    <a href="{{url('admin/order/status/'.$value->id.'/1')}}"
+                                                       class="btn-zalo-send ">
+                                                        <button type="submit" class="btn btn-primary mb-2">Xác nhận
+                                                            đơn
+                                                        </button>
                                                     </a>
                                                     <a href="{{url('admin/order/status/'.$value->id.'/2')}}">
-                                                        <button type="submit" class="btn btn-danger">Huỷ đơn hàng</button>
+                                                        <button type="submit" class="btn btn-danger">Huỷ đơn hàng
+                                                        </button>
                                                     </a>
                                                 @endif
                                             </td>
