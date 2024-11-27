@@ -5,17 +5,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body d-flex align-items-center flex-wrap"
+                        <div class="card-body d-flex align-items-center flex-wrap gap-3"
                              style="padding-top: 20px">
                             <a href="{{url('shop/order/index/all')}}" type="button"
-                               class="btn btn-outline-secondary mb @if($status == 'all') active @endif"> Tất cả đơn hàng
+                               class="btn btn-outline-secondary @if($status == 'all') active @endif"> Tất cả đơn hàng
                                 <span style="font-weight: 700">{{$order_all}}</span></a>
                             <a href="{{url('shop/order/index/1')}}"
-                               class="btn btn-outline-warning mx-3 @if($status == 1) active @endif">Chờ thanh toán <span
+                               class="btn btn-outline-warning @if($status == 1) active @endif">Chờ thanh toán <span
                                     style="font-weight: 700">{{$order_pending}}</span></a>
                             <a href="{{url('shop/order/index/2')}}" type="button"
                                class="btn btn-outline-success @if($status == 2) active @endif">Đã thanh toán <span
                                     style="font-weight: 700">{{$order_paid}}</span></a>
+                            <a href="{{url('shop/order/index/3')}}" class="btn btn-outline-danger @if($status == 3) active @endif">
+                                Đã hủy <span style="font-weight: 700">{{$order_canceled}}</span>
+                            </a>
                         </div>
                     </div>
 
@@ -24,7 +27,7 @@
                             <form class="d-flex align-items-center w-50" method="get"
                                   action="{{url('shop/order/index/'.$status)}}">
                                 <input name="search" type="text" value="{{request()->get('search')}}"
-                                       placeholder="Tìm kiếm..." class="form-control" style="margin-right: 16px">
+                                       placeholder="Tìm kiếm barcode" class="form-control" style="margin-right: 16px">
                                 <button class="btn btn-info" style="margin-left: 15px"><i class="bi bi-search"></i>
                                 </button>
                                 <a href="{{url('admin/order/index/all')}}" class="btn btn-danger"
@@ -52,30 +55,29 @@
                                     </thead>
                                     <tbody>
                                     @foreach($listData as $k => $value)
-                                        <tr>
-                                            <th id="{{$value->id}}" scope="row">{{$k+1}}</th>
-                                            <td>
-                                                {{$value->order_code}}
-                                            </td>
-                                            <td>
-                                                @if($value->user)
-                                                    {{$value->user->full_name}}<br>
-                                                    {{$value->user->phone}}
-                                                @else
-                                                    Không tìm thấy thông tin người mua.
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{number_format($value->total_price)}} đ
-                                            </td>
-                                            <td>
-                                                {{number_format($value->total_price)}} đ
-                                            </td>
-                                            <td style="color: @if($value->status_id == 1) #FF9900 @elseif($value->status_id == 2) #00FF00 @elseif($value->status == 3) #FF3333 @endif; font-weight: 600">
-                                                {{$value->status_name}}
-                                            </td>
-                                            <td>{{$value->created_at}}</td>
-                                        </tr>
+                                        @foreach($value->orderProducts as $item)
+                                            <tr>
+                                                <th id="{{$item->id}}" scope="row">{{$k+1}}</th>
+                                                <td>
+                                                    {{$item->barcode}}
+                                                </td>
+                                                <td>
+                                                    {{$item->receiver_phone}}
+                                                </td>
+                                                <td>
+                                                    Tên SP: {{$item->product->name}}<br>
+                                                    Số lượng: {{$item->quantity}}<br>
+                                                    Giá: {{number_format($item->unit_price)}}đ
+                                                </td>
+                                                <td>
+                                                    {{number_format($item->quantity*$item->unit_price)}} đ
+                                                </td>
+                                                <td style="color: @if($value->status_id == 1) #FF9900 @elseif($value->status_id == 2) #00FF00 @elseif($value->status_id == 3) red @endif; font-weight: 600">
+                                                    {{$value->status_name}}
+                                                </td>
+                                                <td>{{$value->created_at}}</td>
+                                            </tr>
+                                            @endforeach
                                     @endforeach
                                     </tbody>
                                 </table>
