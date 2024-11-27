@@ -7,7 +7,6 @@ use App\Models\CartModel;
 use App\Models\CartReceiverModel;
 use App\Models\OrderModel;
 use App\Models\OrderProductModel;
-use App\Models\OrderReceiverModel;
 use App\Models\ShopProductModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -224,27 +223,46 @@ class CreateOrderController extends Controller
             ]);
 
             foreach ($request->input('carts') as $cart) {
-                $orderProduct = OrderProductModel::create([
-                    'order_id' => $order->id,
-                    'product_id' => $cart['product_id'],
-                    'message' => $cart['message'] ?? null,
-                    'quantity' => $cart['quantity'],
-                    'buy_for' => $cart['buy_for'],
-                ]);
+                $shopProduct = ShopProductModel::where('id', $cart['product_id'])->first();
+                if ($shopProduct) {
+                    $shopID = $shopProduct->shop_id;
+                    $unitPrice = $shopProduct->price;
+                }
 
-                $cart = CartModel::where('id', $cart['id'])->first();
+                if($cart['buy_for'] == '1'){
+                    $orderProductData = [
+                        'order_id' => $order->id,
+                        'product_id' => $cart['product_id'],
+                        'message' => $cart['message'] ?? null,
+                        'quantity' => $cart['quantity'],
+                        'buy_for' => $cart['buy_for'],
+                        'shop_id' => $shopID,
+                        'unit_price' => $unitPrice,
+                        'barcode' => 'ABC123',
+                    ];
+                    OrderProductModel::create($orderProductData);
+                } elseif ($cart['buy_for'] == '2'){
+                    $cart = CartModel::where('id', $cart['id'])->first();
 
-                if ($cart && $cart->buy_for == '2'){
-                    $cartReceivers = CartReceiverModel::where('cart_id', $cart['id'])->get();
+                    if ($cart && $cart->buy_for == '2') {
+                        $cartReceivers = CartReceiverModel::where('cart_id', $cart['id'])->get();
 
-                    foreach ($cartReceivers as $receiver) {
-                        OrderReceiverModel::create([
-                            'order_id' => $order->id,
-                            'order_product_id' => $orderProduct->id,
-                            'phone' => $receiver->phone,
-                        ]);
+                        foreach ($cartReceivers as $receiver) {
+                            OrderProductModel::create([
+                                'order_id' => $order->id,
+                                'product_id' => $cart['product_id'],
+                                'message' => $cart['message'] ?? null,
+                                'quantity' => $receiver->quantity,
+                                'buy_for' => $cart['buy_for'],
+                                'shop_id' => $shopID,
+                                'unit_price' => $unitPrice,
+                                'barcode' => 'ABC123',
+                                'receiver_phone' => $receiver->phone
+                            ]);
+                        }
                     }
                 }
+
                 CartModel::where('id', $cart['id'])->delete();
                 CartReceiverModel::where('cart_id', $cart['id'])->delete();
             }
