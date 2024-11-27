@@ -25,6 +25,11 @@
                         <div class="content-voucher-product">
                             Số lượng còn lại: {{ number_format(@$order->quantity, 0, ',', '.') }}
                         </div>
+                        @if($slug == 'da-tang')
+                            <div class="content-voucher-product">
+                                Số điện thoại người nhận: {{ @$order->receiver_phone }}
+                            </div>
+                        @endif
                     </div>
                     <div class="expiry">
                         Từ: {{ \Carbon\Carbon::parse(@$order->product_start_date)->format('d/m/Y') }} đến

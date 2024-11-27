@@ -68,12 +68,12 @@
 .content-item-voucher {
     position: absolute;
     left: 135px;
-    top: 25px;
+    top: 20px;
     width: 100%;
     max-width: 295px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .name-voucher-product {

@@ -23,6 +23,7 @@ class MyVoteController extends Controller
                 'order_products.buy_for',
                 'order_products.unit_price',
                 'order_products.quantity',
+                'order_products.receiver_phone',
                 'shop_products.name as product_name',
                 'shop_products.start_date as product_start_date',
                 'shop_products.end_date as product_end_date',
