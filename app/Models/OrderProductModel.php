@@ -13,15 +13,14 @@ class OrderProductModel extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'shop_id',
         'message',
         'quantity',
-        'buy_for'
+        'unit_price',
+        'buy_for',
+        'receiver_phone',
+        'barcode'
     ];
-
-    public function orderReceivers()
-    {
-        return $this->hasMany(OrderReceiverModel::class, 'order_product_id', 'id');
-    }
 
     public function product()
     {

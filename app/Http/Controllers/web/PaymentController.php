@@ -4,9 +4,6 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartModel;
-use App\Models\CartReceiverModel;
-use App\Models\OrderModel;
-use App\Models\OrderReceiverModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
