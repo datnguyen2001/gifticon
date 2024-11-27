@@ -15,7 +15,7 @@
             <p class="name-product-voucher">{{@$orderProducts->product_name}}</p>
             <p class="price-product-voucher"> Đơn giá: {{ number_format(@$orderProducts->product_price, 0, ',', '.') }}đ</p>
             <div class="remaining-quantity">
-                Số lượng còn lại: {{ number_format(@$order->quantity, 0, ',', '.') }}
+                Số lượng còn lại: {{ number_format(@$orderProducts->quantity, 0, ',', '.') }}
             </div>
             <p class="name-cs">Cơ sở áp dụng:</p>
             @if(!empty($orderProducts->locations) && is_array($orderProducts->locations))
