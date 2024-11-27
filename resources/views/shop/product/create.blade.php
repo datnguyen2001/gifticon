@@ -81,6 +81,16 @@
                     </div>
 
                     <div class="row mt-3">
+                        <div class="col-3">Số lượng phát hành :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="quantity" value="{{ old('quantity') }}" type="number" required>
+                            @error('quantity')
+                            <span class="text-danger text-error mt-1">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
                         <div class="col-3">Cơ sở áp dụng :</div>
                         <div class="col-8">
                             <div class="d-flex flex-column" style="gap: 10px" id="location-wrapper">

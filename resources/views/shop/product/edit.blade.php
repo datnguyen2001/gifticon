@@ -7,12 +7,17 @@
             height: 24px;
             object-fit: cover;
         }
-        .add-icon{
+        .add-address{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
             cursor: pointer;
+        }
+        .add-icon{
             width: 24px;
             height: 24px;
             object-fit: cover;
-            margin: auto;
         }
         .text-error{
             font-size: 12px;
@@ -82,6 +87,16 @@
                     </div>
 
                     <div class="row mt-3">
+                        <div class="col-3">Số lượng phát hành :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="quantity" value="{{ old('quantity', $data->quantity) }}" type="number" required>
+                            @error('quantity')
+                            <span class="text-danger text-error mt-1">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
                         <div class="col-3">Cơ sở áp dụng :</div>
                         <div class="col-8">
                             <div class="d-flex flex-column" style="gap: 10px">
@@ -91,7 +106,10 @@
                                         <img src="{{ asset('assets/images/trash-icon.png') }}" alt="trash icon" class="delete-icon"/>
                                     </div>
                                 @endforeach
-                                <img src="{{ asset('assets/images/add-icon.png') }}" alt="add icon" class="add-icon"/>
+                                <div class="add-address">
+                                    <img src="{{ asset('assets/images/add-icon.png') }}" alt="add icon" class="add-icon"/>
+                                    <p class="mb-0">Thêm địa chỉ</p>
+                                </div>
                             </div>
                             @error('location')
                             <span class="text-danger text-error mt-1">{{ $message }}</span>
@@ -230,7 +248,7 @@
             });
 
             // Add a new input row when clicking the add icon
-            $(".add-icon").click(function () {
+            $(".add-address").click(function () {
                 let newInputRow = `
                 <div class="d-flex align-items-center" style="gap: 10px">
                     <input class="form-control" name="location[]" type="text" required>
