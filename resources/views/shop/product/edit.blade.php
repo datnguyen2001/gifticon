@@ -188,10 +188,15 @@
 @section('script')
     <script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
     <script type="text/javascript">
-        CKEDITOR.replace('content', {
+        CKEDITOR.replace('describe', {
             filebrowserUploadUrl: "{{route('admin.ckeditor.image-upload', ['_token' => csrf_token() ])}}",
             filebrowserUploadMethod: 'form',
-            height:'700px'
+            height:'600px'
+        });
+        CKEDITOR.replace('guide', {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.image-upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form',
+            height:'600px'
         });
     </script>
     <script>
