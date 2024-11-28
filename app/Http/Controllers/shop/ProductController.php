@@ -35,9 +35,12 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $titlePage = 'Thêm mới sản phẩm';
+        $page_menu = 'product';
+        $page_sub = null;
         $categories = CategoryModel::all();
 
-        return view('shop.product.create', compact('categories'));
+        return view('shop.product.create', compact('categories','titlePage','page_menu','page_sub'));
     }
 
     /**
@@ -103,6 +106,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         try {
+            $titlePage = 'Sửa sản phẩm';
+            $page_menu = 'product';
+            $page_sub = null;
             $data = ShopProductModel::find($id);
             $locations = ShopProductLocationModel::where('product_id', $id)->get();
             $categories = CategoryModel::all();
@@ -111,7 +117,7 @@ class ProductController extends Controller
                 return back()->with(['error' => 'Dữ liệu không tồn tại']);
             }
 
-            return view('shop.product.edit', compact('data', 'locations', 'categories'));
+            return view('shop.product.edit', compact('data', 'locations', 'categories','titlePage','page_menu','page_sub'));
         } catch (\Exception $exception) {
             return back()->with(['error' => $exception->getMessage()]);
         }
