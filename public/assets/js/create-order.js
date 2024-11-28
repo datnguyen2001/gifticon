@@ -7,6 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantityInput = document.querySelector(".for-me-quantity");
     const paymentTotal = document.querySelector(".total-money");
 
+    //Validate quantity input
+    quantityInput.addEventListener('input', function() {
+        let value = parseInt(quantityInput.value, 10);
+        if (value < 0) {
+            quantityInput.value = 0;
+        } else if (value > maxQuantity) {
+            quantityInput.value = maxQuantity;
+        }
+    });
+
     // Function to update payment total
     function updatePaymentTotal() {
         let total;

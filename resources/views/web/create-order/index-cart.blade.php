@@ -15,7 +15,8 @@
                 </div>
                 <div class="col-10 product-content">
                     <h5 class="product-name mb-0">{{ @$product->name }}</h5>
-                    <p class="product-price">Đơn giá: <span>{{ number_format($product->price, 0, ',', '.') }} VNĐ</span></p>
+                    <p class="product-price">Đơn giá: <span style="font-weight: 600;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</span></p>
+                    <p class="product-price">Số lượng còn lại: <span style="font-weight: 600;">{{ number_format($product->quantity, 0, ',', '.') }}</span></p>
                 </div>
             </div>
             <div class="buyer-info">
@@ -51,7 +52,7 @@
                 <div class="buy-for-me-quantity">
                     <div class="input-detail">
                         <label for="quantity" class="label-field">Nhập số lượng</label>
-                        <input type="number" class="input-field for-me-quantity" name="quantity" id="receiver-number" value="{{ old('quantity') }}">
+                        <input type="number" class="input-field for-me-quantity" name="quantity" id="receiver-number" value="{{ old('quantity') }}" min="0" max="{{ $product->quantity }}">
                     </div>
                 </div>
             </div>
@@ -112,6 +113,7 @@
     <script>
         const price = {{ $product->price }};
         const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
+        const maxQuantity = {{ $product->quantity ?? 0 }};
     </script>
     <script>
         document.getElementById('add-cart-form').addEventListener('submit', function (event) {

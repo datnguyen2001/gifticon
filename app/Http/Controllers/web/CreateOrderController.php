@@ -38,6 +38,7 @@ class CreateOrderController extends Controller
             $productID = $request->input('product_id');
             $product = ShopProductModel::findOrFail($productID);
             $productPrice = $product->price;
+            $maxQuantity = $product->quantity;
 
             $buyFor = $request->input('buy_for');
 
@@ -45,22 +46,24 @@ class CreateOrderController extends Controller
                 $rules = [
                     'receivers' => 'required|array|min:1',
                     'receivers.*.phone' => 'required|regex:/^\d{9,15}$/',
-                    'receivers.*.quantity' => 'required',
+                    'receivers.*.quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure receiver quantity doesn't exceed max stock
                 ];
                 $messages = [
                     'receivers.required' => 'Thông tin người nhận phải được điền đủ',
                     'receivers.*.phone.required' => 'Số điện thoại không được để trống cho tất cả người nhận',
                     'receivers.*.phone.regex' => 'Số điện thoại phải có từ 9 đến 15 chữ số.',
                     'receivers.*.quantity.required' => 'Số lượng không được để trống cho tất cả người nhận',
+                    'receivers.*.quantity.max' => 'Số lượng của mỗi người nhận không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             } else {
                 $rules = [
-                    'quantity' => 'required|integer|min:1',
+                    'quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure the quantity doesn't exceed the stock
                 ];
                 $messages = [
                     'quantity.required' => 'Vui lòng nhập số lượng.',
                     'quantity.integer' => 'Số lượng phải là một số hợp lệ.',
                     'quantity.min' => 'Số lượng phải lớn hơn 0.',
+                    'quantity.max' => 'Số lượng không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             }
 
@@ -69,15 +72,24 @@ class CreateOrderController extends Controller
             $totalPrice = 0;
             $receivers = $request->input('receivers', []);
             if ($buyFor == '2') {
+                $totalQuantity = 0;
                 foreach ($receivers as $receiver) {
                     $receiverQuantity = intval($receiver['quantity'] ?? 0);
-                    $totalPrice += $receiverQuantity;
+                    $totalQuantity += $receiverQuantity;
                 }
+
+                if ($totalQuantity > $maxQuantity) {
+                    return redirect()->back()->withInput()->with('error', 'Tổng số lượng không được vượt quá số lượng tồn kho.');
+                }
+
+                $totalPrice = $totalQuantity * $productPrice;
             } else {
                 $quantity = intval($request->input('quantity', 0));
-                $totalPrice = $quantity;
+                if ($quantity > $maxQuantity) {
+                    return redirect()->back()->withInput()->with('error', 'Số lượng không được vượt quá số lượng sản phẩm có sẵn.');
+                }
+                $totalPrice = $quantity * $productPrice;
             }
-            $totalPrice *= $productPrice;
 
             // Create cart entry
             $cart = CartModel::create([
@@ -119,6 +131,7 @@ class CreateOrderController extends Controller
             $productID = $request->input('product_id');
             $product = ShopProductModel::findOrFail($productID);
             $productPrice = $product->price;
+            $maxQuantity = $product->quantity;
 
             $buyFor = $request->input('buy_for');
 
@@ -126,22 +139,24 @@ class CreateOrderController extends Controller
                 $rules = [
                     'receivers' => 'required|array|min:1',
                     'receivers.*.phone' => 'required|regex:/^\d{9,15}$/',
-                    'receivers.*.quantity' => 'required',
+                    'receivers.*.quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure receiver quantity doesn't exceed max stock
                 ];
                 $messages = [
                     'receivers.required' => 'Thông tin người nhận phải được điền đủ',
                     'receivers.*.phone.required' => 'Số điện thoại không được để trống cho tất cả người nhận',
                     'receivers.*.phone.regex' => 'Số điện thoại phải có từ 9 đến 15 chữ số.',
                     'receivers.*.quantity.required' => 'Số lượng không được để trống cho tất cả người nhận',
+                    'receivers.*.quantity.max' => 'Số lượng của mỗi người nhận không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             } else {
                 $rules = [
-                    'quantity' => 'required|integer|min:1',
+                    'quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure the quantity doesn't exceed the stock
                 ];
                 $messages = [
                     'quantity.required' => 'Vui lòng nhập số lượng.',
                     'quantity.integer' => 'Số lượng phải là một số hợp lệ.',
                     'quantity.min' => 'Số lượng phải lớn hơn 0.',
+                    'quantity.max' => 'Số lượng không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             }
 
@@ -150,15 +165,24 @@ class CreateOrderController extends Controller
             $totalPrice = 0;
             $receivers = $request->input('receivers', []);
             if ($buyFor == '2') {
+                $totalQuantity = 0;
                 foreach ($receivers as $receiver) {
                     $receiverQuantity = intval($receiver['quantity'] ?? 0);
-                    $totalPrice += $receiverQuantity;
+                    $totalQuantity += $receiverQuantity;
                 }
+
+                if ($totalQuantity > $maxQuantity) {
+                    return redirect()->back()->withInput()->with('error', 'Tổng số lượng không được vượt quá số lượng tồn kho.');
+                }
+
+                $totalPrice = $totalQuantity * $productPrice;
             } else {
                 $quantity = intval($request->input('quantity', 0));
-                $totalPrice = $quantity;
+                if ($quantity > $maxQuantity) {
+                    return redirect()->back()->withInput()->with('error', 'Số lượng không được vượt quá số lượng sản phẩm có sẵn.');
+                }
+                $totalPrice = $quantity * $productPrice;
             }
-            $totalPrice *= $productPrice;
 
             $cartBuyNow = CartModel::where('user_id', $user->id)
                 ->where('type', 2)
