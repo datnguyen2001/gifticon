@@ -210,6 +210,16 @@ input:checked + .slider::before {
     border: 1px solid #D6D6D6;
     border-radius: 8px;
 }
+.receiver-number::-webkit-outer-spin-button,
+.receiver-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.receiver-number[type=number] {
+    -moz-appearance: textfield;
+}
+
 #receiver-number {
     -moz-appearance: textfield;
 }
