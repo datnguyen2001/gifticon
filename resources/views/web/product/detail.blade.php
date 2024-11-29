@@ -25,6 +25,10 @@
                 <div class="item-field">{{ number_format($product->price ?? 0, 0, ',', '.') }}đ</div>
             </div>
             <div class="product-field">
+                <label class="title-field">Số lượng còn lại:</label>
+                <div class="item-field">{{ number_format($product->quantity ?? 0, 0, ',', '.') }}</div>
+            </div>
+            <div class="product-field">
                 <label class="title-field">Đã áp dụng giảm giá:</label>
                 <div class="item-field">Áp dụng giảm giá theo cấp độ thành viên</div>
             </div>

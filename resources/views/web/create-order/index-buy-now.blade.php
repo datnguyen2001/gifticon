@@ -66,6 +66,11 @@
                         <div class="tooltip-text">Vui lòng upload file excel với 2 cột: Số điện thoại và Số lượng</div>
                     </div>
                 </div>
+                <div class="example-excel">
+                    <button class="download-link" type="button" onclick="window.location.href='{{ route('download.example') }}'">
+                        Tải xuống File mẫu
+                    </button>
+                </div>
                 <div class="receiver-detail">
                     <div class="d-flex justify-content-between align-items-center mb-3 wrap-mobile">
                         <label class="label-field">Số điện thoại của người nhận*</label>

@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/mua-ngay/tao-don-hang', [CreateOrderController::class, 'indexBuyNow'])->name('create-order.buy-now.index');
     Route::post('/them-mua-ngay', [CreateOrderController::class, 'buyNowSubmit'])->name('create-order.buy-now.submit');
     Route::post('/xac-nhan-don-hang', [CreateOrderController::class, 'confirmOrder'])->name('create-order.confirm');
+    Route::get('/download/example', [CreateOrderController::class, 'downloadExcel'])->name('download.example');
 
     Route::get('/thong-tin-ca-nhan', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/thong-tin-ca-nhan', [ProfileController::class, 'updateProfile'])->name('profile.update');
