@@ -69,10 +69,12 @@
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            © 2023. All Rights Reserved Country & Region: Vietnam | China | Japan | Korea
-        </div>
     </div>
+    <div class="footer-bottom">
+        <img src="{{asset('assets/images/song.png')}}" class="img-song">
+        <span>© 2023. All Rights Reserved Country & Region: Vietnam </span>
+    </div>
+
 </div>
 
 <div class="box-footer-mobile">

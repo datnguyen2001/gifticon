@@ -238,7 +238,10 @@ a:hover {
     width: 100%;
     background: white;
     padding: 30px 0;
+    padding-bottom: 0px;
     margin-top: 60px;
+    background: url("../images/Shape.png") no-repeat top;
+    background-size: 100% 270px;
 }
 
 .footer {
@@ -254,9 +257,14 @@ a:hover {
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #000000;
-    margin-bottom: 25px;
+}
+.footer-bottom span{
+    position: absolute;
+    width: 1210px;
+    max-width: 100%;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%,-50%);
 }
 
 .item-footer {
@@ -330,9 +338,13 @@ a:hover {
 }
 
 .footer-bottom {
-    color: #929292;
+    position: relative;
+    color: white;
     font-size: 16px;
     font-weight: 400;
+}
+.img-song{
+    width: 100%;
 }
 
 .content-you-like {
@@ -604,7 +616,7 @@ a:hover {
         width: 60%;
         max-width: 800px;
     }
-    .footer {
+    .footer,.footer-bottom span {
         padding-left: 40px;
         padding-right: 40px;
     }
@@ -711,7 +723,7 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    .footer {
+    .footer,.footer-bottom span {
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -789,7 +801,10 @@ a:hover {
     .footer-bottom {
         font-size: 14px;
     }
-    .main, .header, .footer{
+    .title-footer {
+        font-size: 17px;
+    }
+    .main, .header, .footer,.footer-bottom span{
         padding-left: 15px;
         padding-right: 15px;
     }
@@ -798,5 +813,8 @@ a:hover {
     }
     .box-search{
         padding-left: 12px;
+    }
+    .box-footer{
+        background-size: 100% 200px;
     }
 }
