@@ -122,7 +122,7 @@ input:checked + .slider::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 5px;
 }
 .receiver-title{
     font-size: 20px;
@@ -178,6 +178,23 @@ input:checked + .slider::before {
     color: white;
     font-size: 16px;
     font-weight: 500;
+}
+.example-excel{
+    display: flex;
+    justify-content: right;
+    margin-bottom: 20px;
+    .download-link{
+        text-decoration: underline;
+        color: #F1641E;
+        text-align: right;
+        font-weight: 600;
+        font-size: 15px;
+        border: none;
+        background: unset;
+    }
+    .download-link:hover{
+        color: #cf4500;
+    }
 }
 .list-receiver {
     display: grid;

@@ -35,7 +35,7 @@
     }
     .item-field{
         width: 60%;
-        text-align: center;
+        text-align: left;
         font-size: 18px;
         font-weight: 500;
     }
@@ -81,8 +81,8 @@
         font-weight: 500;
     }
     .location-icon{
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
     }
 }
 .add-to-cart{

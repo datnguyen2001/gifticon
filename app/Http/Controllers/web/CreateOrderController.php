@@ -10,6 +10,7 @@ use App\Models\OrderProductModel;
 use App\Models\ShopProductModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CreateOrderController extends Controller
@@ -30,6 +31,12 @@ class CreateOrderController extends Controller
         $product = ShopProductModel::where('id', $productID)->first();
 
         return view('web.create-order.index-buy-now', compact('user', 'product'));
+    }
+
+    public function downloadExcel()
+    {
+        $filePath = public_path('assets/excel/example.xlsx');
+        return Response::download($filePath);
     }
 
     public function addToCartSubmit(Request $request)
@@ -251,6 +258,7 @@ class CreateOrderController extends Controller
                 if ($shopProduct) {
                     $shopID = $shopProduct->shop_id;
                     $unitPrice = $shopProduct->price;
+                    $productQuantity = $shopProduct->quantity;
                 }
 
                 if($cart['buy_for'] == '1'){
@@ -266,12 +274,15 @@ class CreateOrderController extends Controller
                         'barcode' => 'ABC123',
                     ];
                     OrderProductModel::create($orderProductData);
+
+                    $newQuantity = $productQuantity - $cart['quantity'];
+                    $shopProduct->update(['quantity' => $newQuantity]);
                 } elseif ($cart['buy_for'] == '2'){
                     $cart = CartModel::where('id', $cart['id'])->first();
 
                     if ($cart && $cart->buy_for == '2') {
                         $cartReceivers = CartReceiverModel::where('cart_id', $cart['id'])->get();
-
+                        $totalQuantity = $cartReceivers->sum('quantity');
                         foreach ($cartReceivers as $receiver) {
                             OrderProductModel::create([
                                 'order_id' => $order->id,
@@ -285,6 +296,8 @@ class CreateOrderController extends Controller
                                 'receiver_phone' => $receiver->phone
                             ]);
                         }
+                        $newQuantity = $productQuantity - $totalQuantity;
+                        $shopProduct->update(['quantity' => $newQuantity]);
                     }
                 }
 
