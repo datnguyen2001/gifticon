@@ -52,6 +52,7 @@ class MyVoteController extends Controller
                 'order_products.product_id',
                 'order_products.unit_price as product_price',
                 'order_products.quantity',
+                'order_products.buy_for',
                 'shop_products.name as product_name',
                 'shop_products.describe as product_describe',
                 'shop_products.guide as product_guide',
