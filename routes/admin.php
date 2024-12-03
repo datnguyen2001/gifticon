@@ -18,6 +18,14 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('check-admin-auth')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('index');
+    //Hiệu suất tổng thể
+    Route::get('overall_performance', [DashboardController::class, 'overallPerformance'])->name('overall_performance');
+    Route::get('get-revenue-data', [DashboardController::class, 'getRevenueData']);
+    Route::get('statistics', [DashboardController::class, 'statistics']);
+    Route::get('revenue-growth', [DashboardController::class, 'revenueGrowth']);
+
+    //Hiệu suất từng gian hàng
+    Route::get('performance_shop/{id}', [DashboardController::class, 'performanceShop'])->name('performance_shop');
 
     Route::prefix('banner')->name('banner.')->group(function () {
         Route::get('/', [BannersController::class, 'index'])->name('index');

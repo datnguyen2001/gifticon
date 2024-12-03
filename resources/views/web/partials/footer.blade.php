@@ -79,7 +79,7 @@
 
 <div class="box-footer-mobile">
     <a href="{{route('home')}}" class="item-footer-menu"> <img src="{{asset('assets/images/home.png')}}" class="icon-menu-footer"> Trang chủ</a>
-    <a href="#" class="item-footer-menu"> <img src="{{asset('assets/images/shopping-bag.png')}}" class="icon-menu-footer"> Giỏ hàng</a>
+    <a href="#" class="item-footer-menu position-relative"> <img src="{{asset('assets/images/shopping-bag.png')}}" class="icon-menu-footer"> @if($cart>0)<span class="number-cart">{{$cart}}</span>@endif Giỏ hàng</a>
     <div class="item-footer-menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"> <img src="{{asset('assets/images/menu.png')}}" class="icon-menu-footer"> Danh mục</div>
     <a href="{{ $user ? route('profile.index') : route('login') }}" class="item-footer-menu"> <img src="{{asset('assets/images/heart-icons.png')}}" class="icon-menu-footer"> Yêu thích</a>
     <a href="{{ $user ? route('profile.index') : route('login') }}" class="item-footer-menu"> <img src="{{asset('assets/images/user-circle.png')}}" class="icon-menu-footer"> Cá nhân</a>
@@ -89,6 +89,6 @@
         <button type="button" class="btn-close btn-close-menu" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         <a href="{{route('trademark','all')}}" class="item-menu-footer-offcanvas">Tất cả các thương hiệu</a>
         <a href="{{url('phieu/cua-toi')}}" class="item-menu-footer-offcanvas">Quà của tôi</a>
-        <a href="#" class="item-menu-footer-offcanvas">Mua số lượng lớn</a>
+{{--        <a href="#" class="item-menu-footer-offcanvas">Mua số lượng lớn</a>--}}
     </div>
 </div>

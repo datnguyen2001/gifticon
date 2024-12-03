@@ -26,14 +26,14 @@
                     <a href="javascript:void(0);" class="icon-header" onclick="setLoveTab();">
                         <img src="{{asset('assets/images/heart-icon.png')}}" alt="Heart Icon">
                     </a>
-                <a href="{{route('cart.index')}}" class="icon-header"><img src="{{asset('assets/images/icon-cart.png')}}" ></a>
+                <a href="{{route('cart.index')}}" class="icon-header"><img src="{{asset('assets/images/icon-cart.png')}}" > @if($cart>0)<span class="number-cart">{{$cart}}</span>@endif</a>
             </div>
          </div>
         <div class="header-bottom">
 {{--            <div class="item-menu-header"><img src="{{asset('assets/images/Container.png')}}" alt=""> <span>Gif card</span></div>--}}
             <a href="{{route('trademark','all')}}" class="item-menu-header">Tất cả các thương hiệu</a>
             <a href="{{url('phieu/cua-toi')}}" class="item-menu-header">Quà của tôi</a>
-            <a href="#" class="item-menu-header">Mua số lượng lớn</a>
+{{--            <a href="#" class="item-menu-header">Mua số lượng lớn</a>--}}
             @if(!$user)
             <a href="{{route('register')}}" class="item-menu-header">Đăng ký</a>
                 @endif

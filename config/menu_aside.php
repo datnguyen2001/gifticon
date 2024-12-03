@@ -11,6 +11,23 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'overall_performance',
+            'title' => 'Hiệu suất tổng thể',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.overall_performance',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
+            'name' => 'performance_shop',
+            'title' => 'Hiệu suất từng shop',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.performance_shop',
+            'parameters' => ['id' => 'all'],
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'banner',
             'title' => 'Cài đặt Banner',
             'icon' => 'bi bi-grid',
@@ -67,6 +84,7 @@ return [
             'submenu' => [],
             'number' => 1
         ],
+
 
     ],
     'shop' => [
