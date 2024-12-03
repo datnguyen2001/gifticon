@@ -32,7 +32,11 @@
 <body>
 @php
     $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
-    $cart = \App\Models\CartModel::where('user_id',$user->id)->count('id');
+    if($user){
+        $cart = \App\Models\CartModel::where('user_id',$user->id)->count('id');
+    }else{
+        $cart = 0;
+    }
 @endphp
 @include('web.partials.header')
 <main class="main">
