@@ -26,4 +26,9 @@ class CartModel extends Model
         return $this->belongsTo(ShopProductModel::class, 'product_id', 'id');
     }
 
+    public function receivers()
+    {
+        return $this->hasMany(CartReceiverModel::class, 'cart_id', 'id');
+    }
+
 }

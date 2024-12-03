@@ -19,7 +19,9 @@ class CartController extends Controller
             $cartsCheckSelect->update(['is_selected' => false]);
         }
 
-        $carts = CartModel::where('user_id', $user->id)->where('type', 1)->with('product:id,src,name,start_date,end_date')->get();
+        $carts = CartModel::where('user_id', $user->id)->where('type', 1)
+            ->with('product:id,src,name,start_date,end_date', 'receivers:cart_id,phone,quantity')
+            ->get();
 
         return view('web.cart.index', compact('carts'));
     }

@@ -36,6 +36,7 @@ class ProfileController extends Controller
         $user->update([
             'full_name' => $request->input('full_name'),
             'email' => $request->input('email'),
+            'date_of_birth' => $request->input('date_of_birth'),
 //            'phone' => $request->input('phone'),
         ]);
 

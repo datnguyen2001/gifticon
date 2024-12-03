@@ -39,13 +39,18 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{route('cart.delete')}}" method="POST" class="btn-delete-cart" id="delete-cart-form">
-                            @csrf
-                            <input type="hidden" name="cart_id" value="{{ $cart->id }}">
-                            <button type="submit">
-                                <img src="{{ asset('assets/images/icon-delete-cart.png') }}" alt="Delete">
-                            </button>
-                        </form>
+                        <div class="icon-wrapper">
+                            <div class="note-icon" data-cart="{{ json_encode($cart) }}">
+                                <img src="{{ asset('assets/images/note.png') }}" alt="note" />
+                            </div>
+                            <form action="{{route('cart.delete')}}" method="POST" class="btn-delete-cart" id="delete-cart-form">
+                                @csrf
+                                <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+                                <button type="submit">
+                                    <img src="{{ asset('assets/images/icon-delete-cart.png') }}" alt="Delete">
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -63,11 +68,13 @@
             </div>
         </div>
     </section>
-
+@include('web.cart.modal-detail')
 @stop
 @section('script_page')
     <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script>
+        var imgSrc = "{{ asset('') }}";
+
         document.getElementById('delete-cart-form').addEventListener('submit', function (event) {
             event.preventDefault();
             showLoading();

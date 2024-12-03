@@ -6,6 +6,7 @@
 @stop
 {{--content of page--}}
 @section('content')
+    @include('web.partials.failed-alert')
     <a href="{{route('home')}}" class="line-back">
         <i class="fa-solid fa-arrow-left"></i>
         <span>Trở lại</span>
@@ -62,8 +63,15 @@
                 </div>
             </div>
             <div class="button-wrapper mt-3">
-                <a href="{{route('create-order.add-cart.index', ['productID' => $product->id])}}" class="add-to-cart">Thêm vào giỏ hàng</a>
-                <a href="{{route('create-order.buy-now.index', ['productID' => $product->id])}}" class="buy-now">Mua ngay</a>
+                <a href="javascript:void(0)"
+                   class="add-to-cart"
+                   data-quantity="{{ $product->quantity ?? 0 }}"
+                   data-route="{{ route('create-order.add-cart.index', ['productID' => $product->id]) }}">Thêm vào giỏ hàng</a>
+
+                <a href="javascript:void(0)"
+                   class="buy-now"
+                   data-quantity="{{ $product->quantity ?? 0 }}"
+                   data-route="{{ route('create-order.buy-now.index', ['productID' => $product->id]) }}">Mua ngay</a>
             </div>
         </div>
     </div>
@@ -101,4 +109,25 @@
 @section('script_page')
     <script src="{{asset('assets/js/product.js')}}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart, .buy-now').on('click', function(e) {
+                var quantity = $(this).data('quantity');
+                var route = $(this).data('route'); // Store the route in a data attribute
+
+                // If quantity is 0, prevent the link from navigating and show the error message
+                if (parseInt(quantity) === 0) {
+                    e.preventDefault(); // Prevent navigation
+                    hideLoading(); // Hide loading if needed
+
+                    $(".failed-message").text("Sản phẩm đã hết hàng!");
+                    $(".failed-alert").fadeIn();
+                    $(".failed-overlay").fadeIn();
+                } else if (parseInt(quantity) > 0) {
+                    // If quantity is greater than 0, navigate to the corresponding route
+                    window.location.href = route;
+                }
+            });
+        });
+    </script>
 @stop
