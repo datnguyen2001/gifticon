@@ -33,7 +33,7 @@
 @php
     $user = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
     if($user){
-        $cart = \App\Models\CartModel::where('user_id',$user->id)->count('id');
+        $cart = \App\Models\CartModel::where('user_id',$user->id)->where('type', 1)->count('id');
     }else{
         $cart = 0;
     }

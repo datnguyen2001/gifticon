@@ -52,7 +52,7 @@ class CreateOrderController extends Controller
             if ($buyFor == '2') {
                 $rules = [
                     'receivers' => 'required|array|min:1',
-                    'receivers.*.phone' => 'required|regex:/^\d{9,15}$/',
+                    'receivers.*.phone' => 'required|regex:/^\d{9,15}$/|distinct',
                     'receivers.*.quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure receiver quantity doesn't exceed max stock
                 ];
                 $messages = [
@@ -60,6 +60,7 @@ class CreateOrderController extends Controller
                     'receivers.*.phone.required' => 'Số điện thoại không được để trống cho tất cả người nhận',
                     'receivers.*.phone.regex' => 'Số điện thoại phải có từ 9 đến 15 chữ số.',
                     'receivers.*.quantity.required' => 'Số lượng không được để trống cho tất cả người nhận',
+                    'receivers.*.phone.distinct' => 'Số điện thoại của các người nhận phải khác nhau.',
                     'receivers.*.quantity.max' => 'Số lượng của mỗi người nhận không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             } else {
@@ -98,16 +99,29 @@ class CreateOrderController extends Controller
                 $totalPrice = $quantity * $productPrice;
             }
 
-            // Create cart entry
-            $cart = CartModel::create([
-                'user_id' => JWTAuth::user()->id,
-                'product_id' => $productID,
-                'quantity' => $request->input('quantity', null),
-                'buy_for' => $buyFor,
-                'total_price' => $totalPrice,
-                'message' => $request->input('note', null),
-                'type' => 1,
-            ]);
+            $cart = CartModel::where('user_id', JWTAuth::user()->id)
+                ->where('product_id', $productID)
+                ->where('buy_for', $buyFor)
+                ->first();
+
+            if ($cart) {
+                // Update existing cart
+                $cart->quantity += $request->input('quantity', 0);
+                $cart->total_price += $totalPrice;
+                $cart->message = $request->input('note', null);
+                $cart->save();
+            } else {
+                // Create new cart entry
+                $cart = CartModel::create([
+                    'user_id' => JWTAuth::user()->id,
+                    'product_id' => $productID,
+                    'quantity' => $request->input('quantity', 0),
+                    'buy_for' => $buyFor,
+                    'total_price' => $totalPrice,
+                    'message' => $request->input('note', null),
+                    'type' => 1,
+                ]);
+            }
 
             // Save receivers if "buy_for = 2"
             if ($buyFor == '2') {
@@ -145,7 +159,7 @@ class CreateOrderController extends Controller
             if ($buyFor == '2') {
                 $rules = [
                     'receivers' => 'required|array|min:1',
-                    'receivers.*.phone' => 'required|regex:/^\d{9,15}$/',
+                    'receivers.*.phone' => 'required|regex:/^\d{9,15}$/|distinct',
                     'receivers.*.quantity' => 'required|integer|min:1|max:' . $maxQuantity, // Ensure receiver quantity doesn't exceed max stock
                 ];
                 $messages = [
@@ -153,6 +167,7 @@ class CreateOrderController extends Controller
                     'receivers.*.phone.required' => 'Số điện thoại không được để trống cho tất cả người nhận',
                     'receivers.*.phone.regex' => 'Số điện thoại phải có từ 9 đến 15 chữ số.',
                     'receivers.*.quantity.required' => 'Số lượng không được để trống cho tất cả người nhận',
+                    'receivers.*.phone.distinct' => 'Số điện thoại của các người nhận phải khác nhau.',
                     'receivers.*.quantity.max' => 'Số lượng của mỗi người nhận không được vượt quá số lượng còn lại của sản phẩm.',
                 ];
             } else {
