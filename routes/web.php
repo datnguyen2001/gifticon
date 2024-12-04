@@ -35,6 +35,13 @@ Route::get('/dang-ky', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
 Route::get('/xac-thuc-ma-otp', [AuthController::class, 'showOtpVerify'])->name('otp.verify');
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('otp.submit');
+Route::get('/kiem-tra-so-dien-thoai', [AuthController::class, 'checkPhone'])->name('check-phone');
+Route::post('/verify-otp-phone', [AuthController::class, 'verifyOtpPhone'])->name('verify-phone-otp');
+Route::get('/xac-thuc-ma-otp-so-dien-thoai/{phone}', [AuthController::class, 'showOtpVerifyPhone'])->name('phone.otp.verify');
+Route::post('/verify-otp-password', [AuthController::class, 'verifyOtpPassword'])->name('password.otp.submit');
+
+Route::get('/quen-mat-khau/{phone}', [AuthController::class, 'forgetPassword'])->name('forget-password');
+Route::post('/save-forget-password', [AuthController::class, 'saveForgetPassword'])->name('save.forget.password');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('thuong-hieu-yeu-thich/{slug}', [ShopController::class, 'trademark'])->name('trademark');
