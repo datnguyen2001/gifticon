@@ -7,6 +7,7 @@ use App\Models\MemberShipModel;
 use App\Models\ShopProductLocationModel;
 use App\Models\ShopProductModel;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProductController extends Controller
 {
