@@ -23,18 +23,31 @@
             <span class="error-message">{{ $errors->first('full_name') }}</span>
         @endif
     </div>
+    <div class="single-input">
+        <label class="label-field">Địa chỉ email <span style="color: red">*</span></label>
+        <input
+            type="text"
+            name="email"
+            class="input-field"
+            value="{{ old('email', $user->email ?? 'N/A') }}"
+            required
+        />
+        @if ($errors->has('email'))
+            <span class="error-message">{{ $errors->first('email') }}</span>
+        @endif
+    </div>
     <div class="double-input">
         <div class="double-input-item">
-            <label class="label-field">Địa chỉ email <span style="color: red">*</span></label>
+            <label class="label-field">Ngày sinh <span style="color: red">*</span></label>
             <input
-                type="text"
-                name="email"
+                type="date"
+                name="date_of_birth"
                 class="input-field"
-                value="{{ old('email', $user->email ?? 'N/A') }}"
+                value="{{ old('date_of_birth', $user->date_of_birth ?? '') }}"
                 required
             />
-            @if ($errors->has('email'))
-                <span class="error-message">{{ $errors->first('email') }}</span>
+            @if ($errors->has('date_of_birth'))
+                <span class="error-message">{{ $errors->first('date_of_birth') }}</span>
             @endif
         </div>
         <div class="double-input-item">

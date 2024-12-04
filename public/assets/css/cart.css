@@ -149,6 +149,12 @@ body {
 }
 
 .name-sp-cart {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
     color: #000000;
     font-weight: 700;
     font-size: 20px;
@@ -167,7 +173,18 @@ body {
     font-weight: 400;
     font-size: 14px;
 }
-
+.icon-wrapper{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.note-icon{
+    cursor: pointer;
+    img{
+        width: 24px;
+        height: 24px;
+    }
+}
 .btn-delete-cart img {
     width: 24px;
 }
@@ -175,7 +192,20 @@ body {
     border: none;
     background: none;
 }
-
+.modal-body{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.cart-detail-img{
+    width: 50%;
+    display: flex;
+    margin: auto;
+    margin-bottom: 10px;
+}
+.cart-detail-name{
+    font-size: 16px;
+}
 @media (max-width: 1200px) {
     .name-cart-use, .name-order {
         font-size: 20px;

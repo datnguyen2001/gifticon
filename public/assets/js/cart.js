@@ -30,3 +30,48 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize selected cart IDs and total price on page load
     updateSelectedCartIds();
 });
+
+$(document).ready(function() {
+    $(".note-icon").on("click", function() {
+        var cart = $(this).data('cart');
+        console.log(cart);
+        var product = cart.product;
+
+        // Populate the modal with dynamic content
+        $(".cart-detail-img").attr("src", imgSrc + product.src);
+        $(".cart-detail-name").text(product.name);
+        $("#price-sp-cart").text(cart.total_price.toLocaleString() + ' VNĐ');
+        $(".cart-detail-price").text((cart.total_price / cart.quantity).toLocaleString() + ' VNĐ');
+        $(".cart-detail-quantity").text(cart.quantity);
+        $(".cart-detail-start-date").text(new Date(product.start_date).toLocaleDateString('en-GB'));
+        $(".cart-detail-end-date").text(new Date(product.end_date).toLocaleDateString('en-GB'));
+
+        if (cart.buy_for == 1) {
+            $(".buy-for-type").text("Mua cho bản thân");
+            $(".table-bordered").hide(); // Hide the table for 'Mua cho bản thân'
+        } else if (cart.buy_for == 2) {
+            $(".buy-for-type").text("Mua cho người khác");
+            $(".table-bordered").show(); // Show the table for 'Mua cho người khác'
+        }
+
+        // Clear any previous rows in the receiver list
+        $(".receiver-list").empty();
+
+        // Add rows for each receiver
+        if (cart.receivers && cart.receivers.length > 0) {
+            cart.receivers.forEach(function(receiver) {
+                var row = '<tr>' +
+                    '<td>' + receiver.phone + '</td>' +
+                    '<td>' + receiver.quantity + '</td>' +
+                    '</tr>';
+                $(".receiver-list").append(row);
+            });
+        } else {
+            var row = '<tr><td colspan="2">Chưa có người nhận</td></tr>';
+            $(".receiver-list").append(row);
+        }
+
+        $("#noteModal").modal('show');
+    });
+});
+
