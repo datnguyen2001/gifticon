@@ -10,10 +10,10 @@
         @csrf
         <div class="container">
             <div class="row">
-                <div class="col-2">
+                <div class="col-md-2 col-4 product-image-col">
                     <img src="{{ asset($product->src) }}" alt="{{ @$product->name }}" class="product-image" />
                 </div>
-                <div class="col-10 product-content">
+                <div class="col-md-10 col-8 product-content">
                     <h5 class="product-name mb-0">{{ @$product->name }}</h5>
                     <p class="product-price">Đơn giá: <span style="font-weight: 600;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</span></p>
                     <p class="product-price">Số lượng còn lại: <span style="font-weight: 600;">{{ number_format($product->quantity, 0, ',', '.') }}</span></p>

@@ -7,8 +7,13 @@
     border-radius: 8px;
 }
 .product-name{
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .product-content{
     display: flex;
@@ -289,12 +294,18 @@ input:checked + .slider::before {
 }
 
 @media screen and (max-width: 768px) {
+    .product-image-col{
+        padding-right: 0 !important;
+    }
     .product-image{
         max-height: 120px;
         max-width: 120px;
     }
+    .product-content{
+        gap: 5px;
+    }
     .product-name{
-        font-size: 18px;
+        font-size: 16px;
     }
     .product-price{
         font-size: 14px;

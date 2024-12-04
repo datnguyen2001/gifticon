@@ -17,15 +17,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CreateOrderController extends Controller
 {
-    public function indexCart(Request $request)
-    {
-        $user = JWTAuth::user();
-        $productID = $request->query('productID');
-        $product = ShopProductModel::where('id', $productID)->first();
-
-        return view('web.create-order.index-cart', compact('user', 'product'));
-    }
-
     public function indexBuyNow(Request $request)
     {
         $user = JWTAuth::user();
@@ -141,7 +132,7 @@ class CreateOrderController extends Controller
                 ]);
             }
 
-            return redirect()->route('cart.index')->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
+            return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
