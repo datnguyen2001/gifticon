@@ -183,6 +183,15 @@ body {
         font-weight: 400;
     }
 }
+.forgot_password{
+    color: #666666;
+    text-align: right;
+    text-decoration: unset;
+    margin-top: 7px;
+}
+.forgot_password:hover {
+    color: #444444;
+}
 @media (max-width: 992px){
     #body{
         gap: 25px;
