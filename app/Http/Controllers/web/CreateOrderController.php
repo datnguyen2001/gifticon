@@ -5,8 +5,10 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\CartModel;
 use App\Models\CartReceiverModel;
+use App\Models\NotificationModel;
 use App\Models\OrderModel;
 use App\Models\OrderProductModel;
+use App\Models\ShopModel;
 use App\Models\ShopProductModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -270,6 +272,7 @@ class CreateOrderController extends Controller
 
             foreach ($request->input('carts') as $cart) {
                 $shopProduct = ShopProductModel::where('id', $cart['product_id'])->first();
+                $shop = ShopModel::find($shopProduct->shop_id);
                 if ($shopProduct) {
                     $shopID = $shopProduct->shop_id;
                     $unitPrice = $shopProduct->price;
@@ -292,6 +295,14 @@ class CreateOrderController extends Controller
 
                     $newQuantity = $productQuantity - $cart['quantity'];
                     $shopProduct->update(['quantity' => $newQuantity]);
+
+                    $notification = new NotificationModel();
+                    $notification->name = "Bạn có đơn hàng mới";
+                    $notification->content = "Bạn vừa mua '.$shopProduct->name.' từ của hàng '.$shop->name.' của chúng tôi. Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi.";
+                    $notification->sender_id = $shopID;
+                    $notification->receiver_id = $user->id;
+                    $notification->save();
+
                 } elseif ($cart['buy_for'] == '2'){
                     $cart = CartModel::where('id', $cart['id'])->first();
 
@@ -313,11 +324,19 @@ class CreateOrderController extends Controller
                         }
                         $newQuantity = $productQuantity - $totalQuantity;
                         $shopProduct->update(['quantity' => $newQuantity]);
+
+                        $notification = new NotificationModel();
+                        $notification->name = "Bạn có đơn hàng mới";
+                        $notification->content = "Bạn vừa mua '.$shopProduct->name.' từ của hàng '.$shop->name.' của chúng tôi. Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi.";
+                        $notification->sender_id = $shopID;
+                        $notification->receiver_id = $user->id;
+                        $notification->save();
                     }
                 }
 
                 CartModel::where('id', $cart['id'])->delete();
                 CartReceiverModel::where('cart_id', $cart['id'])->delete();
+
             }
 
             return redirect()->route('home')->with('success', 'Mua hàng thành công!');
