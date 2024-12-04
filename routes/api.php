@@ -3,6 +3,9 @@
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\HomeController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\api\TrademarkController;
+use \App\Http\Controllers\api\ProductsController;
+use \App\Http\Controllers\api\VoucherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +23,30 @@ Route::post('register/create-password', [AuthController::class, 'registerCreateP
 Route::post('register/create-profile', [AuthController::class, 'registerCreateProfile'])->name('register.create-profile');
 Route::post('login/check-phone', [AuthController::class, 'loginCheckPhone'])->name('login.check-phone');
 Route::post('login/submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
+Route::post('password/verify-otp', [AuthController::class, 'passwordVerifyOTP']);
+Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 
-Route::get('banner', [HomeController::class, 'banner'])->name('home.banner');
-Route::get('sale-today', [HomeController::class, 'saleToday'])->name('home.sale-today');
-Route::get('recent-brand', [HomeController::class, 'recentBrand'])->name('home.recent-brand');
-Route::get('category', [HomeController::class, 'category'])->name('home.category');
-Route::get('may-like', [HomeController::class, 'mayLike'])->name('home.may-like');
-Route::get('search', [HomeController::class, 'search'])->name('home.search');
+Route::get('banner', [HomeController::class, 'banner']);
+Route::get('sale-today', [HomeController::class, 'saleToday']);
+Route::get('trademark', [HomeController::class, 'trademark']);
+Route::get('category', [HomeController::class, 'category']);
+Route::get('may-like', [HomeController::class, 'mayLike']);
+Route::get('search', [HomeController::class, 'search']);
+Route::get('filter-trademark/{id}', [TrademarkController::class, 'filterTrademark']);
+Route::get('detail-trademark/{id}', [TrademarkController::class, 'detailTrademark']);
+Route::get('detail-product/{id}', [ProductsController::class, 'detailProduct']);
 
 Route::middleware('check-jwt-auth')->group(function () {
+    Route::get('my-voucher', [VoucherController::class, 'myVoucher']);
+    Route::get('voucher-given', [VoucherController::class, 'voucherGiven']);
+    Route::get('voucher-info/{id}', [VoucherController::class, 'voucherInfo']);
+    Route::get('detail-voucher/{id}', [VoucherController::class, 'detailVoucher']);
 
+    Route::get('notification', [HomeController::class, 'notification']);
+    Route::get('read-notification/{id}', [HomeController::class, 'readNotification']);
+
+    Route::post('update-profile', [AuthController::class, 'updateProfile']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
+
+    Route::post('logout', [AuthController::class, 'logout']);
 });

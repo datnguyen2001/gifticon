@@ -27,7 +27,7 @@ class MyVoteController extends Controller
                 'shop_products.name as product_name',
                 'shop_products.start_date as product_start_date',
                 'shop_products.end_date as product_end_date',
-                'shops.src as shop_src',
+                'shops.src as shop_src'
             );
 
         if ($slug == 'cua-toi') {

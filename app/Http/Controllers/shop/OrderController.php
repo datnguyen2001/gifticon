@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\NotificationModel;
 use App\Models\OrderModel;
 use App\Models\OrderProductModel;
 use App\Models\ShopProductModel;
@@ -126,9 +127,28 @@ class OrderController extends Controller
         try {
             $order = OrderModel::find($order_id);
             $order->status_id = $status_id;
-//            if ($status_id == 2) {
+            $orderItem = OrderProductModel::where('order_id',$order->id)->get();
+            foreach ($orderItem as $item){
+                if ($status_id == 2) {
 //                $this->sendVoucherZalo($order);
-//            }
+                    $notification = new NotificationModel();
+                    $notification->name = "Thay đổi trạng thái đơn hàng";
+                    $notification->content = 'Đơn hàng '.$order->order_code.' của bạn đã được xác nhân. Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi.';
+                    $notification->sender_id = $item->shop_id;
+                    $notification->receiver_id = $order->user_id;
+                    $notification->save();
+                }
+
+                if ($status_id == 3) {
+                    $notification = new NotificationModel();
+                    $notification->name = "Thay đổi trạng thái đơn hàng";
+                    $notification->content = 'Đơn hàng '.$order->order_code.' của bạn đã bị hủy. Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi.';
+                    $notification->sender_id = $item->shop_id;
+                    $notification->receiver_id = $order->user_id;
+                    $notification->save();
+                }
+            }
+
             $order->save();
 
             return \redirect()->route('admin.order.index', [$status_id])->with(['success' => 'Xét trạng thái đơn hàng thành công']);
