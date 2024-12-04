@@ -21,7 +21,7 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         z-index: 9999;
-        width: 50%;
+        width: 25%;
         height: 300px;
     }
 
@@ -40,15 +40,25 @@
     }
 
     .success-alert p {
-        font-size: 16px;
+        font-size: 20px;
         color: #333;
         font-weight: 600;
         text-align: center;
         margin: 0;
+        padding: 0 20px;
+    }
+    @media screen and (max-width: 1200px) {
+        .success-alert {
+            width: 50%;
+        }
     }
     @media screen and (max-width: 768px) {
         .success-alert {
             width: 75%;
+        }
+        .success-alert p {
+            font-size: 16px;
+            padding: 0 10px;
         }
     }
     @media screen and (max-width: 420px) {

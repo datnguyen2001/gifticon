@@ -35,6 +35,12 @@ $(document).ready(function() {
         e.preventDefault();
         hideLoading();
         var quantity = $(this).data('quantity');
+        if(!userLogin){
+            $(".warning-message").text("Vui lòng đăng nhập để thực hiện chức năng này!");
+            $(".warning-alert").fadeIn();
+            $(".warning-overlay").fadeIn();
+            return;
+        }
         if (parseInt(quantity) === 0) {
             $(".failed-message").text("Sản phẩm đã hết hàng!");
             $(".failed-alert").fadeIn();

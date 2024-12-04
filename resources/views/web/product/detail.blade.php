@@ -8,6 +8,10 @@
 {{--content of page--}}
 @section('content')
     @include('web.partials.failed-alert')
+    @include('web.partials.warning-alert')
+    @php
+        $userLogin = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
+    @endphp
     <a href="{{route('home')}}" class="line-back">
         <i class="fa-solid fa-arrow-left"></i>
         <span>Trở lại</span>
@@ -113,5 +117,6 @@
         const price = {{ $product->price }};
         const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
         const maxQuantity = {{ $product->quantity ?? 0 }};
+        const userLogin = @json($userLogin);
     </script>
 @stop
