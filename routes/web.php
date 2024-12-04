@@ -55,7 +55,7 @@ Route::post('/toggle-favorite/{id}', [HomeController::class, 'toggleFavorite']);
 Route::get('search', [HomeController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/gio-hang/tao-don-hang', [CreateOrderController::class, 'indexCart'])->name('create-order.add-cart.index');
+//    Route::get('/gio-hang/tao-don-hang', [CreateOrderController::class, 'indexCart'])->name('create-order.add-cart.index');
     Route::post('/them-gio-hang', [CreateOrderController::class, 'addToCartSubmit'])->name('create-order.add-cart.submit');
     Route::get('/mua-ngay/tao-don-hang', [CreateOrderController::class, 'indexBuyNow'])->name('create-order.buy-now.index');
     Route::post('/them-mua-ngay', [CreateOrderController::class, 'buyNowSubmit'])->name('create-order.buy-now.submit');

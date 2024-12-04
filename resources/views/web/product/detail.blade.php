@@ -2,11 +2,16 @@
 @section('title','Trang Cá Nhân')
 
 @section('style_page')
+    <link rel="stylesheet" href="{{asset('assets/css/create-order.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/product.css')}}">
 @stop
 {{--content of page--}}
 @section('content')
     @include('web.partials.failed-alert')
+    @include('web.partials.warning-alert')
+    @php
+        $userLogin = session('jwt_token') ? \Tymon\JWTAuth\Facades\JWTAuth::setToken(session('jwt_token'))->authenticate() : null;
+    @endphp
     <a href="{{route('home')}}" class="line-back">
         <i class="fa-solid fa-arrow-left"></i>
         <span>Trở lại</span>
@@ -65,9 +70,8 @@
             <div class="button-wrapper mt-3">
                 <a href="javascript:void(0)"
                    class="add-to-cart"
-                   data-quantity="{{ $product->quantity ?? 0 }}"
-                   data-route="{{ route('create-order.add-cart.index', ['productID' => $product->id]) }}">Thêm vào giỏ hàng</a>
-
+                   data-quantity="{{ $product->quantity ?? 0 }}">Thêm vào giỏ hàng</a>
+                @include('web.product.modal-add-cart')
                 <a href="javascript:void(0)"
                    class="buy-now"
                    data-quantity="{{ $product->quantity ?? 0 }}"
@@ -107,27 +111,12 @@
     </div>
 @stop
 @section('script_page')
+    <script src="{{asset('assets/js/create-order.js')}}"></script>
     <script src="{{asset('assets/js/product.js')}}"></script>
-
     <script>
-        $(document).ready(function() {
-            $('.add-to-cart, .buy-now').on('click', function(e) {
-                var quantity = $(this).data('quantity');
-                var route = $(this).data('route'); // Store the route in a data attribute
-
-                // If quantity is 0, prevent the link from navigating and show the error message
-                if (parseInt(quantity) === 0) {
-                    e.preventDefault(); // Prevent navigation
-                    hideLoading(); // Hide loading if needed
-
-                    $(".failed-message").text("Sản phẩm đã hết hàng!");
-                    $(".failed-alert").fadeIn();
-                    $(".failed-overlay").fadeIn();
-                } else if (parseInt(quantity) > 0) {
-                    // If quantity is greater than 0, navigate to the corresponding route
-                    window.location.href = route;
-                }
-            });
-        });
+        const price = {{ $product->price }};
+        const deleteIcon = "{{ asset('assets/images/trash-icon.png') }}";
+        const maxQuantity = {{ $product->quantity ?? 0 }};
+        const userLogin = @json($userLogin);
     </script>
 @stop

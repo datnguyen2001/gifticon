@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function() {
     $(".note-icon").on("click", function() {
         var cart = $(this).data('cart');
-        console.log(cart);
         var product = cart.product;
 
         // Populate the modal with dynamic content
