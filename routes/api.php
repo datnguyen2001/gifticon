@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\api\HomeController;
+use App\Http\Controllers\api\PaymentController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\api\TrademarkController;
 use \App\Http\Controllers\api\ProductsController;
@@ -41,6 +43,15 @@ Route::middleware('check-jwt-auth')->group(function () {
     Route::get('voucher-given', [VoucherController::class, 'voucherGiven']);
     Route::get('voucher-info/{id}', [VoucherController::class, 'voucherInfo']);
     Route::get('detail-voucher/{id}', [VoucherController::class, 'detailVoucher']);
+
+    Route::get('cart', [CartController::class, 'index']);
+    Route::get('cart-detail/{id}', [CartController::class, 'detail']);
+    Route::post('delete-cart/{id}', [CartController::class, 'deleteCart']);
+    Route::post('add-to-cart-submit', [CartController::class, 'addToCartSubmit']);
+
+    Route::get('payment', [PaymentController::class, 'index']);
+    Route::post('create-order', [PaymentController::class, 'createOrder']);
+    Route::post('confirm-order', [PaymentController::class, 'confirmOrder']);
 
     Route::get('notification', [HomeController::class, 'notification']);
     Route::get('read-notification/{id}', [HomeController::class, 'readNotification']);

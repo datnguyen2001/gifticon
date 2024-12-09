@@ -92,19 +92,32 @@ class CreateOrderController extends Controller
                 $totalPrice = $quantity * $productPrice;
             }
 
-            $cart = CartModel::where('user_id', JWTAuth::user()->id)
-                ->where('product_id', $productID)
-                ->where('buy_for', $buyFor)
-                ->first();
+            if($buyFor == '1'){
+                $cart = CartModel::where('user_id', JWTAuth::user()->id)
+                    ->where('product_id', $productID)
+                    ->where('buy_for', $buyFor)
+                    ->where('type', 1)
+                    ->first();
 
-            if ($cart) {
-                // Update existing cart
-                $cart->quantity += $request->input('quantity', 0);
-                $cart->total_price += $totalPrice;
-                $cart->message = $request->input('note', null);
-                $cart->save();
-            } else {
-                // Create new cart entry
+                if ($cart) {
+                    // Update existing cart
+                    $cart->quantity += $request->input('quantity', 0);
+                    $cart->total_price += $totalPrice;
+                    $cart->message = $request->input('note', null);
+                    $cart->save();
+                } else {
+                    // Create new cart entry
+                    $cart = CartModel::create([
+                        'user_id' => JWTAuth::user()->id,
+                        'product_id' => $productID,
+                        'quantity' => $request->input('quantity', 0),
+                        'buy_for' => $buyFor,
+                        'total_price' => $totalPrice,
+                        'message' => $request->input('note', null),
+                        'type' => 1,
+                    ]);
+                }
+            }elseif ($buyFor == '2') {
                 $cart = CartModel::create([
                     'user_id' => JWTAuth::user()->id,
                     'product_id' => $productID,
@@ -114,10 +127,6 @@ class CreateOrderController extends Controller
                     'message' => $request->input('note', null),
                     'type' => 1,
                 ]);
-            }
-
-            // Save receivers if "buy_for = 2"
-            if ($buyFor == '2') {
                 $totalQuantity = 0;
                 foreach ($receivers as $receiver) {
                     CartReceiverModel::create([
@@ -142,6 +151,9 @@ class CreateOrderController extends Controller
     {
         try {
             $user = JWTAuth::user();
+            // Set the 'is_selected' column to false for all carts of the current user
+            CartModel::where('user_id', $user->id)->update(['is_selected' => false]);
+
             $productID = $request->input('product_id');
             $product = ShopProductModel::findOrFail($productID);
             $productPrice = $product->price;
