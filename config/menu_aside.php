@@ -97,6 +97,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'revenue_orders',
+            'title' => 'Doanh thu và đơn hàng',
+            'icon' => 'bi bi-grid',
+            'route' => 'shop.revenue-orders',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'profile',
             'title' => 'Thông tin cá nhân',
             'icon' => 'bi bi-grid',

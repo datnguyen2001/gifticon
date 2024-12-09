@@ -135,4 +135,25 @@ class Controller extends BaseController
         return $response;
     }
 
+    public function sendNotification()
+    {
+        $content = [
+            "en" => "Thông báo mới từ ứng dụng của bạn"
+        ];
+
+        $players = ['player_id_1', 'player_id_2']; // Đây là ví dụ player IDs (user device ID)
+
+        // Gửi thông báo
+        $response = OneSignal::sendNotificationToUsers(
+            $content,  // Nội dung thông báo
+            $players,  // ID người nhận
+            $url = null,  // URL mà người dùng sẽ truy cập khi bấm vào thông báo
+            $data = null,  // Thêm data nếu cần (ví dụ như thông tin bổ sung cho app)
+            $buttons = null,  // Thêm các nút tùy chọn cho thông báo
+            $headings = ["en" => "Thông báo mới"]  // Tiêu đề thông báo
+        );
+
+        return response()->json($response);
+    }
+
 }

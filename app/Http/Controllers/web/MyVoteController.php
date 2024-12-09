@@ -19,6 +19,7 @@ class MyVoteController extends Controller
             ->join('shop_products', 'shop_products.id', '=', 'order_products.product_id')
             ->join('shops', 'shops.id', '=', 'order_products.shop_id')
             ->select(
+                'orders.status_id as status_id',
                 'order_products.id as order_product_id',
                 'order_products.buy_for',
                 'order_products.unit_price',
@@ -28,7 +29,7 @@ class MyVoteController extends Controller
                 'shop_products.start_date as product_start_date',
                 'shop_products.end_date as product_end_date',
                 'shops.src as shop_src'
-            );
+            )->where('status_id','!=','3');
 
         if ($slug == 'cua-toi') {
             $query->where('order_products.buy_for', 1);

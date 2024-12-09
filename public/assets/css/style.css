@@ -431,7 +431,6 @@ a:hover {
 .item-product {
     position: relative;
     padding: 5px 0;
-    cursor: pointer;
 }
 
 .item-product:before, .item-product:after {
