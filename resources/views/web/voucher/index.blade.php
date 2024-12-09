@@ -13,7 +13,11 @@
         </div>
         <div class="content-voucher">
             @foreach($orders as $order)
+                @if($order->status_id == 2)
                 <a href="{{ route('detailmy-vote', [$order->order_product_id]) }}" class="voucher-item">
+                    @else
+                        <div class="voucher-item">
+                    @endif
                     <img src="{{ asset('assets/images/Subtract.png') }}" class="img-voucher">
                     <img src="{{ asset($order->shop_src) }}" alt="{{ @$order->product_name }}" class="logo-trademark">
                     <div class="line-voucher"></div>
@@ -21,6 +25,9 @@
                         <p class="name-voucher-product">{{ @$order->product_name }}</p>
                         <p class="price-voucher-product">
                             Đơn giá: {{ number_format(@$order->unit_price, 0, ',', '.') }}đ
+                        @if($order->status_id == 1)
+                            <span>(Chờ xác nhận)</span>
+                            @endif
                         </p>
                         <div class="content-voucher-product">
                             Số lượng còn lại: {{ number_format(@$order->quantity, 0, ',', '.') }}
@@ -35,9 +42,12 @@
                         Từ: {{ \Carbon\Carbon::parse(@$order->product_start_date)->format('d/m/Y') }} đến
                         {{ \Carbon\Carbon::parse(@$order->product_end_date)->format('d/m/Y') }}
                     </div>
+                    @if($order->status_id == 2)
                 </a>
+                            @else
+                    <div>
+                            @endif
             @endforeach
-
         </div>
     </section>
 

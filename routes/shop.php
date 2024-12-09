@@ -15,6 +15,8 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware('check-shop-auth')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('index');
 
+    Route::get('revenue-orders', [DashboardController::class, 'revenueOrders'])->name('revenue-orders');
+
     Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
 

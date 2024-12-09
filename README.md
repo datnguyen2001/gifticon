@@ -68,7 +68,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 1. composer require tymon/jwt-auth
 2. php artisan jwt:secret
 3. php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider" --tag="config"
-3.composer require laravel/socialite
-4.composer require socialiteproviders/google
-5.composer require socialiteproviders/facebook
-6.composer require socialiteproviders/zalo
+4.composer require laravel/socialite
+5.composer require socialiteproviders/google
+6.composer require socialiteproviders/facebook
+7.composer require socialiteproviders/zalo
+8. composer require berkayk/onesignal-laravel
+9. php artisan vendor:publish --provider="Berkayk\OneSignal\OneSignalServiceProvider" --tag="config"

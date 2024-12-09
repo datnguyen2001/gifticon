@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\OrderModel;
 use App\Models\ShopModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -274,29 +275,65 @@ class DashboardController extends Controller
     }
 
     //Hiệu suất từng gian hàng
-    public function performanceShop($id)
+    public function performanceShop($id,Request $request)
     {
         $titlePage = 'Hiểu suất từng shop';
         $page_menu = 'performance_shop';
         $page_sub = null;
 
         $shop = ShopModel::where('display',1)->get();
-        $currentYear = now()->year;
-        $currentMonth = now()->month;
+        $startDate = $request->get('date_start');
+        $endDate = $request->get('date_end');
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
+        $query = DB::table('orders');
+        $queryOrder = DB::table('order_products');
+        $queryOrderShop = DB::table('order_products');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+            $queryOrder->whereBetween('order_products.created_at', [$startDate, $endDate]);
+            $queryOrderShop->whereBetween('order_products.created_at', [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->where('created_at', '>=', $startDate);
+            $queryOrder->where('order_products.created_at', '>=', $startDate);
+            $queryOrderShop->where('order_products.created_at', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->where('created_at', '<=', $endDate);
+            $queryOrder->where('order_products.created_at', '<=', $endDate);
+            $queryOrderShop->where('order_products.created_at', '<=', $endDate);
+        }else{
+            $query->whereNotNull('created_at');
+            $queryOrder->whereNotNull('order_products.created_at');
+            $queryOrderShop->whereNotNull('order_products.created_at');
+        }
+
+        $highestRevenueShops = clone $queryOrderShop;
+        $lowestRevenueShops = clone $queryOrderShop;
 
         if ($id == 'all'){
-            $order_all = DB::table('orders')->count('id');
-            $waiting_payment = DB::table('orders')->where('status_id',1)->count('id');
-            $order_paid = DB::table('orders')->where('status_id',2)->count('id');
-            $order_canceled = DB::table('orders')->where('status_id',3)->count('id');
+            $order_all = clone $query;
+            $waiting_payment = clone $query;
+            $order_paid = clone $query;
+            $order_canceled = clone $query;
+            $order_all_money = clone $query;
+            $waiting_payment_money = clone $query;
+            $order_paid_money = clone $query;
+            $order_canceled_money = clone $query;
+            $dailyRevenues = clone $query;
+            $currentRevenue = clone $query;
 
-            $order_all_money = DB::table('orders')->sum('total_price');
-            $waiting_payment_money = DB::table('orders')->where('status_id',1)->sum('total_price');
-            $order_paid_money = DB::table('orders')->where('status_id',2)->sum('total_price');
-            $order_canceled_money = DB::table('orders')->where('status_id',3)->sum('total_price');
+            $order_all = $order_all->count('id');
+            $waiting_payment = $waiting_payment->where('status_id', 1)->count('id');
+            $order_paid = $order_paid->where('status_id', 2)->count('id');
+            $order_canceled = $order_canceled->where('status_id', 3)->count('id');
 
-            $dailyRevenues = DB::table('orders')
-                ->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(total_price) as total_revenue'))
+            $order_all_money = $order_all_money->sum('total_price');
+            $waiting_payment_money = $waiting_payment_money->where('status_id', 1)->sum('total_price');
+            $order_paid_money = $order_paid_money->where('status_id', 2)->sum('total_price');
+            $order_canceled_money = $order_canceled_money->where('status_id', 3)->sum('total_price');
+
+            $dailyRevenues = $dailyRevenues->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(total_price) as total_revenue'))
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->orderBy(DB::raw('DATE(created_at)'))
                 ->get();
@@ -306,23 +343,32 @@ class DashboardController extends Controller
                 'days' => $dailyRevenues->pluck('day')->toArray(),
             ];
 
-            $currentRevenue = DB::table('orders')
-                ->sum('total_price');
+            $currentRevenue = $currentRevenue->sum('total_price');
         }else{
-            $order_all = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->count('order_products.id');
-            $waiting_payment = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',1)->count('order_products.id');
-            $order_paid =  DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',2)->count('order_products.id');
-            $order_canceled =  DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',3)->count('order_products.id');
+            $order_all = clone $queryOrder;
+            $waiting_payment = clone $queryOrder;
+            $order_paid = clone $queryOrder;
+            $order_canceled = clone $queryOrder;
+            $order_all_money = clone $queryOrder;
+            $waiting_payment_money = clone $queryOrder;
+            $order_paid_money = clone $queryOrder;
+            $order_canceled_money = clone $queryOrder;
+            $dailyRevenues = clone $queryOrder;
+            $currentRevenue = clone $queryOrder;
 
-            $order_all_money = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
-            $waiting_payment_money = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',1)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
-            $order_paid_money = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',2)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
-            $order_canceled_money = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',3)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
+            $order_all = $order_all->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->count('order_products.id');
+            $waiting_payment = $waiting_payment->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',1)->count('order_products.id');
+            $order_paid =  $order_paid->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',2)->count('order_products.id');
+            $order_canceled =  $order_canceled->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',3)->count('order_products.id');
 
-            $dailyRevenues = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')
+            $order_all_money = $order_all_money->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
+            $waiting_payment_money = $waiting_payment_money->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',1)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
+            $order_paid_money = $order_paid_money->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',2)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
+            $order_canceled_money = $order_canceled_money->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->where('orders.status_id',3)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
+
+            $dailyRevenues = $dailyRevenues->join('orders', 'order_products.order_id', '=', 'orders.id')
                 ->select(DB::raw('DATE(order_products.created_at) as day'), DB::raw('SUM(order_products.quantity * order_products.unit_price) as total_revenue'))
                 ->where('order_products.shop_id',$id)
-                ->whereYear('order_products.created_at', $currentYear)->whereMonth('order_products.created_at', $currentMonth)
                 ->groupBy(DB::raw('DATE(order_products.created_at)'))
                 ->orderBy(DB::raw('DATE(order_products.created_at)'))
                 ->get();
@@ -332,33 +378,30 @@ class DashboardController extends Controller
                 'days' => $dailyRevenues->pluck('day')->toArray(),
             ];
 
-            $currentRevenue = DB::table('order_products')->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)->whereYear('order_products.created_at', $currentYear)
-                ->whereMonth('order_products.created_at', $currentMonth)->sum(DB::raw('order_products.quantity * order_products.unit_price'));
-
+            $currentRevenue =$currentRevenue->join('orders', 'order_products.order_id', '=', 'orders.id')->where('order_products.shop_id',$id)
+                ->sum(DB::raw('order_products.quantity * order_products.unit_price'));
         }
 
         // Tìm gian hàng có doanh thu cao nhất trong tháng và năm hiện tại
-        $highestRevenueShop = DB::table('order_products')
-            ->join('orders', 'order_products.order_id', '=', 'orders.id')
-            ->join('shops', 'order_products.shop_id', '=', 'shops.id')
-            ->select(
-                'shops.name as shop_name',
-                DB::raw('SUM(order_products.quantity * order_products.unit_price) as total_revenue')
-            )
-            ->groupBy('shops.name')
+        $highestRevenueShop = $highestRevenueShops->join('orders as o1', 'order_products.order_id', '=', 'o1.id')
+        ->join('shops as s1', 'order_products.shop_id', '=', 's1.id')
+        ->select(
+            's1.name as shop_name',
+            DB::raw('SUM(order_products.quantity * order_products.unit_price) as total_revenue')
+        )
+            ->groupBy('s1.name')
             ->orderByDesc('total_revenue')
             ->limit(1)
             ->first();
 
         // Tìm gian hàng có doanh thu thấp nhất
-        $lowestRevenueShop  = DB::table('order_products')
-            ->join('orders', 'order_products.order_id', '=', 'orders.id')
-            ->join('shops', 'order_products.shop_id', '=', 'shops.id')
-            ->select(
-                'shops.name as shop_name',
-                DB::raw('SUM(order_products.quantity * order_products.unit_price) as total_revenue')
-            )
-            ->groupBy('shops.name')
+        $lowestRevenueShop  = $lowestRevenueShops->join('orders as o2', 'order_products.order_id', '=', 'o2.id')
+        ->join('shops as s2', 'order_products.shop_id', '=', 's2.id')
+        ->select(
+            's2.name as shop_name',
+            DB::raw('SUM(order_products.quantity * order_products.unit_price) as total_revenue')
+        )
+            ->groupBy('s2.name')
             ->orderBy('total_revenue')
             ->limit(1)
             ->first();

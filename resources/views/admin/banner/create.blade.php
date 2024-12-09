@@ -22,7 +22,7 @@
                     <div class="row mt-3">
                         <div class="col-3">Link: </div>
                         <div class="col-8">
-                            <input type="number" class="form-control" name="link" value="">
+                            <input type="text" class="form-control" name="link" value="">
                         </div>
                     </div>
                     <div class="row mt-3">

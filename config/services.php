@@ -49,4 +49,11 @@ return [
         'redirect' => 'https://gifticon.krmedi.vn/auth/zalo/callback'
     ],
 
+    'onesignal' => [
+        'app_id' => env('ONESIGNAL_APP_ID'),
+        'api_key' => env('ONESIGNAL_API_KEY'),
+        'user_auth_key' => env('ONESIGNAL_USER_AUTH_KEY'),
+    ],
+
+
 ];

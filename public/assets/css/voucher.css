@@ -416,6 +416,9 @@
         font-size: 14px;
         padding: 5px 16px;
     }
+    .content-item-voucher {
+        gap: 5px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -427,8 +430,11 @@
     .content-item-voucher {
         left: 135px;
         width: 295px;
+        gap: 3px;
     }
-
+    .name-voucher-product {
+    font-size: 13px;
+    }
     .line-voucher {
         left: 122px;
     }

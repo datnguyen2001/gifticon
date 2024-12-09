@@ -23,7 +23,7 @@
                     <div class="row mt-3">
                         <div class="col-3">Link: </div>
                         <div class="col-8">
-                            <input type="number" class="form-control" name="link" value="{{@$banner->link}}">
+                            <input type="text" class="form-control" name="link" value="{{@$banner->link}}">
                         </div>
                     </div>
 
