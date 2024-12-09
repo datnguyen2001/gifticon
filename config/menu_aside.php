@@ -28,6 +28,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'user_behavior',
+            'title' => 'Hành vi người dùng',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.user_behavior',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'banner',
             'title' => 'Cài đặt Banner',
             'icon' => 'bi bi-grid',
