@@ -48,6 +48,10 @@ class CartController extends Controller
     public function payment(Request $request)
     {
         try {
+            $user = JWTAuth::user();
+            // Set the 'is_selected' column to false for all carts of the current user
+            CartModel::where('user_id', $user->id)->update(['is_selected' => false]);
+
             $selectedCartIds = $request->input('selected_cart_id');
             if (empty($selectedCartIds) || count(array_filter($selectedCartIds)) === 0) {
                 return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
