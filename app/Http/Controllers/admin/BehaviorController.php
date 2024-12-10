@@ -23,7 +23,7 @@ class BehaviorController extends Controller
 
         // Initialize Google Analytics Data API client
         $analyticsData = new AnalyticsData($client);
-        $propertyId = 'properties/463728937';
+        $propertyId = 'properties/469790856';
 
         // Prepare request
         $request = new AnalyticsData\RunReportRequest([
@@ -51,21 +51,13 @@ class BehaviorController extends Controller
                     'screenPageViews' => $row->getMetricValues()[0]->getValue()
                 ];
             }
-
-            return response()->json([
-                'message' => 'Lấy danh sách thống kê thành công.',
-                'data' => [
-                    'ga4' => $ga4Data
-                ],
-                'status' => true
-            ]);
+            return view('admin.statistical.user_behavior', compact('ga4Data', 'titlePage', 'page_menu', 'page_sub'));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-
-        return view('admin.statistical.user_behavior', compact('titlePage', 'page_menu', 'page_sub'));
     }
 }
+
 
 
 

@@ -19,11 +19,11 @@ use \App\Http\Controllers\api\VoucherController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('check-phone', [AuthController::class, 'checkPhone'])->name('login.check-phone');
 Route::post('register/send-otp', [AuthController::class, 'registerSendOTP'])->name('register.send-otp');
 Route::post('register/verify-otp', [AuthController::class, 'registerVerifyOTP'])->name('register.verify-otp');
 Route::post('register/create-password', [AuthController::class, 'registerCreatePassword'])->name('register.create-password');
 Route::post('register/create-profile', [AuthController::class, 'registerCreateProfile'])->name('register.create-profile');
-Route::post('login/check-phone', [AuthController::class, 'loginCheckPhone'])->name('login.check-phone');
 Route::post('login/submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
 Route::post('password/verify-otp', [AuthController::class, 'passwordVerifyOTP']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
