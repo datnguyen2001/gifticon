@@ -71,36 +71,24 @@ class DashboardController extends Controller
         }
     }
 
-    public function revenueOrders()
+    public function revenueOrders(Request $request)
     {
         $titlePage = 'Doanh thu và đơn hàng';
         $page_menu = 'revenue_orders';
         $page_sub = null;
 
-        // Lấy danh sách các năm
-        $years = DB::table('orders')
-            ->select(DB::raw('YEAR(created_at) as year'))
-            ->distinct()
-            ->orderBy('year', 'desc')
-            ->get();
-
-        // Lấy danh sách các quý
-        $quarters = DB::table('orders')
-            ->select(DB::raw('QUARTER(created_at) as quarter'))
-            ->distinct()
-            ->get();
-
-        // Lấy danh sách các tháng
-        $months = DB::table('orders')
-            ->select(DB::raw('MONTH(created_at) as month'))
-            ->distinct()
-            ->orderBy('month', 'desc')
-            ->get();
-
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         $startDate = Carbon::create($currentYear, $currentMonth, 1);
         $endDate = $startDate->copy()->endOfMonth();
+
+        if ($request->has('date_start') && $request->date_start) {
+            $startDate = Carbon::parse($request->date_start);
+        }
+
+        if ($request->has('date_end') && $request->date_end) {
+            $endDate = Carbon::parse($request->date_end);
+        }
 
         $queryOrder = DB::table('order_products');
         $order_all = clone $queryOrder;
@@ -136,7 +124,7 @@ class DashboardController extends Controller
         $totalRevenue = $revenuesData->sum();
 
         return view('shop.statistical.revenue-orders', compact(
-            'years', 'quarters', 'months', 'dates', 'totalRevenue', 'revenuesData','titlePage','page_menu','page_sub','order_all',
+            'dates', 'totalRevenue', 'revenuesData','titlePage','page_menu','page_sub','order_all',
             'waiting_payment','order_paid','order_canceled','order_all_money','waiting_payment_money','order_paid_money','order_canceled_money'
         ));
     }

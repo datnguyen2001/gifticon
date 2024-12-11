@@ -3,42 +3,27 @@
 @section('main')
     <main id="main" class="main">
 
-<!-- Bộ lọc thời gian -->
-    <div class="filter row mb-3">
-        <div class="col-3">
-            <select id="filter-month" class="form-control">
-                <option value="">Theo Tháng</option>
-                @foreach ($months as $month)
-                    <option value="{{ $month->month }}" {{ request('month') == $month->month ? 'selected' : '' }}>
-                        Tháng {{ $month->month }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-3">
-            <select id="filter-quarter" class="form-control">
-                <option value="">Theo Quý</option>
-                @foreach($quarters as $quarter)
-                    <option value="{{ $quarter->quarter }}" {{ request('quarter') == $quarter->quarter ? 'selected' : '' }}>
-                        Quý {{ $quarter->quarter }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-3">
-            <select id="filter-year" class="form-control">
-                <option value="">Theo Năm</option>
-                @foreach($years as $year)
-                    <option value="{{ $year->year }}" {{ request('year') == $year->year ? 'selected' : '' }}>
-                        Năm {{ $year->year }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-3">
-            <a href="{{ route('shop.revenue-orders') }}" class="btn btn-success">Làm mới</a>
-        </div>
-    </div>
+        <!-- Bộ lọc thời gian -->
+        <form action="{{route('shop.revenue-orders')}}" method="GET" class="filter row mb-3" enctype="multipart/form-data">
+            <div class="col-12 mb-3">
+                <h8 class="card-title" style="color: #f26522">Bộ lọc thời gian</h8>
+            </div>
+            <div class="col-3">
+                <label class="mb-2">Ngày bắt đầu</label>
+                <input type="date" class="form-control" name="date_start" value="{{ request('date_start') }}">
+            </div>
+            <div class="col-3">
+                <label class="mb-2">Ngày kết thúc</label>
+                <input type="date" class="form-control" name="date_end" value="{{ request('date_end') }}">
+            </div>
+            <div class="col-3 d-flex flex-column">
+                <label style="margin-bottom: 7px">Hành động</label>
+                <div>
+                    <button type="submit" class="btn btn-success">Lọc</button>
+                    <a href="{{url('shop/revenue-orders')}}" class="btn btn-secondary mx-2">Làm mới</a>
+                </div>
+            </div>
+        </form>
 
         <div class="pagetitle">
             <h8 class="card-title" style="color: #f26522">Thống kê đơn hàng</h8>
@@ -125,7 +110,6 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
-                            // Dữ liệu doanh thu ban đầu
                             const series = {
                                 "dailyDataSeries": {
                                     "prices": @json($revenuesData),
@@ -172,7 +156,6 @@
                 </div>
             </div>
         </div>
-
 
     </main>
 @endsection
