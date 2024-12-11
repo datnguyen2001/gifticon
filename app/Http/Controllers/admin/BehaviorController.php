@@ -17,7 +17,7 @@ class BehaviorController extends Controller
     public function userBehavior()
     {
         $titlePage = 'Hành vi người dùng';
-        $page_menu = 'user_behavior';
+        $page_menu = 'page_view';
         $page_sub = null;
 
         $credentialsPath = storage_path('app/public/gifticon-ga4.json');
@@ -142,6 +142,10 @@ class BehaviorController extends Controller
                 $startDate = Carbon::now()->subMonth()->startOfMonth();
                 $endDate = Carbon::now()->subMonth()->endOfMonth();
                 break;
+            case 'custom':
+                $startDate = Carbon::parse($request->start_date);
+                $endDate = Carbon::parse($request->end_date);
+                break;
         }
 
         $dataPageView = UserBehavior::whereBetween('date', [$startDate, $endDate])
@@ -175,6 +179,10 @@ class BehaviorController extends Controller
             case 'c_last_month':
                 $startDate = Carbon::now()->subMonth()->startOfMonth();
                 $endDate = Carbon::now()->subMonth()->endOfMonth();
+                break;
+            case 'c_custom':
+                $startDate = Carbon::parse($request->start_date);
+                $endDate = Carbon::parse($request->end_date);
                 break;
         }
 
