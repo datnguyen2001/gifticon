@@ -26,6 +26,9 @@ Route::middleware('check-admin-auth')->group(function () {
     Route::get('revenue-growth', [DashboardController::class, 'revenueGrowth']);
 
     Route::get('user_behavior', [BehaviorController::class, 'userBehavior'])->name('user_behavior');
+    Route::get('user_behavior/{range}', [BehaviorController::class, 'userBehaviorRange'])->name('user_behavior_rage');
+    Route::get('user_behavior_percentage/{range}', [BehaviorController::class, 'userBehaviorPercentageRange'])->name('user_behavior_rage');
+
     //Hiệu suất từng gian hàng
     Route::get('performance_shop/{id}', [DashboardController::class, 'performanceShop'])->name('performance_shop');
 
