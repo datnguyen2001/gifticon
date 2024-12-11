@@ -30,7 +30,7 @@
                     <span class="error-message">{{ $errors->first('password') }}</span>
                 @endif
                 <div class="d-flex justify-content-end">
-                    <a href="{{route('check-phone')}}" class="forgot_password">Quên mậy khẩu?</a>
+                    <a href="{{route('check-phone')}}" class="forgot_password">Quên mật khẩu?</a>
                 </div>
             </div>
             <div class="submit-btn-wrapper">
