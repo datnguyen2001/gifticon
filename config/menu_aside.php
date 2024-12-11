@@ -113,6 +113,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'product_statistics',
+            'title' => 'Thống kê sản phẩm',
+            'icon' => 'bi bi-grid',
+            'route' => 'shop.product-statistics',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'profile',
             'title' => 'Thông tin cá nhân',
             'icon' => 'bi bi-grid',

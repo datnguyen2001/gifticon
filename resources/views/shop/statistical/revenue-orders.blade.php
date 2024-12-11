@@ -1,5 +1,10 @@
 @extends('shop.layout.index')
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        right: 14px;
+    }
+</style>
 @section('main')
     <main id="main" class="main">
 
@@ -157,8 +162,42 @@
             </div>
         </div>
 
+        <div class="pagetitle">
+            <h8 class="card-title" style="color: #f26522">Doanh thu theo sản phẩm</h8>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card info-card sales-card">
+                <div class="card-body" style="padding-top: 20px">
+                    <div class="col-6">
+                        <span style="margin-bottom: 5px;display: inline-block">Chọn sản phẩm</span>
+                        <form action="{{route('shop.revenue-orders')}}" method="GET" class="filter row mb-3" enctype="multipart/form-data">
+                            <input type="date" class="form-control" name="date_start" value="{{ request('date_start') }}" hidden>
+                            <input type="date" class="form-control" name="date_end" value="{{ request('date_end') }}" hidden>
+                            <select class="js-example-basic-single form-control" name="product_id" onchange="this.form.submit()">
+                            <option value="" >Tên sản phẩm</option>
+                            @foreach($listProduct as $item)
+                                <option value="{{ $item->id }}" {{ request('product_id') == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                @endforeach
+                        </select>
+                        </form>
+                        <div class="d-flex align-items-center mt-3">
+                            <p style="font-size: 18px;font-weight: bold;margin-right: 10px">Tổng số tiền thu được của sản phẩm:</p>
+                            <p style="font-size: 18px;font-weight: bold">{{number_format($totalRevenueProduct)}}đ</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </main>
 @endsection
 @section('script')
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 @endsection

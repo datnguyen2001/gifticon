@@ -71,5 +71,10 @@ class ShopProductModel extends Model
             ->exists();
     }
 
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProductModel::class, 'product_id', 'id');
+    }
+
 }
 
