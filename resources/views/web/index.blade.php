@@ -35,7 +35,7 @@
         gtag('js', new Date());
 
         gtag('config', 'G-6329DR07MN');
-        
+
         gtag('event', 'page_view_time', {
             'page_title': document.title,
             'page_location': window.location.href,
