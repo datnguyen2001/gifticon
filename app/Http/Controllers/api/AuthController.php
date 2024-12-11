@@ -12,14 +12,32 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    public function checkPhone(Request $request)
+    {
+        $phone = $request->get('phone');
+
+        if (substr($phone, 0, 1) !== '0') {
+            $phone = '0' . $phone;
+        }
+
+        $phonePattern = '/^(0[1-9]{1})([0-9]{8})$/';
+
+        if (!preg_match($phonePattern, $phone)) {
+            return response()->json(['message' => 'Số điện thoại không hợp lệ', 'type' => 0, 'status' => 200]);
+        }
+
+        $user = User::where('phone', $phone)->first();
+        if (!$user) {
+            return response()->json(['message' => 'Vui lòng tiếp tục đăng ký', 'type' => 1, 'status' => 200]);
+        }
+
+        return response()->json(['message' => 'Vui lòng tiếp tục đăng nhập', 'type' => 2, 'status' => 200]);
+    }
+
+
     public function registerSendOTP(Request $request)
     {
         $phone = $request->get('phone');
-        $existingUser = User::where('phone', $phone)->first();
-
-        if ($existingUser) {
-            return response()->json(['message' => 'SĐT này đã được đăng ký', 'status' => 400]);
-        }
 
         $otp = random_int(100000, 999999);
 
@@ -106,18 +124,6 @@ class AuthController extends Controller
         ]);
 
         return response()->json(['message' => 'Cập nhật hồ sơ thành công', 'status' => 200]);
-    }
-
-    public function loginCheckPhone(Request $request)
-    {
-        $phone = $request->get('phone');
-
-        $user = User::where('phone', $phone)->first();
-        if (!$user) {
-            return response()->json(['message' => 'Người dùng không tồn tại', 'status' => 400]);
-        }
-
-        return response()->json(['message' => 'Số điện thoại tồn tại, vui lòng tiếp tục', 'status' => 200]);
     }
 
     public function loginSubmit(Request $request)

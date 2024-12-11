@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BehaviorController;
 use App\Http\Controllers\admin\MemberShipController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\admin\LoginController;
@@ -24,6 +25,7 @@ Route::middleware('check-admin-auth')->group(function () {
     Route::get('statistics', [DashboardController::class, 'statistics']);
     Route::get('revenue-growth', [DashboardController::class, 'revenueGrowth']);
 
+    Route::get('user_behavior', [BehaviorController::class, 'userBehavior'])->name('user_behavior');
     //Hiệu suất từng gian hàng
     Route::get('performance_shop/{id}', [DashboardController::class, 'performanceShop'])->name('performance_shop');
 
