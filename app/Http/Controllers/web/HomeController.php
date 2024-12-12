@@ -7,9 +7,12 @@ use App\Models\BannerModel;
 use App\Models\CategoryModel;
 use App\Models\FavoritesModel;
 use App\Models\FooterModel;
+use App\Models\ProductReviewModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class HomeController extends Controller
 {

@@ -73,8 +73,8 @@ class DashboardController extends Controller
             'days' => $dailyRevenues->pluck('day')->toArray(),
         ];
 
-        $currentRevenue = DB::table('orders')
-            ->sum('total_price');
+        $currentRevenue = DB::table('orders') ->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)->sum('total_price');
 
         //Tăng trưởng doanh thu
         $currentRevenues = DB::table('orders')

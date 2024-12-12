@@ -53,6 +53,10 @@ Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->n
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 Route::post('/toggle-favorite/{id}', [HomeController::class, 'toggleFavorite']);
 Route::get('search', [HomeController::class, 'search'])->name('search');
+Route::post('/product-reviews', [ProductController::class, 'storeReviews'])->name('product-reviews.store');
+Route::get('/load-reviews', [ProductController::class, 'loadReviews'])->name('load.reviews');
+
+
 
 Route::middleware('auth')->group(function () {
 //    Route::get('/gio-hang/tao-don-hang', [CreateOrderController::class, 'indexCart'])->name('create-order.add-cart.index');
