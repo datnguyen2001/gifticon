@@ -19,7 +19,8 @@ class OrderProductModel extends Model
         'unit_price',
         'buy_for',
         'receiver_phone',
-        'barcode'
+        'barcode',
+        'commission_money'
     ];
 
     public function product()

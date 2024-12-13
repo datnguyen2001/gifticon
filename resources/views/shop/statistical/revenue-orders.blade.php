@@ -191,6 +191,46 @@
             </div>
         </div>
 
+        <div class="pagetitle">
+            <h8 class="card-title" style="color: #f26522">Thời gian mua hàng phổ biển</h8>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card info-card sales-card">
+                <div class="card-body" style="padding-top: 20px">
+                    <div class="row">
+                        <div class="col-6">
+                            <table class="table table-bordered text-center">
+                                <tr>
+                                    <th>Khung giờ</th>
+                                    <th>Đơn hàng</th>
+                                </tr>
+                                @foreach($morningRanges as $time => $count)
+                                    <tr>
+                                        <td>{{ $time }}</td>
+                                        <td class="{{ $count == $maxOrderCount ? 'text-danger' : '' }}">{{ $count }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table class="table table-bordered text-center">
+                                <tr>
+                                    <th>Khung giờ</th>
+                                    <th>Đơn hàng</th>
+                                </tr>
+                                @foreach($afternoonRanges as $time => $count)
+                                    <tr>
+                                        <td>{{ $time }}</td>
+                                        <td class="{{ $count == $maxOrderCount ? 'text-danger' : '' }}">{{ $count }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 @endsection
 @section('script')

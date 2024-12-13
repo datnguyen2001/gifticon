@@ -50,6 +50,7 @@ class ShopController extends Controller
                 'name' => $request->get('title'),
                 'slug' => Str::slug($request->get('title')),
                 'phone'=> $request->get('phone'),
+                'commission_percentage' => $request->get('commission_percentage'),
                 'password'=>Hash::make($request->get('password')),
                 'content'=>$request->get('content'),
                 'src'=>$imagePath,
@@ -116,6 +117,7 @@ class ShopController extends Controller
             $shop->name = $request->get('title');
             $shop->slug = Str::slug($request->get('title'));
             $shop->phone = $request->get('phone');
+            $shop->commission_percentage = $request->get('commission_percentage');
             $shop->content = $request->get('content');
             $shop->display = $display;
             $shop->save();

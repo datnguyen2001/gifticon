@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 <style>
-    .area-custom-date, .order-custom-date{
+    .area-custom-date, .order-custom-date, .shop-custom-date{
         display: flex;
         align-items: center;
     }
@@ -30,6 +30,33 @@
                         </div>
                     </div>
                     <div id="areaChart"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">Lượng truy cập website theo shop: </h5>
+                        <div class="d-flex align-items-center" style="gap: 10px">
+                            <div class="shop-custom-date">
+                                <label class="mx-2">Từ: </label>
+                                <input type="date" id="start_date_shop" name="start_date" class="form-control"/>
+                                <label class="me-2 mx-4">Đến: </label>
+                                <input type="date" id="end_date_shop" name="end_date" class="form-control"/>
+                            </div>
+                            <select class="form-control" id="shopBehaviorSort" style="width: fit-content">
+                                <option value="s_30_days_before" selected>30 Ngày Trước</option>
+                                <option value="s_yesterday">Hôm qua</option>
+                                <option value="s_7_days_before">7 Ngày Trước</option>
+                                <option value="s_this_month">Tháng Này</option>
+                                <option value="s_last_month">Tháng Trước</option>
+                                <option value="s_custom">Tuỳ Chỉnh</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="shopChart"></div>
 
                 </div>
             </div>
@@ -73,6 +100,15 @@
                     $('.area-custom-date').show();
                 } else {
                     $('.area-custom-date').hide();
+                }
+            });
+
+            $('.shop-custom-date').hide();
+            $('#shopBehaviorSort').change(function() {
+                if ($(this).val() === 's_custom') {
+                    $('.shop-custom-date').show();
+                } else {
+                    $('.shop-custom-date').hide();
                 }
             });
 
@@ -196,6 +232,147 @@
                 });
             });
 
+            const shopGa4Data = Object.values(@json($dataPageViewByShop));
+
+            const groupedData = shopGa4Data.reduce((acc, item) => {
+                const date = new Date(item.date.split('/').reverse().join('-')).toLocaleDateString('en-GB');
+                if (!acc[date]) {
+                    acc[date] = {};
+                }
+                if (!acc[date][item.shop_name]) {
+                    acc[date][item.shop_name] = 0;
+                }
+                acc[date][item.shop_name] += parseInt(item.page_view);
+                return acc;
+            }, {});
+
+            const uniqueShopNames = [...new Set(shopGa4Data.map(item => item.shop_name))];
+
+            const shopDates = Object.keys(groupedData).sort((a, b) => {
+                const dateA = new Date(a.split('/').reverse().join('-'));
+                const dateB = new Date(b.split('/').reverse().join('-'));
+                return dateA - dateB;
+            });
+
+            const seriesData = uniqueShopNames.map(shop_name => {
+                return {
+                    name: shop_name,
+                    data: shopDates.map(date => groupedData[date][shop_name] || 0)
+                };
+            });
+
+            var shopOptions = {
+                series: seriesData,
+                chart: {
+                    type: 'line',
+                    height: 350
+                },
+                stroke: {
+                    width: 2
+                },
+                xaxis: {
+                    categories: shopDates,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Lượng truy cập'
+                    },
+                    labels: {
+                        formatter: function (value) {
+                            return value.toLocaleString();
+                        }
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (value) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }
+            };
+
+            var shopChart = new ApexCharts($("#shopChart")[0], shopOptions);
+            shopChart.render();
+
+            // Handle the change in the select dropdown (for range selection)
+            $('#shopBehaviorSort, #start_date_shop, #end_date_shop').on('change', function () {
+                const selectedRange = $('#shopBehaviorSort').val();
+                let startDate = $('#start_date_shop').val();
+                let endDate = $('#end_date_shop').val();
+
+                if (selectedRange !== 's_custom') {
+                    startDate = null;
+                    endDate = null;
+                }
+
+                if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+                    alert('Vui lòng chọn ngày kết thúc sau ngày bắt đầu');
+                    return;
+                }
+
+                if (selectedRange === 'custom' && (!startDate || !endDate)) {
+                    return;
+                }
+                // Make an AJAX request to fetch the data for the selected range
+                $.ajax({
+                    url: `/admin/user_behavior_shop/${selectedRange}`,
+                    method: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    success: function (data) {
+                        const newGa4Data = Object.values(data);
+                        const groupedData = newGa4Data.reduce((acc, item) => {
+                            const date = new Date(item.date.split('/').reverse().join('-')).toLocaleDateString('en-GB');
+                            if (!acc[date]) {
+                                acc[date] = {};
+                            }
+                            if (!acc[date][item.shop_name]) {
+                                acc[date][item.shop_name] = 0;
+                            }
+                            acc[date][item.shop_name] += parseInt(item.page_view);
+                            return acc;
+                        }, {});
+
+                        const uniqueShopNames = [...new Set(newGa4Data.map(item => item.shop_name))];
+
+                        const shopDates = Object.keys(groupedData).sort((a, b) => {
+                            const dateA = new Date(a.split('/').reverse().join('-'));
+                            const dateB = new Date(b.split('/').reverse().join('-'));
+                            return dateA - dateB;
+                        });
+
+                        const seriesData = uniqueShopNames.map(shop_name => {
+                            return {
+                                name: shop_name,
+                                data: shopDates.map(date => groupedData[date][shop_name] || 0)
+                            };
+                        });
+
+                        shopChart.updateOptions({
+                            series: seriesData,
+                            xaxis: {
+                                categories: shopDates,
+                            },
+                            yaxis: {
+                                title: {
+                                    text: 'Lượng truy cập'
+                                },
+                                labels: {
+                                    formatter: function (value) {
+                                        return value.toLocaleString();
+                                    }
+                                }
+                            },
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
 
             const orderResultCalculate = Object.values(@json($orderResultCalculate));
 

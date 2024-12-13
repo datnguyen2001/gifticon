@@ -14,6 +14,7 @@ class ShopModel extends Authenticatable
         'phone',
         'name',
         'password',
+        'commission_percentage',
         'content',
         'src',
         'display',

@@ -28,6 +28,12 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-3">Phần trăm hoa hồng :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="commission_percentage" value="{{$data->commission_percentage}}" type="text" required>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-3">Danh mục :</div>
                         <div class="col-8 d-flex flex-wrap gap-3">
                             @foreach($categories as $category)
