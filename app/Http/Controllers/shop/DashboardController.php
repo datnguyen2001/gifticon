@@ -4,6 +4,7 @@ namespace App\Http\Controllers\shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
+use App\Models\OrderModel;
 use App\Models\OrderProductModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class DashboardController extends Controller
 {
@@ -138,10 +140,51 @@ class DashboardController extends Controller
             $totalRevenueProduct = 0;
         }
 
+        $shopUser = Auth::guard('shop')->user();
+
+        // Define all possible time ranges
+        $timeRanges = [
+            '0am - 2am', '2am - 4am', '4am - 6am', '6am - 8am', '8am - 10am', '10am - 12pm',
+            '12pm - 2pm', '2pm - 4pm', '4pm - 6pm', '6pm - 8pm', '8pm - 10pm', '10pm - 0am'
+        ];
+
+        // Get the count of orders grouped by time range
+        $shopUser = Auth::guard('shop')->user();
+        $countOrder = OrderProductModel::where('shop_id', $shopUser->id)
+            ->selectRaw("
+                CASE
+                    WHEN HOUR(created_at) >= 0 AND HOUR(created_at) < 2 THEN '0am - 2am'
+                    WHEN HOUR(created_at) >= 2 AND HOUR(created_at) < 4 THEN '2am - 4am'
+                    WHEN HOUR(created_at) >= 4 AND HOUR(created_at) < 6 THEN '4am - 6am'
+                    WHEN HOUR(created_at) >= 6 AND HOUR(created_at) < 8 THEN '6am - 8am'
+                    WHEN HOUR(created_at) >= 8 AND HOUR(created_at) < 10 THEN '8am - 10am'
+                    WHEN HOUR(created_at) >= 10 AND HOUR(created_at) < 12 THEN '10am - 12pm'
+                    WHEN HOUR(created_at) >= 12 AND HOUR(created_at) < 14 THEN '12pm - 2pm'
+                    WHEN HOUR(created_at) >= 14 AND HOUR(created_at) < 16 THEN '2pm - 4pm'
+                    WHEN HOUR(created_at) >= 16 AND HOUR(created_at) < 18 THEN '4pm - 6pm'
+                    WHEN HOUR(created_at) >= 18 AND HOUR(created_at) < 20 THEN '6pm - 8pm'
+                    WHEN HOUR(created_at) >= 20 AND HOUR(created_at) < 22 THEN '8pm - 10pm'
+                    ELSE '10pm - 0am'
+                END as time_range,
+                COUNT(*) as count
+            ")
+            ->groupBy('time_range')
+            ->get()
+            ->keyBy('time_range')
+            ->toArray();
+
+        $mergedData = [];
+        foreach ($timeRanges as $range) {
+            $mergedData[$range] = isset($countOrder[$range]) ? $countOrder[$range]['count'] : 0;
+        }
+
+        $maxOrderCount = max($mergedData);
+        $morningRanges = array_slice($mergedData, 0, 6);
+        $afternoonRanges = array_slice($mergedData, 6, 6);
         return view('shop.statistical.revenue-orders', compact(
             'dates', 'totalRevenue', 'revenuesData','titlePage','page_menu','page_sub','order_all',
             'waiting_payment','order_paid','order_canceled','order_all_money','waiting_payment_money','order_paid_money',
-            'order_canceled_money','listProduct','totalRevenueProduct'
+            'order_canceled_money','listProduct','totalRevenueProduct', 'morningRanges', 'afternoonRanges', 'maxOrderCount'
         ));
     }
 

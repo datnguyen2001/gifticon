@@ -36,6 +36,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'commission',
+            'title' => 'Thống kê hoa hồng',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.commission',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'banner',
             'title' => 'Cài đặt Banner',
             'icon' => 'bi bi-grid',

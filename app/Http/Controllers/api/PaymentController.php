@@ -256,6 +256,7 @@ class PaymentController extends Controller
                         'unit_price' => $unitPrice,
                         'receiver_phone' => $user->phone ?? null,
                         'barcode' => 'ABC123',
+                        'commission_money' => $cart['quantity'] * $unitPrice * ($shop->commission_percentage / 100)
                     ];
                     OrderProductModel::create($orderProductData);
 
@@ -285,7 +286,8 @@ class PaymentController extends Controller
                                 'shop_id' => $shopID,
                                 'unit_price' => $unitPrice,
                                 'barcode' => 'ABC123',
-                                'receiver_phone' => $receiver->phone
+                                'receiver_phone' => $receiver->phone,
+                                'commission_money' => $receiver->quantity * $unitPrice * ($shop->commission_percentage / 100)
                             ]);
                         }
                         $newQuantity = $productQuantity - $totalQuantity;

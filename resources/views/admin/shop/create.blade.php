@@ -28,6 +28,12 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-3">Phần trăm hoa hồng :</div>
+                        <div class="col-8">
+                            <input class="form-control" name="commission_percentage" type="text" required>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-3">Mô tả :</div>
                         <div class="col-8">
                             <textarea name="content" class="form-control" rows="6" required placeholder="Mô tả shop"></textarea>

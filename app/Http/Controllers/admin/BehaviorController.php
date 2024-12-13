@@ -17,7 +17,7 @@ class BehaviorController extends Controller
     public function userBehavior()
     {
         $titlePage = 'Hành vi người dùng';
-        $page_menu = 'page_view';
+        $page_menu = 'user_behavior';
         $page_sub = null;
 
         $credentialsPath = storage_path('app/public/gifticon-ga4.json');
@@ -90,7 +90,13 @@ class BehaviorController extends Controller
                 );
             }
 
-            $dataPageView = UserBehavior::get();
+            $dataPageView = UserBehavior::whereBetween('date', [Carbon::now()->subDays(15), Carbon::now()])->where('path', '/')->get();
+
+            $dataPageViewByShop = UserBehavior::whereBetween('date', [Carbon::now()->subDays(15), Carbon::now()])
+                ->where('path', 'like', '/thuong-hieu%')
+                ->join('shops', 'shops.slug', '=', DB::raw("SUBSTRING_INDEX(path, '/', -1)"))
+                ->select('user_behaviors.*', 'shops.name as shop_name', 'shops.slug as shop_slug')
+                ->get();
 
             $orderCountByDate = OrderModel::select(DB::raw('DATE(created_at) as date, count(*) as buy_count'))
                 ->groupBy(DB::raw('DATE(created_at)'))
@@ -113,7 +119,7 @@ class BehaviorController extends Controller
                 ];
             });
 
-            return view('admin.statistical.user_behavior', compact('dataPageView', 'orderResultCalculate', 'titlePage', 'page_menu', 'page_sub'));
+            return view('admin.statistical.user_behavior', compact('dataPageView', 'orderResultCalculate', 'dataPageViewByShop','titlePage', 'page_menu', 'page_sub'));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -148,13 +154,54 @@ class BehaviorController extends Controller
                 break;
         }
 
-        $dataPageView = UserBehavior::whereBetween('date', [$startDate, $endDate])
+        $dataPageView = UserBehavior::whereBetween('date', [$startDate, $endDate])->where('path', '/')
             ->get();
         if ($request->ajax()) {
             return response()->json($dataPageView);
         }
 
         return view('admin.statistical.user_behavior', compact('dataPageView'));
+    }
+
+    public function userBehaviorShopRange($range, Request $request)
+    {
+        $startDate = Carbon::now();
+        $endDate = Carbon::now();
+
+        switch ($range) {
+            case 's_yesterday':
+                $startDate = Carbon::yesterday();
+                $endDate = Carbon::yesterday();
+                break;
+            case 's_7_days_before':
+                $startDate = Carbon::now()->subDays(7);
+                break;
+            case 's_30_days_before':
+                $startDate = Carbon::now()->subDays(30);
+                break;
+            case 's_this_month':
+                $startDate = Carbon::now()->startOfMonth();
+                break;
+            case 's_last_month':
+                $startDate = Carbon::now()->subMonth()->startOfMonth();
+                $endDate = Carbon::now()->subMonth()->endOfMonth();
+                break;
+            case 's_custom':
+                $startDate = Carbon::parse($request->start_date);
+                $endDate = Carbon::parse($request->end_date);
+                break;
+        }
+
+        $dataPageViewByShop = UserBehavior::whereBetween('date', [$startDate, $endDate])
+            ->where('path', 'like', '/thuong-hieu%')
+            ->join('shops', 'shops.slug', '=', DB::raw("SUBSTRING_INDEX(path, '/', -1)"))
+            ->select('user_behaviors.*', 'shops.name as shop_name', 'shops.slug as shop_slug')
+            ->get();
+        if ($request->ajax()) {
+            return response()->json($dataPageViewByShop);
+        }
+
+        return view('admin.statistical.user_behavior', compact('dataPageViewByShop'));
     }
 
     public function userBehaviorPercentageRange($range, Request $request)
@@ -186,7 +233,7 @@ class BehaviorController extends Controller
                 break;
         }
 
-        $dataPageView = UserBehavior::whereBetween('date', [$startDate, $endDate])->get();
+        $dataPageView = UserBehavior::whereBetween('date', [$startDate, $endDate])->where('path', '/')->get();
 
         $orderCountByDate = OrderModel::select(DB::raw('DATE(created_at) as date, count(*) as buy_count'))
             ->whereBetween(DB::raw('DATE(created_at)'), [$startDate->toDateString(), $endDate->toDateString()])
