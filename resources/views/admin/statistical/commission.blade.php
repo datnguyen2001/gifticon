@@ -160,7 +160,7 @@
                                     <i class="bi bi-cart" style="font-size: 32px;font-weight: bold"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <p class="mb-0" style="color: red">${item.total_commission.toLocaleString('vi-VN')} VND</p>
+                                    <p class="mb-0" style="color: red">${(item.total_commission ?? 0).toLocaleString('vi-VN')} VND</p>
                                 </div>
                             </div>
                         </div>

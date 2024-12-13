@@ -36,7 +36,7 @@ class CommissionController extends Controller
             ->get();
 
         $countCommissionByShop = OrderProductModel::select('shop_id', DB::raw('SUM(commission_money) as total_commission'))
-            ->groupBy('shop_id')
+            ->groupBy('shop_id', 'shops.name')
             ->join('shops', 'shops.id', '=', 'order_products.shop_id')
             ->select('shops.name as shop_name', DB::raw('SUM(order_products.commission_money) as total_commission'))
             ->orderBy('total_commission', 'desc')
