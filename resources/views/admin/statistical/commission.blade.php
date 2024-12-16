@@ -69,7 +69,7 @@
             @endforeach
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-lg-12 mt-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Tổng hoa hồng theo tháng: </h5>
@@ -169,6 +169,46 @@
                 });
                 $('.commission_shop').html(html);
             }
+
+            const commissionData = Object.values(@json($totalCommissionByMonth));
+
+            const months = commissionData.map(item => `Tháng ${item.month}`);
+            const totalCommissionByMonth = commissionData.map(item => parseInt(item.total_commission));
+            // Chart configuration
+            var options = {
+                series: [{
+                    name: 'Tổng hoa hồng',
+                    data: totalCommissionByMonth
+                }],
+                chart: {
+                    type: 'area',
+                    height: 350
+                },
+                xaxis: {
+                    categories: months,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Tổng hoa hồng'
+                    },
+                    labels: {
+                        formatter: function (value) {
+                            return value.toLocaleString();
+                        }
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (value) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }
+            };
+
+            // Create the chart
+            var chart = new ApexCharts($("#commisionChart")[0], options);
+            chart.render();
         });
     </script>
 @endsection

@@ -42,8 +42,15 @@ class CommissionController extends Controller
             ->orderBy('total_commission', 'desc')
             ->get();
 
+        $totalCommissionByMonth = OrderProductModel::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(commission_money) as total_commission')
+        )
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->get();
+
         return view('admin.statistical.commission', compact('titlePage', 'page_menu', 'page_sub'
-        ,'years', 'quarters', 'months', 'countCommissionByShop'));
+        ,'years', 'quarters', 'months', 'countCommissionByShop', 'totalCommissionByMonth'));
     }
 
     public function commissionRange(Request $request)
