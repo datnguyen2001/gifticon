@@ -124,5 +124,28 @@ class HomeController extends Controller
         }
     }
 
+    public function productSortByCategory()
+    {
+        try {
+            $categories = CategoryModel::where('category.display', 1)
+                ->orderBy('category.id', 'asc')
+                ->get();
+
+            $data = $categories->map(function ($category) {
+                $products = ShopProductModel::where('category_id', $category->id)
+                    ->select('id as product_id', 'name as product_name', 'display as product_display', 'src as product_src')
+                    ->get();
+
+                return [
+                    'category' => $category,
+                    'products' => $products
+                ];
+            });
+
+            return response()->json(['message' => 'Lấy dữ liệu thành công', 'data' => $data, 'status' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'status' => 400]);
+        }
+    }
 
 }
