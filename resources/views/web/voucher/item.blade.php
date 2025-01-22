@@ -32,7 +32,7 @@
                     <p class="mb-0">Không có cơ sở</p>
                 @endif
                 <div class="line-bottom-voucher">
-                    <p class="code-voucher">Mã Voucher: <span></span></p>
+                    <p class="code-voucher">Mã Voucher: <span>{!! @$vouchers->voucher_id !!}</span></p>
                     <button class="btn-copy-code">Copy mã</button>
                 </div>
                 <div class="circle1"><img src="{{asset('assets/images/ellipse1.png')}}" alt=""></div>

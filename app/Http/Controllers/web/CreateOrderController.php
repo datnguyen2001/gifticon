@@ -284,6 +284,9 @@ class CreateOrderController extends Controller
                 }
 
                 $barcodeGenerator = new DNS1D();
+                $voucherID = random_int(1000000000, 9999999999);
+                $barCodeDataString = (string) $voucherID;
+                $barcode = $barcodeGenerator->getBarcodeSVG($barCodeDataString, 'C128', 2, 50);
                 if ($cart['buy_for'] == '1') {
                     $orderProductData = [
                         'order_id' => $order->id,
@@ -294,21 +297,14 @@ class CreateOrderController extends Controller
                         'shop_id' => $shopID,
                         'unit_price' => $unitPrice,
                         'receiver_phone' => $user->phone ?? null,
+                        'barcode' => $barcode,
+                        'voucher_id' => $voucherID,
+                        'start_date' => $shopProduct->start_date,
+                        'end_date' => $shopProduct->end_date,
                         'commission_money' => $cart['quantity'] * $unitPrice * ($shop->commission_percentage / 100),
                     ];
 
-                    $orderProduct = OrderProductModel::create($orderProductData);
-
-                    $orderProductId = $orderProduct->id;
-
-                    $barCodeData = [
-                        'used_quantity' => 1,
-                        'order_product_id' => $orderProductId,
-                    ];
-                    $barCodeDataString = json_encode($barCodeData);
-                    $barcode = $barcodeGenerator->getBarcodeSVG($barCodeDataString, 'C128', 2, 50);
-
-                    $orderProduct->update(['barcode' => $barcode]);
+                    OrderProductModel::create($orderProductData);
 
                     $newQuantity = $productQuantity - $cart['quantity'];
                     $shopProduct->update(['quantity' => $newQuantity]);
@@ -336,21 +332,14 @@ class CreateOrderController extends Controller
                                 'shop_id' => $shopID,
                                 'unit_price' => $unitPrice,
                                 'receiver_phone' => $receiver->phone,
+                                'barcode' => $barcode,
+                                'voucher_id' => $voucherID,
+                                'start_date' => $shopProduct->start_date,
+                                'end_date' => $shopProduct->end_date,
                                 'commission_money' => $receiver->quantity * $unitPrice * ($shop->commission_percentage / 100)
                             ];
                         }
                         $orderProduct = OrderProductModel::create($orderProductData);
-
-                        $orderProductId = $orderProduct->id;
-
-                        $barCodeData = [
-                            'used_quantity' => 1,
-                            'order_product_id' => $orderProductId,
-                        ];
-                        $barCodeDataString = json_encode($barCodeData);
-                        $barcode = $barcodeGenerator->getBarcodeSVG($barCodeDataString, 'C128', 2, 50);
-
-                        $orderProduct->update(['barcode' => $barcode]);
 
                         $newQuantity = $productQuantity - $totalQuantity;
                         $shopProduct->update(['quantity' => $newQuantity]);

@@ -251,9 +251,9 @@
     padding-bottom: 5px;
     margin-bottom: 15px;
 
-    text{
-        display: none;
-    }
+    /*text{*/
+    /*    display: none;*/
+    /*}*/
 }
 
 .img-barcode {
