@@ -20,6 +20,9 @@ class OrderProductModel extends Model
         'buy_for',
         'receiver_phone',
         'barcode',
+        'voucher_id',
+        'start_date',
+        'end_date',
         'commission_money'
     ];
 
