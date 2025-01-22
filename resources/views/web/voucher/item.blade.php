@@ -18,7 +18,7 @@
                     <img src="{{asset(@$vouchers->product_src)}}" class="img-sp-voucher">
                 </div>
                 <div class="line-barcode">
-                    <img src="{{asset('assets/images/top-section.png')}}" class="img-barcode">
+                    {!! @$vouchers->barcode !!}
                 </div>
                 <p class="name-cs">Cơ sở áp dụng:</p>
                 @if(!empty($vouchers->locations) && is_array($vouchers->locations))
@@ -32,7 +32,7 @@
                     <p class="mb-0">Không có cơ sở</p>
                 @endif
                 <div class="line-bottom-voucher">
-                    <p class="code-voucher">Mã Voucher: <span>{{@$vouchers->barcode}}</span></p>
+                    <p class="code-voucher">Mã Voucher: <span></span></p>
                     <button class="btn-copy-code">Copy mã</button>
                 </div>
                 <div class="circle1"><img src="{{asset('assets/images/ellipse1.png')}}" alt=""></div>
