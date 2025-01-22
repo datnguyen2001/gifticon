@@ -12,6 +12,7 @@ use App\Models\ShopModel;
 use App\Models\ShopProductModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Milon\Barcode\DNS1D;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PaymentController extends Controller
@@ -246,6 +247,8 @@ class PaymentController extends Controller
                     $productQuantity = $shopProduct->quantity;
                 }
                 if ($cart->buy_for == '1') {
+                    $barcodeGenerator = new DNS1D();
+                    $barcode = $barcodeGenerator->getBarcodeSVG(uniqid('PROD-', true), 'C128', 2, 50);
                     $orderProductData = [
                         'order_id' => $order->id,
                         'product_id' => $cart->product_id,
@@ -255,7 +258,7 @@ class PaymentController extends Controller
                         'shop_id' => $shopID,
                         'unit_price' => $unitPrice,
                         'receiver_phone' => $user->phone ?? null,
-                        'barcode' => 'ABC123',
+                        'barcode' => $barcode,
                         'commission_money' => $cart['quantity'] * $unitPrice * ($shop->commission_percentage / 100)
                     ];
                     OrderProductModel::create($orderProductData);
@@ -276,6 +279,10 @@ class PaymentController extends Controller
                     if ($cart && $cart->buy_for == '2') {
                         $cartReceivers = CartReceiverModel::where('cart_id', $cartID)->get();
                         $totalQuantity = $cartReceivers->sum('quantity');
+
+                        $barcodeGenerator = new DNS1D();
+                        $barcode = $barcodeGenerator->getBarcodeSVG(uniqid('PROD-', true), 'C128', 2, 50);
+
                         foreach ($cartReceivers as $receiver) {
                             OrderProductModel::create([
                                 'order_id' => $order->id,
@@ -285,7 +292,7 @@ class PaymentController extends Controller
                                 'buy_for' => $cart->buy_for,
                                 'shop_id' => $shopID,
                                 'unit_price' => $unitPrice,
-                                'barcode' => 'ABC123',
+                                'barcode' => $barcode,
                                 'receiver_phone' => $receiver->phone,
                                 'commission_money' => $receiver->quantity * $unitPrice * ($shop->commission_percentage / 100)
                             ]);

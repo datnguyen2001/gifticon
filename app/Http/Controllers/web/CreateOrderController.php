@@ -13,6 +13,7 @@ use App\Models\ShopProductModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Milon\Barcode\DNS1D;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CreateOrderController extends Controller
@@ -282,7 +283,8 @@ class CreateOrderController extends Controller
                     $productQuantity = $shopProduct->quantity;
                 }
 
-                if($cart['buy_for'] == '1'){
+                $barcodeGenerator = new DNS1D();
+                if ($cart['buy_for'] == '1') {
                     $orderProductData = [
                         'order_id' => $order->id,
                         'product_id' => $cart['product_id'],
@@ -292,10 +294,21 @@ class CreateOrderController extends Controller
                         'shop_id' => $shopID,
                         'unit_price' => $unitPrice,
                         'receiver_phone' => $user->phone ?? null,
-                        'barcode' => 'ABC123',
-                        'commission_money' => $cart['quantity'] * $unitPrice * ($shop->commission_percentage / 100)
+                        'commission_money' => $cart['quantity'] * $unitPrice * ($shop->commission_percentage / 100),
                     ];
-                    OrderProductModel::create($orderProductData);
+
+                    $orderProduct = OrderProductModel::create($orderProductData);
+
+                    $orderProductId = $orderProduct->id;
+
+                    $barCodeData = [
+                        'used_quantity' => 1,
+                        'order_product_id' => $orderProductId,
+                    ];
+                    $barCodeDataString = json_encode($barCodeData);
+                    $barcode = $barcodeGenerator->getBarcodeSVG($barCodeDataString, 'C128', 2, 50);
+
+                    $orderProduct->update(['barcode' => $barcode]);
 
                     $newQuantity = $productQuantity - $cart['quantity'];
                     $shopProduct->update(['quantity' => $newQuantity]);
@@ -314,7 +327,7 @@ class CreateOrderController extends Controller
                         $cartReceivers = CartReceiverModel::where('cart_id', $cart['id'])->get();
                         $totalQuantity = $cartReceivers->sum('quantity');
                         foreach ($cartReceivers as $receiver) {
-                            OrderProductModel::create([
+                            $orderProductData = [
                                 'order_id' => $order->id,
                                 'product_id' => $cart['product_id'],
                                 'message' => $cart['message'] ?? null,
@@ -322,11 +335,23 @@ class CreateOrderController extends Controller
                                 'buy_for' => $cart['buy_for'],
                                 'shop_id' => $shopID,
                                 'unit_price' => $unitPrice,
-                                'barcode' => 'ABC123',
                                 'receiver_phone' => $receiver->phone,
                                 'commission_money' => $receiver->quantity * $unitPrice * ($shop->commission_percentage / 100)
-                            ]);
+                            ];
                         }
+                        $orderProduct = OrderProductModel::create($orderProductData);
+
+                        $orderProductId = $orderProduct->id;
+
+                        $barCodeData = [
+                            'used_quantity' => 1,
+                            'order_product_id' => $orderProductId,
+                        ];
+                        $barCodeDataString = json_encode($barCodeData);
+                        $barcode = $barcodeGenerator->getBarcodeSVG($barCodeDataString, 'C128', 2, 50);
+
+                        $orderProduct->update(['barcode' => $barcode]);
+
                         $newQuantity = $productQuantity - $totalQuantity;
                         $shopProduct->update(['quantity' => $newQuantity]);
 
