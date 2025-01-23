@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\web\AuthController;
+use App\Http\Controllers\web\BarcodeController;
 use App\Http\Controllers\web\BrandController;
 use App\Http\Controllers\web\CartController;
 use App\Http\Controllers\web\CreateOrderController;
@@ -56,7 +57,8 @@ Route::get('search', [HomeController::class, 'search'])->name('search');
 Route::post('/product-reviews', [ProductController::class, 'storeReviews'])->name('product-reviews.store');
 Route::get('/load-reviews', [ProductController::class, 'loadReviews'])->name('load.reviews');
 
-
+Route::get('/kiem-tra-barcode', [BarcodeController::class, 'index'])->name('barcode.index');
+Route::post('/kiem-tra-barcode', [BarcodeController::class, 'scanBarcode'])->name('barcode.scan');
 
 Route::middleware('auth')->group(function () {
 //    Route::get('/gio-hang/tao-don-hang', [CreateOrderController::class, 'indexCart'])->name('create-order.add-cart.index');
