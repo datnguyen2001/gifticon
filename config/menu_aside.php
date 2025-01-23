@@ -60,6 +60,14 @@ return [
             'number' => 1
         ],
         [
+            'name' => 'product',
+            'title' => 'Sản phẩm',
+            'icon' => 'bi bi-grid',
+            'route' => 'admin.product.index',
+            'submenu' => [],
+            'number' => 1
+        ],
+        [
             'name' => 'shop',
             'title' => 'Quản lý shop',
             'icon' => 'bi bi-grid',

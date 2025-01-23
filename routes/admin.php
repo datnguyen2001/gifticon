@@ -12,6 +12,7 @@ use \App\Http\Controllers\admin\CategoryController;
 use \App\Http\Controllers\admin\FooterController;
 use \App\Http\Controllers\admin\ShopController;
 use \App\Http\Controllers\shop\OrderController;
+use \App\Http\Controllers\admin\ProductController;
 
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -63,6 +64,8 @@ Route::middleware('check-admin-auth')->group(function () {
         Route::get('edit/{id}', [ShopController::class, 'edit'])->name('edit');
         Route::post('update/{id}', [ShopController::class, 'update'])->name('update');
     });
+
+    Route::resource('product', ProductController::class);
 
     Route::prefix('footer')->name('footer.')->group(function () {
         Route::get('/', [FooterController::class, 'index'])->name('index');
