@@ -10,11 +10,11 @@
                 {!! @$product->barcode !!}
             </div>
             <p class="name-cs">Cơ sở áp dụng:</p>
-            @if(!empty($product->locations) && is_array($product->locations))
+            @if(!empty($product->locations))
                 @foreach($product->locations as $location)
                     <div class="line-address">
                         <img src="{{asset('assets/images/location-icon.png')}}" class="icon-location">
-                        <span>{{$location}}</span>
+                        <span>{{$location->location}}</span>
                     </div>
                 @endforeach
             @else
