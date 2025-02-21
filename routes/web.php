@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\web\HomeController;
 use \App\Http\Controllers\web\LoginController;
 use \App\Http\Controllers\web\ShopController;
+use App\Http\Controllers\TwilioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,3 +86,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('thanh-toan', [PaymentController::class, 'index'])->name('order.index');
 });
+
+//Route::post('send-mms', [\App\Http\Controllers\SinchController::class, 'sendMms']);
+Route::get('/zalo/callback', [\App\Http\Controllers\ZaloController::class, 'getAccessToken']);
+Route::post('/send-zalo-message', [\App\Http\Controllers\ZaloController::class, 'sendMessage']);
+
