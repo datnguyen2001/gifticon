@@ -30,18 +30,20 @@
                 <div class="swiper-wrapper">
                     @foreach($saleProducts as $saleProduct)
                         <div class="swiper-slide">
-                            <div class="item-product">
-                                <div class="box-img-product">
-                                    <img src="{{asset($saleProduct->src ??'assets/images/image-product.png')}}"
-                                         class="img-product">
-                                    <i class="fa-solid fa-heart fa-heart-sp {{ $saleProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"
-                                       data-product-id="{{ $saleProduct->id }}"></i>
+                            <a href="{{route('product.detail', [$saleProduct->slug])}}">
+                                <div class="item-product">
+                                    <div class="box-img-product">
+                                        <img src="{{asset($saleProduct->src ??'assets/images/image-product.png')}}"
+                                             class="img-product">
+                                        <i class="fa-solid fa-heart fa-heart-sp {{ $saleProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"
+                                           data-product-id="{{ $saleProduct->id }}"></i>
+                                    </div>
+                                    <a href="{{route('product.detail', [$saleProduct->slug])}}"
+                                       class="name-product">{{$saleProduct->name ?? ''}}</a>
+                                    <span
+                                        class="price-product">{{ number_format($saleProduct->price, 0, ',', '.') }}đ</span>
                                 </div>
-                                <a href="{{route('product.detail', [$saleProduct->slug])}}"
-                                   class="name-product">{{$saleProduct->name ?? ''}}</a>
-                                <span
-                                    class="price-product">{{ number_format($saleProduct->price, 0, ',', '.') }}đ</span>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -75,12 +77,14 @@
                 <div class="item-product"
                      data-price="{{ $shopProduct->price }}"
                      data-name="{{ strtolower($shopProduct->name) }}">
-                    <div class="box-img-product">
-                        <img src="{{ asset($shopProduct->src ?? 'assets/images/image-product.png') }}"
-                             class="img-product">
-                        <i class="fa-solid fa-heart fa-heart-sp {{ $shopProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"
-                           data-product-id="{{ $shopProduct->id }}"></i>
-                    </div>
+                    <a href="{{ route('product.detail', [$shopProduct->slug]) }}">
+                        <div class="box-img-product">
+                            <img src="{{ asset($shopProduct->src ?? 'assets/images/image-product.png') }}"
+                                 class="img-product">
+                            <i class="fa-solid fa-heart fa-heart-sp {{ $shopProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"
+                               data-product-id="{{ $shopProduct->id }}"></i>
+                        </div>
+                    </a>
                     <a href="{{ route('product.detail', [$shopProduct->slug]) }}"
                        class="name-product">{{ $shopProduct->name ?? '' }}</a>
                     <span class="price-product">{{ number_format($shopProduct->price, 0, ',', '.') }}đ</span>

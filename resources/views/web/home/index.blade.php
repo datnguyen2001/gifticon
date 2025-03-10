@@ -17,14 +17,17 @@
                 <div class="swiper-wrapper">
                     @foreach($saleProducts as $saleProduct)
                         <div class="swiper-slide">
-                            <div class="item-product">
-                                <div class="box-img-product">
-                                    <img src="{{asset($saleProduct->src)}}" class="img-product">
-                                    <i class="fa-solid fa-heart fa-heart-sp {{ $saleProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $saleProduct->id }}"></i>
+                            <a href="{{route('product.detail', [$saleProduct->slug])}}">
+                                <div class="item-product">
+                                        <div class="box-img-product">
+                                            <img src="{{asset($saleProduct->src)}}" class="img-product">
+                                            <i class="fa-solid fa-heart fa-heart-sp {{ $saleProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $saleProduct->id }}"></i>
+                                        </div>
+
+                                    <a href="{{route('product.detail', [$saleProduct->slug])}}" class="name-product custom-content-2-line" style="height: 42px">{{$saleProduct->name ?? 'N/A'}}</a>
+                                    <span class="price-product">{{ number_format($saleProduct->price ?? 0, 0, ',', '.') }}đ</span>
                                 </div>
-                                <a href="{{route('product.detail', [$saleProduct->slug])}}" class="name-product custom-content-2-line" style="height: 42px">{{$saleProduct->name ?? 'N/A'}}</a>
-                                <span class="price-product">{{ number_format($saleProduct->price ?? 0, 0, ',', '.') }}đ</span>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -122,14 +125,16 @@
         </div>
         <div class="content-you-like">
             @foreach($likeProducts as $likeProduct)
-                <div class="item-product">
-                    <div class="box-img-product">
-                        <img src="{{asset($likeProduct->src)}}" class="img-product">
-                        <i class="fa-solid fa-heart fa-heart-sp {{ $likeProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $likeProduct->id }}"></i>
+                <a href="{{route('product.detail', [$likeProduct->slug])}}">
+                    <div class="item-product">
+                        <div class="box-img-product">
+                            <img src="{{asset($likeProduct->src)}}" class="img-product">
+                            <i class="fa-solid fa-heart fa-heart-sp {{ $likeProduct->isFavorite() ? 'fa-heart-sp-active' : '' }}"  data-product-id="{{ $likeProduct->id }}"></i>
+                        </div>
+                        <a href="{{route('product.detail', [$likeProduct->slug])}}" class="name-product">{{$likeProduct->name ?? 'N/A'}}</a>
+                        <span class="price-product">{{ number_format($likeProduct->price ?? 0, 0, ',', '.') }}đ</span>
                     </div>
-                    <a href="{{route('product.detail', [$likeProduct->slug])}}" class="name-product">{{$likeProduct->name ?? 'N/A'}}</a>
-                    <span class="price-product">{{ number_format($likeProduct->price ?? 0, 0, ',', '.') }}đ</span>
-                </div>
+                </a>
             @endforeach
         </div>
     </section>
