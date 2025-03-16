@@ -340,10 +340,10 @@
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    height: 54px;
+    height: 36px;
 }
 .prod_info{
     display: flex;
@@ -433,9 +433,10 @@
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    height: 36px;
 }
 .price-sp-th{
     width: 100%;
@@ -524,6 +525,7 @@
     .img-sp-propose{
         width: 57px;
         height: 57px;
+        object-fit: cover;
     }
     .name-sp-propose{
         text-align: center;
@@ -608,6 +610,7 @@
     .img-sp-news{
         width: 105px;
         height: 105px;
+        object-fit: cover;
     }
     .item-prod-news{
         width: 100%;
