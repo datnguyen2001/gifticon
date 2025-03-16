@@ -413,6 +413,7 @@
 .img-sp-th{
     width: 75px;
     height: 70px;
+    object-fit: cover;
 }
 .col-info-product-th-left{
     position: relative;
