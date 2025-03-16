@@ -10,6 +10,7 @@ use App\Models\FooterModel;
 use App\Models\ProductReviewModel;
 use App\Models\ShopModel;
 use App\Models\ShopProductModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -35,6 +36,77 @@ class HomeController extends Controller
         }
 
         return view('web.home.index', compact('banner','shop', 'saleProducts', 'categoryProducts', 'likeProducts', 'categories'));
+    }
+
+    public function homeNew()
+    {
+        $banner = BannerModel::where('display', 1)->orderBy('created_at', 'desc')->get();
+        $shop = ShopModel::where('display', 1)->limit(15)->get();
+        $popularProducts = ShopProductModel::where('display', 1)
+            ->where(function($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', Carbon::now());
+            })
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', Carbon::now());
+            })->where('quantity','>',0)
+            ->select('id', 'name', 'src', 'price', 'slug')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        $plummetedProducts = ShopProductModel::where('display', 1)
+            ->where(function($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', Carbon::now());
+            })
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', Carbon::now());
+            })->where('quantity','>',0)
+            ->select('id', 'name', 'src', 'price', 'slug')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        $proposeProducts = ShopProductModel::where('display', 1)
+            ->where(function($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', Carbon::now());
+            })
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', Carbon::now());
+            })->where('quantity','>',0)
+            ->select('id', 'name', 'src', 'price', 'slug','shop_id')
+            ->with(['shop:id,src'])
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+        $categories = CategoryModel::where('display', 1)->orderBy('id', 'asc')->get();
+        $shops = ShopModel::select('id', 'name', 'src')
+        ->with(['products'])
+        ->inRandomOrder()
+            ->limit(3)
+            ->get();
+        $newProducts = ShopProductModel::where('display', 1)
+            ->where(function($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', Carbon::now());
+            })
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', Carbon::now());
+            })->where('quantity','>',0)
+            ->select('id', 'name', 'src', 'price', 'slug')
+            ->orderBy('created_at','desc')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        return view('web.home.index-new', compact('banner','shop', 'popularProducts','plummetedProducts', 'categories',
+        'proposeProducts','shops','newProducts'));
     }
 
     public function search(Request $request)

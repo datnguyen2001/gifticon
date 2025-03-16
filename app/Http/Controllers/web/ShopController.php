@@ -95,4 +95,39 @@ class ShopController extends Controller
 
         return view('web.trademark.list', compact('title', 'categories', 'products','slug'));
     }
+
+    public function productNew ($slug, Request $request)
+    {
+        $title = "Sản phẩm mới";
+
+        $categories = CategoryModel::where('display', 1)->orderBy('id', 'asc')->get();
+
+        if ($slug != 'all') {
+            $dataCate = CategoryModel::where('slug', $slug)->first();
+            $query = ShopProductModel::where('display', 1)->where('category_id',$dataCate->id)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id');
+        }else{
+            $query = ShopProductModel::where('display', 1)
+                ->select('id', 'name', 'src', 'price', 'slug', 'category_id')->inRandomOrder();
+        }
+
+        if (!empty($request->input('start_price'))) {
+            $startPrice = (int) $request->input('start_price');
+            $query->where('price', '>=', $startPrice);
+        }
+
+        if (!empty($request->input('end_price'))) {
+            $endPrice = (int) $request->input('end_price');
+            $query->where('price', '<=', $endPrice);
+        }
+
+        if (!empty($request->input('product_name'))) {
+            $productName = strtolower($request->input('product_name'));
+            $query->whereRaw('LOWER(name) LIKE ?', ["%$productName%"]);
+        }
+
+        $products = $query->orderBy('created_at','desc')->paginate(24);
+
+        return view('web.trademark.list', compact('title', 'categories', 'products','slug'));
+    }
 }
