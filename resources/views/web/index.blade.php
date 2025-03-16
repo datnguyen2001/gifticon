@@ -25,13 +25,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
-    @yield('style_page')
-    <!-- Google tag (gtag.js) -->
+    {{--    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/header-new.css') }}">
+@yield('style_page')
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6329DR07MN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'G-6329DR07MN');
@@ -52,15 +57,28 @@
     }else{
         $cart = 0;
     }
+    $isHome = request()->is('/');
 @endphp
-@include('web.partials.header')
-<main class="main">
-    @yield('content')
-</main>
-@include('web.partials.footer')
+<div class="box-big-layout">
+    @if($isHome)
+        @include('web.partials.header-new')
+    @else
+        @include('web.partials.header')
+    @endif
+    <main class="main">
+        @if($isHome)
+            @include('web.partials.right-bar')
+        @endif
+        @yield('content')
+    </main>
+    @if($isHome)
+        @include('web.partials.footer-new')
+    @else
+        @include('web.partials.footer')
+    @endif
 
-@include('web.partials.loading')
-
+    @include('web.partials.loading')
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
 </script>

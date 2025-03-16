@@ -76,5 +76,10 @@ class ShopProductModel extends Model
         return $this->hasMany(OrderProductModel::class, 'product_id', 'id');
     }
 
+    public function shop()
+    {
+        return $this->belongsTo(ShopModel::class, 'shop_id', 'id');
+    }
+
 }
 

@@ -45,11 +45,13 @@ Route::post('/verify-otp-password', [AuthController::class, 'verifyOtpPassword']
 Route::get('/quen-mat-khau/{phone}', [AuthController::class, 'forgetPassword'])->name('forget-password');
 Route::post('/save-forget-password', [AuthController::class, 'saveForgetPassword'])->name('save.forget.password');
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
+//Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/', [HomeController::class, 'homeNew'])->name('home');
 Route::get('thuong-hieu-yeu-thich/{slug}', [ShopController::class, 'trademark'])->name('trademark');
 Route::get('/thuong-hieu/{slug}', [BrandController::class, 'detail'])->name('brand.detail');
 Route::get('khuyen-mai-hom-nay/{slug}', [ShopController::class, 'promotionToday'])->name('promotion-today');
 Route::get('co-the-ban-thich/{slug}', [ShopController::class, 'youLike'])->name('you-like');
+Route::get('san-pham-moi/{slug}', [ShopController::class, 'productNew'])->name('product-new');
 Route::get('ho-tro-khach-hang/{slug}', [HomeController::class, 'customerSupport'])->name('customer-support');
 Route::get('ve-chung-toi/{slug}', [HomeController::class, 'customerSupport'])->name('about-us');
 Route::get('/chi-tiet/{slug}', [ProductController::class, 'detail'])->name('product.detail');
